@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import '../controllers/login_controller.dart';
+import '../controllers/register_controller.dart';
 
-class LoginView extends GetView<LoginController> {
-  const LoginView({Key? key}) : super(key: key);
+class RegisterView extends GetView<RegisterController> {
+  const RegisterView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +49,7 @@ class LoginView extends GetView<LoginController> {
                 SizedBox(height: 57),
                 TextFormField(
                   decoration: InputDecoration(
-                    hintText: 'Enter Your email',
+                    hintText: 'Username',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
@@ -58,41 +58,70 @@ class LoginView extends GetView<LoginController> {
                     ),
                   ),
                 ),
-                SizedBox(height: 15),
+                SizedBox(height: 10),
                 TextFormField(
                   decoration: InputDecoration(
-                    hintText: 'Enter Your Password',
+                    hintText: 'Email',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    suffixIcon: IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.remove_red_eye,
-                          color: Colors.grey.shade700,
-                        )),
                   ),
-                  obscureText: true,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        'Forgot Password?',
-                        style: TextStyle(color: Colors.grey),
-                      ),
+                SizedBox(height: 10),
+                TextFormField(
+                  decoration: InputDecoration(
+                    hintText: 'Tipe Pengguna',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
                     ),
-                  ],
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
                 ),
-                SizedBox(height: 70),
+                SizedBox(height: 10),
+                TextFormField(
+                  decoration: InputDecoration(
+                    hintText: 'Role',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10),
+                TextFormField(
+                  decoration: InputDecoration(
+                    hintText: 'Password',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10),
+                TextFormField(
+                  decoration: InputDecoration(
+                    hintText: 'Confirm Password',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 60),
                 InkWell(
                   onTap: () {
-                    Get.offAllNamed('/homeCrew');
+                    Get.toNamed('/login');
                   },
                   child: Container(
                     width: 330,
@@ -110,7 +139,7 @@ class LoginView extends GetView<LoginController> {
                     ),
                     child: const Center(
                         child: Text(
-                      'Login',
+                      'Agree and Register',
                       style: TextStyle(
                         fontSize: 15,
                         color: Color(0xFFFFFFFFF),
@@ -119,19 +148,6 @@ class LoginView extends GetView<LoginController> {
                     )),
                   ),
                 ),
-                SizedBox(height: 150),
-                SafeArea(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('Don\'t have an account?'),
-                      TextButton(
-                        onPressed: () {},
-                        child: Text('Register Now'),
-                      ),
-                    ],
-                  ),
-                )
               ],
             ),
           ),
