@@ -16,7 +16,9 @@ class WelcomeView extends GetView<WelcomeController> {
             Image.asset('assets/image/logoRadya.png'),
             const SizedBox(height: 181),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                Get.toNamed('/login');
+              },
               child: Container(
                 width: 330,
                 height: 56,
