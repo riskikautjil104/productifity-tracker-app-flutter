@@ -6,6 +6,10 @@ import '../controllers/home_controller.dart';
 
 import 'package:carousel_slider/carousel_slider.dart';
 
+import '../widget/namaTask_widget.dart';
+
+import 'package:percent_indicator/percent_indicator.dart';
+
 class HomeView extends GetView<HomeController> {
   const HomeView({Key? key}) : super(key: key);
   @override
@@ -55,24 +59,72 @@ class HomeView extends GetView<HomeController> {
           Container(
             width: 375,
             height: 185,
-            color: Colors.amber,
             child: Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                    height: 50,
-                    width: 50,
-                    color: Colors.red,
+                  CircularPercentIndicator(
+                    radius: 45.0,
+                    lineWidth: 13.0,
+                    animation: true,
+                    animationDuration: 700,
+                    percent: 0.7,
+                    center: Text(
+                      "70.0%",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20.0,
+                        color: Color(0XFF197492),
+                      ),
+                    ),
+                    footer: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: Text(
+                        "Productifity",
+                        style: TextStyle(
+                          fontSize: 15.0,
+                        ),
+                      ),
+                    ),
+                    circularStrokeCap: CircularStrokeCap.round,
+                    progressColor: Color(0XFF197492),
                   ),
                   SizedBox(
-                    width: 100,
+                    width: 20,
                   ),
                   Container(
-                    height: 50,
-                    width: 50,
-                    color: Colors.red,
-                  )
+                    height: 113,
+                    width: 1,
+                    color: Color(0XFFB1B1B1),
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  CircularPercentIndicator(
+                    radius: 45.0,
+                    lineWidth: 13.0,
+                    animation: true,
+                    animationDuration: 700,
+                    percent: 0.3,
+                    center: Text(
+                      "30.0%",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20.0,
+                          color: Color(0XFF0F9EEA)),
+                    ),
+                    footer: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: Text(
+                        "Contribution",
+                        style: TextStyle(
+                          fontSize: 15.0,
+                        ),
+                      ),
+                    ),
+                    circularStrokeCap: CircularStrokeCap.round,
+                    progressColor: Color(0XFF2699FB),
+                  ),
                 ],
               ),
             ),
@@ -114,11 +166,123 @@ class HomeView extends GetView<HomeController> {
                                   width: 344,
                                   child: Padding(
                                     padding: const EdgeInsets.all(10.0),
-                                    child: Center(
-                                      child: Text(
-                                        'Nama Project $i',
-                                        style: TextStyle(fontSize: 16.0),
-                                      ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        IconButton(
+                                          onPressed: () {},
+                                          icon: Icon(
+                                            Icons.arrow_back_ios_new,
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            children: [
+                                              Expanded(
+                                                child: Row(
+                                                  children: [
+                                                    Text(
+                                                      "Nama Project",
+                                                      style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 13,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      width: 61,
+                                                    ),
+                                                    Text(
+                                                      "01 Nov 2023",
+                                                      style: TextStyle(
+                                                        fontSize: 11,
+                                                        color:
+                                                            Color(0XFFB1B1B1),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 12,
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Container(
+                                                    width: MediaQuery.of(
+                                                                context)
+                                                            .size
+                                                            .width -
+                                                        (MediaQuery.of(context)
+                                                                .size
+                                                                .width -
+                                                            208),
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                      color: Color(0XFFB1B1B1),
+                                                    ),
+                                                    child: Row(
+                                                      children: [
+                                                        Expanded(
+                                                          child: ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10.0),
+                                                            child:
+                                                                LinearPercentIndicator(
+                                                              padding:
+                                                                  EdgeInsets
+                                                                      .zero,
+                                                              animation: true,
+                                                              lineHeight: 7.0,
+                                                              animationDuration:
+                                                                  2500,
+                                                              percent: 0.9,
+                                                              progressColor:
+                                                                  Color(
+                                                                      0XFF197492),
+                                                              backgroundColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        // SizedBox(width: 8),
+                                                        // Text(
+                                                        //   "90%",
+                                                        //   style: TextStyle(
+                                                        //     color: Color(
+                                                        //         0XFFB1B1B1),
+                                                        //     fontSize: 8,
+                                                        //   ),
+                                                        // ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Text(
+                                          "90%",
+                                          style: TextStyle(
+                                            color: Color(0XFFB1B1B1),
+                                            fontSize: 8,
+                                          ),
+                                        ),
+                                        IconButton(
+                                          onPressed: () {},
+                                          icon: Icon(
+                                            Icons.arrow_forward_ios_outlined,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),
@@ -184,93 +348,41 @@ class HomeView extends GetView<HomeController> {
           )
         ],
       ),
-    );
-  }
-}
-
-class CartNamaTask extends StatelessWidget {
-  final String namaProject;
-  final String toDos;
-  final String date;
-  final String progress;
-
-  const CartNamaTask({
-    Key? key,
-    required this.namaProject,
-    required this.toDos,
-    required this.date,
-    required this.progress,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(14.0),
-      ),
-      color: Color(0XFFD6D6D6),
-      child: SizedBox(
-        height: 73,
-        width: 344,
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Row(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    namaProject,
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.right,
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    toDos,
-                    style: TextStyle(
-                      fontSize: 10.68,
-                      color: Color(0XFF737373),
-                    ),
-                    textAlign: TextAlign.right,
+      bottomNavigationBar: BottomNavigationBar(
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        backgroundColor: Color(0XFFD3D3D3),
+        elevation: 10,
+        onTap: (_) {},
+        items: [
+          BottomNavigationBarItem(
+            icon: Container(
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Color.fromARGB(255, 197, 192, 192).withOpacity(0.3),
+                    spreadRadius: 2,
+                    blurRadius: 3,
+                    offset: Offset(0, 2),
                   ),
                 ],
               ),
-              SizedBox(
-                width: 150,
+              child: Icon(
+                Icons.home,
+                color: Color(0XFF28A4DC),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    date,
-                    style: TextStyle(
-                      fontSize: 11,
-                      color: Color(0XFFB1B1B1),
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.right,
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    progress,
-                    style: TextStyle(
-                      fontSize: 9.06,
-                      color: Color(0XFFB1B1B1),
-                    ),
-                    textAlign: TextAlign.left,
-                  ),
-                ],
-              ),
-            ],
+            ),
+            label: 'Home',
           ),
-        ),
+          BottomNavigationBarItem(
+            label: '',
+            icon: Icon(Icons.task_alt_sharp),
+          ),
+          BottomNavigationBarItem(
+            label: '',
+            icon: Icon(Icons.bar_chart),
+          ),
+        ],
       ),
     );
   }

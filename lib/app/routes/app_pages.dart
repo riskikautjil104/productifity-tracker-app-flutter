@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+// import '../modules/home/views/home_pm_views.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/welcome/bindings/welcome_binding.dart';
