@@ -10,6 +10,8 @@ import '../widget/namaTask_widget.dart';
 
 import 'package:percent_indicator/percent_indicator.dart';
 
+import '../widget/buttonNavigator.dart';
+
 class HomeView extends GetView<HomeController> {
   const HomeView({Key? key}) : super(key: key);
   @override
@@ -348,42 +350,7 @@ class HomeView extends GetView<HomeController> {
           )
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        backgroundColor: Color(0XFFD3D3D3),
-        elevation: 10,
-        onTap: (_) {},
-        items: [
-          BottomNavigationBarItem(
-            icon: Container(
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: Color.fromARGB(255, 197, 192, 192).withOpacity(0.3),
-                    spreadRadius: 2,
-                    blurRadius: 3,
-                    offset: Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: Icon(
-                Icons.home,
-                color: Color(0XFF28A4DC),
-              ),
-            ),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            label: '',
-            icon: Icon(Icons.task_alt_sharp),
-          ),
-          BottomNavigationBarItem(
-            label: '',
-            icon: Icon(Icons.bar_chart),
-          ),
-        ],
-      ),
+      bottomNavigationBar: ButtonNavigator(),
     );
   }
 }

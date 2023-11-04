@@ -17,7 +17,7 @@ class WelcomeView extends GetView<WelcomeController> {
             const SizedBox(height: 181),
             InkWell(
               onTap: () {
-                Get.toNamed('/login');
+                Get.toNamed('/homePm');
               },
               child: Container(
                 width: 330,
@@ -46,7 +46,7 @@ class WelcomeView extends GetView<WelcomeController> {
             ),
             const SizedBox(height: 34),
             InkWell(
-              onTap: () => Get.toNamed('/register'),
+              onTap: () => Get.toNamed('/homeCrew'),
               child: Container(
                 width: 330,
                 height: 56,
