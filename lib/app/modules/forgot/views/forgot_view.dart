@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import '../controllers/login_controller.dart';
+import '../controllers/forgot_controller.dart';
 
-class LoginView extends GetView<LoginController> {
-  const LoginView({Key? key}) : super(key: key);
+class ForgotView extends GetView<ForgotController> {
+  const ForgotView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,11 +39,26 @@ class LoginView extends GetView<LoginController> {
             physics: BouncingScrollPhysics(),
             child: Column(
               children: [
-                Text(
-                  'Welcome back! Glad to see you, Again',
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.w700,
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Forgot Password?',
+                    style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Don\'t worry\! It occurs. Please enter the email address linked with your account.',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xFF8391A1),
+                    ),
                   ),
                 ),
                 SizedBox(height: 57),
@@ -58,41 +73,10 @@ class LoginView extends GetView<LoginController> {
                     ),
                   ),
                 ),
-                SizedBox(height: 15),
-                TextFormField(
-                  decoration: InputDecoration(
-                    hintText: 'Enter Your Password',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    suffixIcon: IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.remove_red_eye,
-                          color: Colors.grey.shade700,
-                        )),
-                  ),
-                  obscureText: true,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    TextButton(
-                      onPressed: () => Get.toNamed('/forgot'),
-                      child: Text(
-                        'Forgot Password?',
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 70),
+                SizedBox(height: 51),
                 InkWell(
                   onTap: () {
-                    Get.offAllNamed('/homeCrew');
+                    Get.toNamed('otpVerification');
                   },
                   child: Container(
                     width: 330,
@@ -110,7 +94,7 @@ class LoginView extends GetView<LoginController> {
                     ),
                     child: const Center(
                         child: Text(
-                      'Login',
+                      'Send Code',
                       style: TextStyle(
                         fontSize: 15,
                         color: Color(0xFFFFFFFFF),
@@ -119,15 +103,15 @@ class LoginView extends GetView<LoginController> {
                     )),
                   ),
                 ),
-                SizedBox(height: 150),
+                SizedBox(height: 299),
                 SafeArea(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Don\'t have an account?'),
+                      Text('Remember Password?'),
                       TextButton(
-                        onPressed: () => Get.toNamed('/register'),
-                        child: Text('Register Now'),
+                        onPressed: () => Get.toNamed('/login'),
+                        child: Text('Login'),
                       ),
                     ],
                   ),
