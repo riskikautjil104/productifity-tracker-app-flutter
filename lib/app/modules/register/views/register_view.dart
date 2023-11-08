@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import '../controllers/register_controller.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
+// ignore: must_be_immutable
 class RegisterView extends GetView<RegisterController> {
   final List<String> tipePengguna = [
     'Project Manager',
