@@ -22,6 +22,8 @@ class RegisterView extends GetView<RegisterController> {
 
   String? selectedValue;
 
+  RegisterView({super.key});
+
   // final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
