@@ -7,21 +7,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 
 // ignore: must_be_immutable
 class RegisterView extends GetView<RegisterController> {
-  final List<String> tipePengguna = [
-    'Project Manager',
-    'Crew',
-  ];
-  final List<String> roleItems = [
-    'Project Manager',
-    'Analis',
-    'QA',
-    'Mobile Developer',
-    'Back End Developer',
-    'Front End Developer',
-  ];
-
-  String? selectedValue;
-
+  final RegisterController controllerRegister = Get.put(RegisterController());
   RegisterView({super.key});
 
   // final _formKey = GlobalKey<FormState>();
@@ -105,7 +91,7 @@ class RegisterView extends GetView<RegisterController> {
                   'Tipe Pengguna',
                   style: TextStyle(fontSize: 14),
                 ),
-                items: tipePengguna
+                items: controllerRegister.tipePengguna
                     .map((item) => DropdownMenuItem<String>(
                           value: item,
                           child: Text(
@@ -124,9 +110,15 @@ class RegisterView extends GetView<RegisterController> {
                 },
                 onChanged: (value) {
                   //Do something when selected item is changed.
+                  if (value == 'Project Manager') {
+                    controllerRegister.isPm = true.obs;
+                  } else {
+                    controllerRegister.isPm = false.obs;
+                  }
+                  print(controllerRegister.isPm);
                 },
                 onSaved: (value) {
-                  selectedValue = value.toString();
+                  controllerRegister.selectedValue = value.toString();
                 },
                 buttonStyleData: const ButtonStyleData(
                   padding: EdgeInsets.only(right: 8),
@@ -148,6 +140,7 @@ class RegisterView extends GetView<RegisterController> {
                 ),
               ),
               SizedBox(height: 10),
+              // if (isPm == false.obs)
               DropdownButtonFormField2<String>(
                 isExpanded: true,
                 decoration: InputDecoration(
@@ -163,7 +156,7 @@ class RegisterView extends GetView<RegisterController> {
                   'Role',
                   style: TextStyle(fontSize: 14),
                 ),
-                items: roleItems
+                items: controllerRegister.roleItems
                     .map((item) => DropdownMenuItem<String>(
                           value: item,
                           child: Text(
@@ -184,7 +177,7 @@ class RegisterView extends GetView<RegisterController> {
                   //Do something when selected item is changed.
                 },
                 onSaved: (value) {
-                  selectedValue = value.toString();
+                  controllerRegister.selectedValue = value.toString();
                 },
                 buttonStyleData: const ButtonStyleData(
                   padding: EdgeInsets.only(right: 8),

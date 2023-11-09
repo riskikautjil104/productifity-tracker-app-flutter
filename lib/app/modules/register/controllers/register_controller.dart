@@ -1,9 +1,24 @@
 import 'package:get/get.dart';
 
 class RegisterController extends GetxController {
+  final List<String> tipePengguna = [
+    'Project Manager',
+    'Crew',
+  ];
+  final List<String> roleItems = [
+    'Project Manager',
+    'Analis',
+    'QA',
+    'Mobile Developer',
+    'Back End Developer',
+    'Front End Developer',
+  ];
+
+  String? selectedValue;
+
+  RxBool isPm = false.obs;
   //TODO: Implement RegisterController
 
-  final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
@@ -18,6 +33,4 @@ class RegisterController extends GetxController {
   void onClose() {
     super.onClose();
   }
-
-  void increment() => count.value++;
 }
