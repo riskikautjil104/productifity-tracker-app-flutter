@@ -9,7 +9,7 @@ import '../widget/listNamaProject_widget.dart';
 import '../widget/buttonNavigator.dart';
 
 class HomeViewPm extends GetView<HomeController> {
-  const HomeViewPm({Key? key}) : super(key: key);
+  const HomeViewPm({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +28,7 @@ class HomeViewPm extends GetView<HomeController> {
             Icons.account_circle,
             color: Colors.black,
           ),
-          onPressed: () {},
+          onPressed: () => Get.toNamed('/profile'),
         ),
         actions: [
           IconButton(
@@ -144,5 +144,3 @@ class HomeViewPm extends GetView<HomeController> {
     );
   }
 }
-
-

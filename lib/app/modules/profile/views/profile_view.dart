@@ -1,35 +1,102 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:productivity_tracker_app/app/widgets/appBar.dart';
 
 import '../controllers/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
-  const ProfileView({Key? key}) : super(key: key);
+  const ProfileView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('ProfileView'),
-        centerTitle: true,
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topRight,
-                end: Alignment.bottomLeft,
-                colors: <Color>[
-                  Color(0xff2DB5F4),
-                  Color(0xff197390),
-                ]),
-          ),
+        appBar: appBar(
+          'Profile',
+          <Widget>[
+            IconButton(
+              icon: const Icon(Icons.more_vert),
+              onPressed: () {
+                //action for search icon button
+              },
+            ),
+          ],
         ),
-      ),
-      body: const Center(
-        child: Text(
-          'ProfileView is working',
-          style: TextStyle(fontSize: 20),
-        ),
-      ),
-    );
+        body: Column(
+          children: [
+            const SizedBox(height: 41),
+            Center(
+              child: Stack(
+                children: [
+                  ClipOval(
+                    child: SizedBox.fromSize(
+                      size: const Size.fromRadius(100), // Image radius
+                      child: Image.asset('assets/image/profilePic.jpg',
+                          fit: BoxFit.cover),
+                    ),
+                  ),
+                  const Positioned(
+                    bottom: 10,
+                    right: 20,
+                    child: Icon(Icons.camera_alt_rounded),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 24),
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 41),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Text(
+                          'Jhon Smith',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        color: Color(0xFFDADADA),
+                        width: MediaQuery.of(context).size.width,
+                        height: 2,
+                      ),
+                      const Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Text(
+                          'JhonSmith@gmail.com',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        color: Color(0xFFDADADA),
+                        width: MediaQuery.of(context).size.width,
+                        height: 2,
+                      ),
+                      const Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Text(
+                          'FrontEnd Developer',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        color: const Color(0xFFDADADA),
+                        width: MediaQuery.of(context).size.width,
+                        height: 2,
+                      ),
+                    ],
+                  )),
+            )
+          ],
+        ));
   }
 }

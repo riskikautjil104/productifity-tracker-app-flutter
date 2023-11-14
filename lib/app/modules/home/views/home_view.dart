@@ -32,7 +32,7 @@ class HomeView extends GetView<HomeController> {
             Icons.account_circle,
             color: Colors.black,
           ),
-          onPressed: () {},
+          onPressed: () => Get.toNamed('/profile'),
         ),
         actions: [
           IconButton(
