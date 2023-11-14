@@ -1,15 +1,17 @@
 import 'package:get/get.dart';
-import 'package:productivity_tracker_app/app/modules/forgot/views/changepasswordsuccess.dart';
-import 'package:productivity_tracker_app/app/modules/forgot/views/createNewPassword.dart';
-import 'package:productivity_tracker_app/app/modules/forgot/views/otpVerification.dart';
 
 import '../modules/forgot/bindings/forgot_binding.dart';
+import '../modules/forgot/views/changepasswordsuccess.dart';
+import '../modules/forgot/views/createNewPassword.dart';
 import '../modules/forgot/views/forgot_view.dart';
+import '../modules/forgot/views/otpVerification.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_pm_views.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
+import '../modules/profile/bindings/profile_binding.dart';
+import '../modules/profile/views/profile_view.dart';
 import '../modules/register/bindings/register_binding.dart';
 import '../modules/register/views/register_view.dart';
 import '../modules/welcome/bindings/welcome_binding.dart';
@@ -69,6 +71,11 @@ class AppPages {
       name: _Paths.CHANGEPASSWORDSUCCESS,
       page: () => const ChangePasswordSuccessView(),
       binding: ForgotBinding(),
+    ),
+    GetPage(
+      name: _Paths.PROFILE,
+      page: () => const ProfileView(),
+      binding: ProfileBinding(),
     ),
   ];
 }

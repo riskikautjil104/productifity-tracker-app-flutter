@@ -12,6 +12,7 @@ abstract class Routes {
   static const OTPVERIFICATION = _Paths.OTPVERIFICATION;
   static const CREATENEWPASSWORD = _Paths.CREATENEWPASSWORD;
   static const CHANGEPASSWORDSUCCESS = _Paths.CHANGEPASSWORDSUCCESS;
+  static const PROFILE = _Paths.PROFILE;
 }
 
 abstract class _Paths {
@@ -25,4 +26,5 @@ abstract class _Paths {
   static const OTPVERIFICATION = '/otpVerification';
   static const CREATENEWPASSWORD = '/createnewpassword';
   static const CHANGEPASSWORDSUCCESS = '/changepasswordsuccess';
+  static const PROFILE = '/profile';
 }

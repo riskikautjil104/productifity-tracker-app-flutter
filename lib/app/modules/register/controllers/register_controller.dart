@@ -2,12 +2,14 @@ import 'package:get/get.dart';
 
 class RegisterController extends GetxController {
   final List<String> tipePengguna = [
+    'Admin',
+    'Manager',
     'Project Manager',
     'Crew',
   ];
   final List<String> roleItems = [
     'Project Manager',
-    'Analis',
+    'Analyst',
     'QA',
     'Mobile Developer',
     'Back End Developer',
