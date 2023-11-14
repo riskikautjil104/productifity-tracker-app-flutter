@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../controllers/login_controller.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LoginView extends GetView<LoginController> {
-  const LoginView({Key? key}) : super(key: key);
+  final LoginController _obscureTextController = Get.put(LoginController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,11 +40,28 @@ class LoginView extends GetView<LoginController> {
             physics: BouncingScrollPhysics(),
             child: Column(
               children: [
-                Text(
-                  'Welcome back! Glad to see you, Again',
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.w700,
+                RichText(
+                  text: TextSpan(
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: 'Welcom back to ',
+                        style: GoogleFonts.playfairDisplay(
+                          textStyle: TextStyle(
+                              fontSize: 30,
+                              color: Color(0xFF032D23),
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                      TextSpan(
+                        text: 'Productivity Tracker App',
+                        style: GoogleFonts.playfairDisplay(
+                          textStyle: TextStyle(
+                              fontSize: 30,
+                              color: Color(0xFF0F9EEA),
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(height: 57),
@@ -59,24 +77,31 @@ class LoginView extends GetView<LoginController> {
                   ),
                 ),
                 SizedBox(height: 15),
-                TextFormField(
-                  decoration: InputDecoration(
-                    hintText: 'Enter Your Password',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    suffixIcon: IconButton(
-                        onPressed: () {},
+                Obx(() {
+                  return TextFormField(
+                    decoration: InputDecoration(
+                      hintText: 'Enter Your Password',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      suffixIcon: IconButton(
                         icon: Icon(
-                          Icons.remove_red_eye,
-                          color: Colors.grey.shade700,
-                        )),
-                  ),
-                  obscureText: true,
-                ),
+                          _obscureTextController.isObscured.value
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                          color: Colors.grey,
+                        ),
+                        onPressed: () {
+                          _obscureTextController.toggleObscureText();
+                        },
+                      ),
+                    ),
+                    obscureText: _obscureTextController.isObscured.value,
+                  );
+                }),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [

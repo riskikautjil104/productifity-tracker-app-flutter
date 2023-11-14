@@ -138,6 +138,7 @@ class _OtpFieldState extends State<OtpField> {
             // Specify direction if desired
             textDirection: TextDirection.ltr,
             child: Pinput(
+              length: 6,
               controller: pinController,
               focusNode: focusNode,
               androidSmsAutofillMethod:
@@ -146,7 +147,7 @@ class _OtpFieldState extends State<OtpField> {
               defaultPinTheme: defaultPinTheme,
               separatorBuilder: (index) => const SizedBox(width: 8),
               validator: (value) {
-                return value == '2222' ? null : 'Pin is incorrect';
+                return value == '212121' ? null : 'Pin is incorrect';
               },
               // onClipboardFound: (value) {
               //   debugPrint('onClipboardFound: $value');

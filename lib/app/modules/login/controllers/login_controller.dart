@@ -1,23 +1,11 @@
 import 'package:get/get.dart';
 
 class LoginController extends GetxController {
-  //TODO: Implement LoginController
+  //TODO: Implement LoginControllerb
+  var isObscured = true.obs; // Observable<bool> to track the obscureText state
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+  void toggleObscureText() {
+    isObscured
+        .toggle(); // Toggles the value of isObscured (true to false or vice versa)
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../controllers/register_controller.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // ignore: must_be_immutable
 class RegisterView extends GetView<RegisterController> {
@@ -44,13 +45,31 @@ class RegisterView extends GetView<RegisterController> {
           physics: BouncingScrollPhysics(),
           child: Column(
             children: [
-              Text(
-                'Welcome back! Glad to see you, Again',
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.w700,
+              RichText(
+                text: TextSpan(
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: 'Please Create Account ',
+                      style: GoogleFonts.playfairDisplay(
+                        textStyle: TextStyle(
+                            fontSize: 30,
+                            color: Color(0xFF032D23),
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                    TextSpan(
+                      text: 'Productivity Tracker App',
+                      style: GoogleFonts.playfairDisplay(
+                        textStyle: TextStyle(
+                            fontSize: 30,
+                            color: Color(0xFF0F9EEA),
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                  ],
                 ),
               ),
+
               SizedBox(height: 57),
               TextFormField(
                 decoration: InputDecoration(
@@ -110,12 +129,7 @@ class RegisterView extends GetView<RegisterController> {
                 },
                 onChanged: (value) {
                   //Do something when selected item is changed.
-                  if (value == 'Project Manager') {
-                    controllerRegister.isPm = true.obs;
-                  } else {
-                    controllerRegister.isPm = false.obs;
-                  }
-                  print(controllerRegister.isPm);
+                  controllerRegister.isPmTrue();
                 },
                 onSaved: (value) {
                   controllerRegister.selectedValue = value.toString();
@@ -141,63 +155,66 @@ class RegisterView extends GetView<RegisterController> {
               ),
               SizedBox(height: 10),
               // if (isPm == false.obs)
-              DropdownButtonFormField2<String>(
-                isExpanded: true,
-                decoration: InputDecoration(
-                  // Add Horizontal padding using menuItemStyleData.padding so it matches
-                  // the menu padding when button's width is not specified.
-                  contentPadding: const EdgeInsets.symmetric(vertical: 16),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  // Add more decoration..
-                ),
-                hint: const Text(
-                  'Role',
-                  style: TextStyle(fontSize: 14),
-                ),
-                items: controllerRegister.roleItems
-                    .map((item) => DropdownMenuItem<String>(
-                          value: item,
-                          child: Text(
-                            item,
-                            style: const TextStyle(
-                              fontSize: 14,
-                            ),
-                          ),
-                        ))
-                    .toList(),
-                validator: (value) {
-                  if (value == null) {
-                    return 'Pilih Role.';
-                  }
-                  return null;
-                },
-                onChanged: (value) {
-                  //Do something when selected item is changed.
-                },
-                onSaved: (value) {
-                  controllerRegister.selectedValue = value.toString();
-                },
-                buttonStyleData: const ButtonStyleData(
-                  padding: EdgeInsets.only(right: 8),
-                ),
-                iconStyleData: const IconStyleData(
-                  icon: Icon(
-                    Icons.arrow_drop_down,
-                    color: Colors.black45,
-                  ),
-                  iconSize: 24,
-                ),
-                dropdownStyleData: DropdownStyleData(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                menuItemStyleData: const MenuItemStyleData(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                ),
-              ),
+              Obx(() => !controllerRegister.isPm.value
+                  ? DropdownButtonFormField2<String>(
+                      isExpanded: true,
+                      decoration: InputDecoration(
+                        // Add Horizontal padding using menuItemStyleData.padding so it matches
+                        // the menu padding when button's width is not specified.
+                        contentPadding:
+                            const EdgeInsets.symmetric(vertical: 16),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        // Add more decoration..
+                      ),
+                      hint: const Text(
+                        'Role',
+                        style: TextStyle(fontSize: 14),
+                      ),
+                      items: controllerRegister.roleItems
+                          .map((item) => DropdownMenuItem<String>(
+                                value: item,
+                                child: Text(
+                                  item,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ))
+                          .toList(),
+                      validator: (value) {
+                        if (value == null) {
+                          return 'Pilih Role.';
+                        }
+                        return null;
+                      },
+                      onChanged: (value) {
+                        //Do something when selected item is changed.
+                      },
+                      onSaved: (value) {
+                        controllerRegister.selectedValue = value.toString();
+                      },
+                      buttonStyleData: const ButtonStyleData(
+                        padding: EdgeInsets.only(right: 8),
+                      ),
+                      iconStyleData: const IconStyleData(
+                        icon: Icon(
+                          Icons.arrow_drop_down,
+                          color: Colors.black45,
+                        ),
+                        iconSize: 24,
+                      ),
+                      dropdownStyleData: DropdownStyleData(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      menuItemStyleData: const MenuItemStyleData(
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                      ),
+                    )
+                  : SizedBox(height: 0)),
               SizedBox(height: 10),
               TextFormField(
                 decoration: InputDecoration(
