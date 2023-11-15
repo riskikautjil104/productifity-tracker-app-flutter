@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:productivity_tracker_app/app/modules/profile/views/editProfileView.dart';
 import 'package:productivity_tracker_app/app/widgets/appBar.dart';
 
 import '../controllers/profile_controller.dart';
@@ -14,12 +15,53 @@ class ProfileView extends GetView<ProfileController> {
         appBar: appBar(
           'Profile',
           <Widget>[
-            IconButton(
-              icon: const Icon(Icons.more_vert),
-              onPressed: () {
-                //action for search icon button
-              },
-            ),
+            PopupMenuButton(
+                // add icon, by default "3 dot" icon
+                // icon: Icon(Icons.book)
+                itemBuilder: (context) {
+              return [
+                const PopupMenuItem<int>(
+                  value: 0,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Icon(
+                        Icons.edit,
+                        color: Colors.black,
+                      ),
+                      Text(
+                        'Edit',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w700),
+                      ),
+                    ],
+                  ),
+                ),
+                const PopupMenuItem<int>(
+                  value: 1,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Icon(
+                        Icons.logout,
+                        color: Colors.black,
+                      ),
+                      Text(
+                        'Logout',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w700),
+                      ),
+                    ],
+                  ),
+                ),
+              ];
+            }, onSelected: (value) {
+              if (value == 0) {
+                Get.to(const EditProfileView());
+              } else if (value == 1) {
+                Get.snackbar('Logout', 'Untuk Sementara Belum Bisa Logout');
+              }
+            }),
           ],
         ),
         body: Column(
@@ -28,11 +70,17 @@ class ProfileView extends GetView<ProfileController> {
             Center(
               child: Stack(
                 children: [
-                  ClipOval(
-                    child: SizedBox.fromSize(
-                      size: const Size.fromRadius(100), // Image radius
-                      child: Image.asset('assets/image/profilePic.jpg',
-                          fit: BoxFit.cover),
+                  InkWell(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(100),
+                    ),
+                    onTap: () {},
+                    child: ClipOval(
+                      child: SizedBox.fromSize(
+                        size: const Size.fromRadius(100), // Image radius
+                        child: Image.asset('assets/image/profilePic.jpg',
+                            fit: BoxFit.cover),
+                      ),
                     ),
                   ),
                   const Positioned(
