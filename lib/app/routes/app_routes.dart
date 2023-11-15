@@ -13,12 +13,14 @@ abstract class Routes {
   static const CREATENEWPASSWORD = _Paths.CREATENEWPASSWORD;
   static const CHANGEPASSWORDSUCCESS = _Paths.CHANGEPASSWORDSUCCESS;
   static const PROFILE = _Paths.PROFILE;
+  static const STATISTIK = _Paths.STATISTIK;
+  static const NOTIFICATION = _Paths.NOTIFICATION;
 }
 
 abstract class _Paths {
   _Paths._();
   static const HOME = '/homeCrew';
-  static const HomeViewPm = '/homePm';
+  static const HomeViewPm = '/homeViewPm';
   static const LOGIN = '/login';
   static const WELCOME = '/welcome';
   static const REGISTER = '/register';
@@ -27,4 +29,6 @@ abstract class _Paths {
   static const CREATENEWPASSWORD = '/createnewpassword';
   static const CHANGEPASSWORDSUCCESS = '/changepasswordsuccess';
   static const PROFILE = '/profile';
+  static const STATISTIK = '/statistik';
+  static const NOTIFICATION = '/notification';
 }

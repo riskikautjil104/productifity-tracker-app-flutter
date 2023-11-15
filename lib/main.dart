@@ -7,7 +7,11 @@ import 'app/routes/app_pages.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(statusBarColor: Color(0xFFffffff)));
+    const SystemUiOverlayStyle(
+      statusBarColor: Color(0xFFffffff),
+      statusBarIconBrightness: Brightness.dark,
+    ),
+  );
   runApp(
     GetMaterialApp(
       debugShowCheckedModeBanner: false,
@@ -21,4 +25,9 @@ void main() {
   );
 }
 
-// tes wahyu
+// info route
+// home crew
+// static const HOME = '/homeCrew';
+
+// home pm
+//   static const HomeViewPm = '/homeViewPm';
