@@ -1,7 +1,8 @@
-// import 'dart:convert';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 // import 'package:productivity_tracker_app/core/utils/EndPoints.dart';
 // import 'package:http/http.dart' as http;
@@ -36,7 +37,7 @@ class RegisterController extends GetxController {
   }
 
   String? selectedTipePengguna;
-  // String? roleItem;
+  String? errTipePengguna;
   String? selectedRoleItem;
 
   var isPm = false.obs; // Observable<bool> to track the obscureText state
@@ -45,58 +46,13 @@ class RegisterController extends GetxController {
     isPm.toggle(); // Toggles the value of isObscured (true to false or vice versa)
   }
 
-  // Future<void> register() async {
-  //   try {
-  //     var myHeader = {
-  //       'Accept': 'application/json',
-  //     };
-
-  //     var url = Uri.parse(EndPoints.register);
-  //     Map body = {
-  //       "username": username.text,
-  //       "email": email.text,
-  //       "userType": selectedTipePengguna,
-  //       "crewRole": selectedRoleItem,
-  //       "password": password.text,
-  //       "confirmPassword": confirmPassword.text
-  //     };
-  //     http.Response response =
-  //         await http.post(url, body: jsonEncode(body), headers: myHeader);
-  //     if (response.statusCode == 200) {
-  //       final json = jsonDecode(response.body);
-  //       print(json);
-  //     } else {
-  //       var s = response.body;
-  //       print(s);
-  //     }
-  //   } catch (e) {}
-  // }
-
   void register() {
-    // var data = {
-    //   "username": username.text,
-    //   "email": email.text,
-    //   "userType": selectedTipePengguna,
-    //   "crewRole": selectedRoleItem,
-    //   "password": 'Tes12345sd',
-    //   "confirmPassword": 'Tes12345sd'
-    // };
-    if (selectedTipePengguna == null ||
-        username.text == '' ||
-        email.text == '' ||
-        password.text == '' ||
-        confirmPassword.text == '') {
-      Get.snackbar('Error', 'Fieald Tidak Boleh Kosong',
-          backgroundColor: Colors.red.shade500,
-          colorText: Colors.white,
-          duration: Duration(seconds: 2));
-    }
     if (selectedTipePengguna == 'Project Manager') {
       selectedRoleItem = null;
     } else {
       selectedRoleItem = selectedRoleItem;
     }
-
+    EasyLoading.show(status: 'loading...');
     var data = {
       "username": username.text,
       "email": email.text,
@@ -107,18 +63,39 @@ class RegisterController extends GetxController {
     };
     // print(data);
 
-    RegisterProvider().getRegister(data).then(
-      (value) {
-        print(value.body);
-        if (value.statusCode == 200) {
-          Get.snackbar(
-              'Berhasil', 'Akun Anda Berhasil di Daftarkan Silahkan Login',
-              backgroundColor: Colors.green.shade500,
-              colorText: Colors.white,
-              duration: Duration(seconds: 4));
-          Get.toNamed('/login');
+    RegisterProvider().getRegister(data).then((value) {
+      final data = jsonDecode(value.body) as Map<String, dynamic>;
+      print(value.body);
+      if (value.statusCode == 200) {
+        Get.snackbar(
+            'Berhasil', 'Akun Anda Berhasil di Daftarkan Silahkan Login',
+            backgroundColor: Colors.green.shade500,
+            colorText: Colors.white,
+            duration: Duration(seconds: 4));
+        Get.toNamed('/login');
+        EasyLoading.dismiss();
+      } else {
+        String emailError = data['errors']['Email'][0];
+        String userNameError = data['errors']['Username'][0];
+        String passwordError = data['errors']['Password'][0];
+        String confirmPasswordError = data['errors']['ConfirmPassword'][0];
+
+        if (selectedTipePengguna == null) {
+          errTipePengguna = 'Tipe Pengguna Tidak Boleh Kosong';
         }
-      },
-    );
+        Get.snackbar(
+          'Error',
+          "${userNameError}\n${emailError}\n${passwordError}\n${confirmPasswordError}\n${errTipePengguna}",
+          backgroundColor: Colors.red.shade500,
+          colorText: Colors.white,
+          duration: Duration(seconds: 7),
+        );
+        print(emailError);
+        print(userNameError);
+        print(passwordError);
+        print(confirmPasswordError);
+        EasyLoading.dismiss();
+      }
+    });
   }
 }

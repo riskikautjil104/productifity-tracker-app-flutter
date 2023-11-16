@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:sp_util/sp_util.dart';
 
 import '../controllers/forgot_controller.dart';
 import 'package:pinput/pinput.dart';
@@ -147,7 +148,9 @@ class _OtpFieldState extends State<OtpField> {
               defaultPinTheme: defaultPinTheme,
               separatorBuilder: (index) => const SizedBox(width: 8),
               validator: (value) {
-                return value == '212121' ? null : 'Pin is incorrect';
+                return value == SpUtil.getString('ForgotToken')
+                    ? null
+                    : 'Pin is incorrect';
               },
               // onClipboardFound: (value) {
               //   debugPrint('onClipboardFound: $value');
@@ -197,7 +200,7 @@ class _OtpFieldState extends State<OtpField> {
               // Get.toNamed('/login');
               // print(formKey.currentState!.validate());
               if (formKey.currentState!.validate()) {
-                Get.toNamed('/changepasswordsuccess');
+                Get.toNamed('/createnewpassword');
               }
             },
             child: Container(

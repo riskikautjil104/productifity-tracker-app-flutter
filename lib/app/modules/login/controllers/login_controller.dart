@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:productivity_tracker_app/app/data/login_provider.dart';
 import 'package:sp_util/sp_util.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 // import 'package:productivity_tracker_app/app/data/login_provider.dart';
 
 class LoginController extends GetxController {
@@ -27,6 +28,7 @@ class LoginController extends GetxController {
         colorText: Colors.white,
       );
     } else {
+      EasyLoading.show(status: 'loading...');
       var data = {
         'email': email,
         'password': password,
@@ -57,6 +59,7 @@ class LoginController extends GetxController {
           } else if (userType == 'Project Manager') {
             Get.offAllNamed('/homeViewPm');
           }
+
           // print(username);
         } else {
           Get.snackbar(
@@ -66,6 +69,7 @@ class LoginController extends GetxController {
             colorText: Colors.white,
           );
         }
+        EasyLoading.dismiss();
       });
     }
   }

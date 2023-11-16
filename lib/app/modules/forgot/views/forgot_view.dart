@@ -63,6 +63,7 @@ class ForgotView extends GetView<ForgotController> {
                 ),
                 SizedBox(height: 57),
                 TextFormField(
+                  controller: controller.emailController,
                   decoration: InputDecoration(
                     hintText: 'Enter Your email',
                     border: OutlineInputBorder(
@@ -76,7 +77,7 @@ class ForgotView extends GetView<ForgotController> {
                 SizedBox(height: 51),
                 InkWell(
                   onTap: () {
-                    Get.toNamed('otpVerification');
+                    controller.sendEmail();
                   },
                   child: Container(
                     width: 330,

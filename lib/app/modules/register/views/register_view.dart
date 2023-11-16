@@ -252,6 +252,12 @@ class RegisterView extends GetView<RegisterController> {
               }),
               SizedBox(height: 10),
               TextFormField(
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your password';
+                  }
+                  return null;
+                },
                 obscureText: true,
                 controller: controller.confirmPassword,
                 decoration: InputDecoration(

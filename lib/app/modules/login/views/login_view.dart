@@ -14,7 +14,7 @@ class LoginView extends GetView<LoginController> {
         appBar: AppBar(
           leading: IconButton(
             onPressed: () {
-              Get.back();
+              Get.toNamed('/welcome');
             },
             icon: Container(
               width: 41,
