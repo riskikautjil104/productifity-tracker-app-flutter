@@ -131,7 +131,8 @@ class RegisterView extends GetView<RegisterController> {
                 },
                 onChanged: (value) {
                   //Do something when selected item is changed.
-                  controllerRegister.isPmTrue();
+                  controllerRegister.isPm.value = value.toString();
+                  // print(controllerRegister.isPm.value);
 
                   controllerRegister.selectedTipePengguna = value.toString();
                 },
@@ -159,7 +160,7 @@ class RegisterView extends GetView<RegisterController> {
               ),
               SizedBox(height: 10),
               // if (isPm == false.obs)
-              Obx(() => !controllerRegister.isPm.value
+              Obx(() => controllerRegister.isPm.value == 'Crew'
                   ? DropdownButtonFormField2<String>(
                       isExpanded: true,
                       decoration: InputDecoration(

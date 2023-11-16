@@ -18,6 +18,7 @@ class WelcomeView extends GetView<WelcomeController> {
             InkWell(
               onTap: () {
                 Get.toNamed('/login');
+                // ;
               },
               child: Container(
                 width: 330,

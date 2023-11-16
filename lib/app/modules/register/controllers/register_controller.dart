@@ -40,11 +40,7 @@ class RegisterController extends GetxController {
   String? errTipePengguna;
   String? selectedRoleItem;
 
-  var isPm = false.obs; // Observable<bool> to track the obscureText state
-
-  void isPmTrue() {
-    isPm.toggle(); // Toggles the value of isObscured (true to false or vice versa)
-  }
+  var isPm = 'Crew'.obs; // Observable<bool> to track the obscureText state
 
   void register() {
     if (selectedTipePengguna == 'Project Manager') {
