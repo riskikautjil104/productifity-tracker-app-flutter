@@ -133,7 +133,7 @@ class ProfileView extends GetView<ProfileController> {
                         child: Text(
                           ("${SpUtil.getString('crewRole')}" == '')
                               ? "${SpUtil.getString('userType')}"
-                              : '',
+                              : "${SpUtil.getString('crewRole')}",
                           style: const TextStyle(
                             fontSize: 16,
                           ),
