@@ -66,6 +66,7 @@ class LoginView extends GetView<LoginController> {
                 ),
                 SizedBox(height: 57),
                 TextFormField(
+                  controller: controller.emailController,
                   decoration: InputDecoration(
                     hintText: 'Enter Your email',
                     border: OutlineInputBorder(
@@ -79,6 +80,7 @@ class LoginView extends GetView<LoginController> {
                 SizedBox(height: 15),
                 Obx(() {
                   return TextFormField(
+                    controller: controller.passwordController,
                     decoration: InputDecoration(
                       hintText: 'Enter Your Password',
                       border: OutlineInputBorder(
@@ -117,7 +119,8 @@ class LoginView extends GetView<LoginController> {
                 SizedBox(height: 70),
                 InkWell(
                   onTap: () {
-                    Get.offAllNamed('/homeCrew');
+                    controller.login();
+                    // Get.offAllNamed('/homeCrew');
                   },
                   child: Container(
                     width: 330,

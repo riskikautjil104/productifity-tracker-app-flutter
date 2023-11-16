@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:productivity_tracker_app/app/modules/profile/views/editProfileView.dart';
 import 'package:productivity_tracker_app/app/widgets/appBar.dart';
+import 'package:sp_util/sp_util.dart';
 
 import '../controllers/profile_controller.dart';
 
@@ -99,11 +100,25 @@ class ProfileView extends GetView<ProfileController> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Padding(
+                      Padding(
                         padding: const EdgeInsets.all(10),
                         child: Text(
-                          'Jhon Smith',
-                          style: TextStyle(
+                          "${SpUtil.getString('username')}",
+                          style: const TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        color: const Color(0xFFDADADA),
+                        width: MediaQuery.of(context).size.width,
+                        height: 2,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Text(
+                          "${SpUtil.getString('email')}",
+                          style: const TextStyle(
                             fontSize: 16,
                           ),
                         ),
@@ -113,25 +128,13 @@ class ProfileView extends GetView<ProfileController> {
                         width: MediaQuery.of(context).size.width,
                         height: 2,
                       ),
-                      const Padding(
+                      Padding(
                         padding: const EdgeInsets.all(10),
                         child: Text(
-                          'JhonSmith@gmail.com',
-                          style: TextStyle(
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        color: Color(0xFFDADADA),
-                        width: MediaQuery.of(context).size.width,
-                        height: 2,
-                      ),
-                      const Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Text(
-                          'FrontEnd Developer',
-                          style: TextStyle(
+                          ("${SpUtil.getString('crewRole')}" == '')
+                              ? "${SpUtil.getString('userType')}"
+                              : '',
+                          style: const TextStyle(
                             fontSize: 16,
                           ),
                         ),

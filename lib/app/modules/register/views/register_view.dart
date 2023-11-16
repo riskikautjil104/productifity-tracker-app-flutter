@@ -72,6 +72,7 @@ class RegisterView extends GetView<RegisterController> {
 
               SizedBox(height: 57),
               TextFormField(
+                controller: controller.username,
                 decoration: InputDecoration(
                   hintText: 'Username',
                   border: OutlineInputBorder(
@@ -84,6 +85,7 @@ class RegisterView extends GetView<RegisterController> {
               ),
               SizedBox(height: 10),
               TextFormField(
+                controller: controller.email,
                 decoration: InputDecoration(
                   hintText: 'Email',
                   border: OutlineInputBorder(
@@ -130,9 +132,11 @@ class RegisterView extends GetView<RegisterController> {
                 onChanged: (value) {
                   //Do something when selected item is changed.
                   controllerRegister.isPmTrue();
+
+                  controllerRegister.selectedTipePengguna = value.toString();
                 },
                 onSaved: (value) {
-                  controllerRegister.selectedValue = value.toString();
+                  controllerRegister.selectedTipePengguna = value.toString();
                 },
                 buttonStyleData: const ButtonStyleData(
                   padding: EdgeInsets.only(right: 8),
@@ -191,9 +195,13 @@ class RegisterView extends GetView<RegisterController> {
                       },
                       onChanged: (value) {
                         //Do something when selected item is changed.
+                        controllerRegister.selectedTipePengguna == 'Crew'
+                            ? controllerRegister.selectedRoleItem =
+                                value.toString()
+                            : null;
                       },
                       onSaved: (value) {
-                        controllerRegister.selectedValue = value.toString();
+                        controllerRegister.selectedRoleItem = value.toString();
                       },
                       buttonStyleData: const ButtonStyleData(
                         padding: EdgeInsets.only(right: 8),
@@ -216,19 +224,36 @@ class RegisterView extends GetView<RegisterController> {
                     )
                   : SizedBox(height: 0)),
               SizedBox(height: 10),
-              TextFormField(
-                decoration: InputDecoration(
-                  hintText: 'Password',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
+              Obx(() {
+                return TextFormField(
+                  controller: controller.password,
+                  decoration: InputDecoration(
+                    hintText: 'Password',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        controllerRegister.isObscured.value
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                        color: Colors.grey,
+                      ),
+                      onPressed: () {
+                        controllerRegister.toggleObscureText();
+                      },
+                    ),
                   ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-              ),
+                  obscureText: controllerRegister.isObscured.value,
+                );
+              }),
               SizedBox(height: 10),
               TextFormField(
+                obscureText: true,
+                controller: controller.confirmPassword,
                 decoration: InputDecoration(
                   hintText: 'Confirm Password',
                   border: OutlineInputBorder(
@@ -242,7 +267,7 @@ class RegisterView extends GetView<RegisterController> {
               SizedBox(height: 60),
               InkWell(
                 onTap: () {
-                  Get.toNamed('/login');
+                  controller.register();
                 },
                 child: Container(
                   width: 330,

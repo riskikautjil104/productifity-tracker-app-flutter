@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:sp_util/sp_util.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -29,7 +30,7 @@ class HomeViewCrew extends GetView<HomeController> {
       // navbar
       appBar: GradientAppBar(
         title: Text(
-          'Nama Anda',
+          SpUtil.getString('username').toString(),
           style: TextStyle(
             color: Colors.white,
           ),
@@ -46,6 +47,7 @@ class HomeViewCrew extends GetView<HomeController> {
           borderRadius: BorderRadius.circular(50),
           onTap: () {
             // Navigasi ke halaman detail profil
+            Get.toNamed('/profile');
           },
           child: Padding(
             padding: const EdgeInsets.all(14.0),
@@ -72,6 +74,16 @@ class HomeViewCrew extends GetView<HomeController> {
             },
             icon: Icon(
               Icons.notifications_none,
+              color: Colors.white,
+            ),
+          ),
+          IconButton(
+            onPressed: () {
+              SpUtil.clear();
+              Get.offAllNamed('/login');
+            },
+            icon: Icon(
+              Icons.logout,
               color: Colors.white,
             ),
           ),

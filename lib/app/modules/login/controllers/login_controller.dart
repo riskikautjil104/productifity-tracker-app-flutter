@@ -1,11 +1,75 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:productivity_tracker_app/app/data/login_provider.dart';
+import 'package:sp_util/sp_util.dart';
+// import 'package:productivity_tracker_app/app/data/login_provider.dart';
 
 class LoginController extends GetxController {
-  //TODO: Implement LoginControllerb
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   var isObscured = true.obs; // Observable<bool> to track the obscureText state
 
   void toggleObscureText() {
     isObscured
         .toggle(); // Toggles the value of isObscured (true to false or vice versa)
   }
+
+  void login() {
+    String email = emailController.text;
+    String password = passwordController.text;
+
+    if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+      Get.snackbar(
+        'Error',
+        "Email atau Password Tidak Boleh Kosong",
+        backgroundColor: Colors.red.shade500,
+        colorText: Colors.white,
+      );
+    } else {
+      var data = {
+        'email': email,
+        'password': password,
+      };
+
+      LoginProvider().auth(data).then((value) {
+        print(value.statusCode);
+        if (value.statusCode == 200) {
+          var responBody = value.body;
+
+          var data = responBody['data'];
+          var username = data['username'];
+          var email = data['email'];
+          var userType = data['userType'];
+          var jwtToken = data['jwtToken'];
+          if (data['crewRole'] != null) {
+            var crewRole = data['crewRole'];
+            SpUtil.putString('crewRole', crewRole);
+          }
+          SpUtil.putString('username', username);
+          SpUtil.putString('email', email);
+          SpUtil.putString('jwtToken', jwtToken);
+          SpUtil.putString('userType', userType);
+          SpUtil.putBool('already_login', true);
+          print(data);
+          if (userType == 'Crew') {
+            Get.offAllNamed('/homeCrew');
+          } else if (userType == 'Project Manager') {
+            Get.offAllNamed('/homeViewPm');
+          }
+          // print(username);
+        } else {
+          Get.snackbar(
+            'Error',
+            "Email Atau Password Anda Salah",
+            backgroundColor: Colors.red.shade500,
+            colorText: Colors.white,
+          );
+        }
+      });
+    }
+  }
 }
+// wahyu@example.com crew
+// fikri@example.com pm
+// Tespassword123
