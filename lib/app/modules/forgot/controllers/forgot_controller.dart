@@ -15,8 +15,8 @@ class ForgotController extends GetxController {
 
     if (emailController.text.isEmpty) {
       Get.snackbar(
-        'Error',
-        "Harap Mengisi Email Anda",
+        'Failed',
+        "Please Enter Your Email",
         backgroundColor: Colors.red.shade500,
         colorText: Colors.white,
       );
@@ -42,8 +42,8 @@ class ForgotController extends GetxController {
         } else {
           EasyLoading.dismiss();
           Get.snackbar(
-            'Error',
-            'Masukan Email Yang Terdaftar',
+            'Failed',
+            'Enter your registered email',
             backgroundColor: Colors.red.shade500,
             colorText: Colors.white,
           );
@@ -52,12 +52,36 @@ class ForgotController extends GetxController {
     }
   }
 
+  void reSendCode() {
+    var emailResend = {'email': SpUtil.getString('email')};
+    ForgotProvider().forgot(emailResend);
+  }
+
   void resetPassword() {
     String password = newPassword.text;
     String confirmPassword = newConfirmPassword.text;
+    if (password.length < 8) {
+      Get.snackbar(
+        'Failed',
+        'Password Minimum 8 Characters',
+        backgroundColor: Colors.red.shade500,
+        colorText: Colors.white,
+      );
+    } else if (password != confirmPassword) {
+      Get.snackbar(
+        'Failed',
+        'Password Does Not Match with Confirm Password',
+        backgroundColor: Colors.red.shade500,
+        colorText: Colors.white,
+      );
+    }
     if (newPassword.text.isEmpty || newConfirmPassword.text.isEmpty) {
       Get.snackbar(
-          'Error', 'Password Atau Confirm Password Tidak Boleh Kosong');
+        'Failed',
+        'Password or Password Confirmation must be Entered.',
+        backgroundColor: Colors.red.shade500,
+        colorText: Colors.white,
+      );
     } else {
       var data = {
         'token': SpUtil.getString('ForgotToken'),
@@ -65,19 +89,24 @@ class ForgotController extends GetxController {
         'newPassword': password,
         'confirmPassword': confirmPassword,
       };
+
       print(data);
       ForgotProvider().createNewPassword(data).then((value) {
+        EasyLoading.show(status: 'loading...');
         if (value.statusCode == 200) {
+          SpUtil.clear();
+          newPassword.clear();
+          newConfirmPassword.clear();
           Get.offAllNamed('/changepasswordsuccess');
-        } else if (value.statusCode == 400) {
-          print(value.body);
-          // Get.snackbar('Error', '');
+          EasyLoading.dismiss();
         } else {
-          if (password != confirmPassword) {
-            Get.snackbar('Error', 'Sandi Tidak Cocok');
-          } else {
-            Get.snackbar('Error', 'Terjadi Kesalahan');
-          }
+          Get.snackbar(
+            'Failed',
+            'Something Wrong',
+            backgroundColor: Colors.red.shade500,
+            colorText: Colors.white,
+          );
+          EasyLoading.dismiss();
         }
       });
     }

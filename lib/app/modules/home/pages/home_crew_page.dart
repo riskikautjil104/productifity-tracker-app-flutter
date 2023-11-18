@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:productivity_tracker_app/app/modules/login/controllers/login_controller.dart';
 import 'package:sp_util/sp_util.dart';
 
 import '../controllers/home_controller.dart';
@@ -22,7 +23,7 @@ import '../widget/cart_nama_task.dart';
 // import '../../../widgets/button_navigatorBar.dart';
 
 class HomeViewCrew extends GetView<HomeController> {
-  const HomeViewCrew({Key? key}) : super(key: key);
+  final LoginController loginController = Get.put(LoginController());
   @override
   Widget build(BuildContext context) {
     final HomeController controller = Get.put(HomeController());
@@ -80,7 +81,8 @@ class HomeViewCrew extends GetView<HomeController> {
           IconButton(
             onPressed: () {
               SpUtil.clear();
-              Get.offAllNamed('/login');
+              loginController.logout();
+              // Get.offAllNamed('/login');
             },
             icon: Icon(
               Icons.logout,

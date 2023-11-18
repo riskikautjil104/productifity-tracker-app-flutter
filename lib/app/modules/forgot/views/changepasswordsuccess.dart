@@ -21,7 +21,7 @@ class ChangePasswordSuccessView extends GetView<ForgotController> {
                   child: Column(children: [
                     Image.asset('assets/icons/Successmark.png'),
                     SizedBox(height: 30),
-                    Text(
+                   const Text(
                       'Password Changed!',
                       style: TextStyle(
                         fontSize: 30,
@@ -29,7 +29,7 @@ class ChangePasswordSuccessView extends GetView<ForgotController> {
                       ),
                     ),
                     SizedBox(height: 30),
-                    Text(
+                   const Text(
                       'Your password has been changed successfully..',
                       style: TextStyle(
                         fontSize: 16,

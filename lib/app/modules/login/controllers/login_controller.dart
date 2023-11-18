@@ -16,14 +16,19 @@ class LoginController extends GetxController {
         .toggle(); // Toggles the value of isObscured (true to false or vice versa)
   }
 
+  void logout() {
+    LoginProvider().logout(SpUtil.getString('jwtToken'));
+    Get.offAllNamed('/login');
+  }
+
   void login() {
     String email = emailController.text;
     String password = passwordController.text;
 
     if (emailController.text.isEmpty || passwordController.text.isEmpty) {
       Get.snackbar(
-        'Error',
-        "Email atau Password Tidak Boleh Kosong",
+        'Failed',
+        "Email or Password cannot be empty",
         backgroundColor: Colors.red.shade500,
         colorText: Colors.white,
       );
@@ -41,6 +46,7 @@ class LoginController extends GetxController {
 
           var data = responBody['data'];
           var username = data['username'];
+          var id = data['id'];
           var email = data['email'];
           var userType = data['userType'];
           var jwtToken = data['jwtToken'];
@@ -49,6 +55,7 @@ class LoginController extends GetxController {
             SpUtil.putString('crewRole', crewRole);
           }
           SpUtil.putString('username', username);
+          SpUtil.putString('userId', id);
           SpUtil.putString('email', email);
           SpUtil.putString('jwtToken', jwtToken);
           SpUtil.putString('userType', userType);
@@ -61,10 +68,17 @@ class LoginController extends GetxController {
           }
 
           // print(username);
+        } else if (value.statusCode == 400) {
+          Get.snackbar(
+            'Failed',
+            "Incorrect Email or Password",
+            backgroundColor: Colors.red.shade500,
+            colorText: Colors.white,
+          );
         } else {
           Get.snackbar(
-            'Error',
-            "Email Atau Password Anda Salah",
+            'Failed',
+            "Something Wrong, Please Login Again",
             backgroundColor: Colors.red.shade500,
             colorText: Colors.white,
           );

@@ -75,7 +75,9 @@ class OtpVerificationView extends GetView<ForgotController> {
                   children: [
                     Text('Didn’t received code?'),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        controller.reSendCode();
+                      },
                       child: Text('Resend'),
                     ),
                   ],

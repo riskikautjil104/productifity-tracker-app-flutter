@@ -109,7 +109,7 @@ class RegisterView extends GetView<RegisterController> {
                   // Add more decoration..
                 ),
                 hint: const Text(
-                  'Tipe Pengguna',
+                  'User Type',
                   style: TextStyle(fontSize: 14),
                 ),
                 items: controllerRegister.tipePengguna
@@ -125,7 +125,7 @@ class RegisterView extends GetView<RegisterController> {
                     .toList(),
                 validator: (value) {
                   if (value == null) {
-                    return 'Pilih Tipe Pengguna.';
+                    return 'Select User Type.';
                   }
                   return null;
                 },
@@ -190,7 +190,7 @@ class RegisterView extends GetView<RegisterController> {
                           .toList(),
                       validator: (value) {
                         if (value == null) {
-                          return 'Pilih Role.';
+                          return 'Select Role.';
                         }
                         return null;
                       },

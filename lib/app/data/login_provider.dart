@@ -8,4 +8,13 @@ class LoginProvider extends GetConnect {
     };
     return await post(EndPoints.login, data, headers: myHeader);
   }
+
+  Future<Response> logout(var token) async {
+    var myHeader = {
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token'
+    };
+    var body = {'': ''};
+    return await post(EndPoints.logout, body, headers: myHeader);
+  }
 }
