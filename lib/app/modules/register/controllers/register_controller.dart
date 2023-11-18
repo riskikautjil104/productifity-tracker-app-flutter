@@ -79,6 +79,7 @@ class RegisterController extends GetxController {
         if (selectedTipePengguna == null) {
           errTipePengguna = 'Tipe Pengguna Tidak Boleh Kosong';
         }
+
         Get.snackbar(
           'Error',
           "${userNameError}\n${emailError}\n${passwordError}\n${confirmPasswordError}\n${errTipePengguna}",
@@ -86,6 +87,7 @@ class RegisterController extends GetxController {
           colorText: Colors.white,
           duration: Duration(seconds: 7),
         );
+        
         print(emailError);
         print(userNameError);
         print(passwordError);

@@ -10,29 +10,6 @@ class ChangePasswordSuccessView extends GetView<ForgotController> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          leading: IconButton(
-            onPressed: () {
-              Get.back();
-            },
-            icon: Container(
-              width: 41,
-              height: 41,
-              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 7),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                // color: Colors.amber,
-                border: Border.all(color: Color(0xFFE8ECF4)),
-              ),
-              child: const Icon(
-                Icons.arrow_back_ios,
-                color: Colors.black,
-              ),
-            ),
-          ),
-          backgroundColor: Colors.white,
-          elevation: 0,
-        ),
         body: Padding(
           padding: const EdgeInsets.all(23),
           child: SingleChildScrollView(

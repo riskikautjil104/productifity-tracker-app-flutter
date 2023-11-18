@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import '../controllers/forgot_controller.dart';
 
 class CreateNewPasswordView extends GetView<ForgotController> {
-  const CreateNewPasswordView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,6 +62,7 @@ class CreateNewPasswordView extends GetView<ForgotController> {
                 ),
                 SizedBox(height: 57),
                 TextFormField(
+                  controller: controller.newPassword,
                   decoration: InputDecoration(
                     hintText: 'New Password',
                     border: OutlineInputBorder(
@@ -75,6 +75,7 @@ class CreateNewPasswordView extends GetView<ForgotController> {
                 ),
                 SizedBox(height: 15),
                 TextFormField(
+                  controller: controller.newConfirmPassword,
                   decoration: InputDecoration(
                     hintText: 'Confirm Password',
                     border: OutlineInputBorder(
@@ -88,7 +89,7 @@ class CreateNewPasswordView extends GetView<ForgotController> {
                 SizedBox(height: 51),
                 InkWell(
                   onTap: () {
-                    Get.toNamed('otpVerification');
+                    controller.resetPassword();
                   },
                   child: Container(
                     width: 330,

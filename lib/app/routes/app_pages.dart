@@ -68,7 +68,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.CREATENEWPASSWORD,
-      page: () => const CreateNewPasswordView(),
+      page: () => CreateNewPasswordView(),
       binding: ForgotBinding(),
     ),
     GetPage(
