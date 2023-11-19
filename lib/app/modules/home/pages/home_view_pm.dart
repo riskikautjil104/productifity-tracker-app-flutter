@@ -112,6 +112,7 @@ class HomePm extends GetView<HomeController> {
                         'Nama Project sangat panjang sekali sumbah deh gak ada lawan',
                     date: '12 Nov 2023',
                     progress: '90%',
+                    percent: 0.9,
                   ),
                   SizedBox(
                     height: 9,
@@ -120,6 +121,7 @@ class HomePm extends GetView<HomeController> {
                     namaProject: 'Nama Project',
                     date: '12 Nov 2023',
                     progress: '90%',
+                    percent: 0.9,
                   ),
                   SizedBox(
                     height: 9,
@@ -128,6 +130,7 @@ class HomePm extends GetView<HomeController> {
                     namaProject: 'Nama Project',
                     date: '12 Nov 2023',
                     progress: '90%',
+                    percent: 0.9,
                   ),
                   SizedBox(
                     height: 9,
@@ -136,6 +139,7 @@ class HomePm extends GetView<HomeController> {
                     namaProject: 'Nama Project',
                     date: '12 Nov 2023',
                     progress: '90%',
+                    percent: 0.9,
                   ),
                   SizedBox(
                     height: 9,
@@ -144,6 +148,7 @@ class HomePm extends GetView<HomeController> {
                     namaProject: 'Nama Project',
                     date: '12 Nov 2023',
                     progress: '90%',
+                    percent: 0.9,
                   ),
                   SizedBox(
                     height: 9,
@@ -152,6 +157,7 @@ class HomePm extends GetView<HomeController> {
                     namaProject: 'Nama Project',
                     date: '12 Nov 2023',
                     progress: '90%',
+                    percent: 0.9,
                   ),
                   SizedBox(
                     height: 9,
@@ -160,6 +166,7 @@ class HomePm extends GetView<HomeController> {
                     namaProject: 'Nama Project',
                     date: '12 Nov 2023',
                     progress: '90%',
+                    percent: 0.9,
                   ),
                   SizedBox(
                     height: 9,

@@ -8,6 +8,7 @@ import '../../../widgets/navbarAppBar.dart';
 
 class NotificationView extends GetView<NotificationController> {
   const NotificationView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     List<Map<String, String>> items = [
@@ -37,9 +38,12 @@ class NotificationView extends GetView<NotificationController> {
         'image': 'assets/profile_image.png',
         'timeSent': '10 minutes ago',
       },
+      // Tambahkan item lain jika diperlukan
     ];
+
     return Scaffold(
       appBar: GradientAppBar(
+        centerText: true,
         title: Text(
           'Notification',
           style: TextStyle(
@@ -73,23 +77,49 @@ class NotificationView extends GetView<NotificationController> {
               Get.defaultDialog(
                 title: 'Konfirmasi',
                 middleText: 'Apakah Anda yakin untuk menghapus item ini?',
-                textConfirm: 'Accept',
-                textCancel: 'Cancel',
-                confirmTextColor:
-                    Colors.green, // Warna teks untuk tombol konfirmasi
-                cancelTextColor: Colors.red,
-                onConfirm: () {
-                  // Tambahkan logika penghapusan item di sini
-                  items.removeAt(index);
-                  Get.back(); // Menutup dialog setelah mengonfirmasi penghapusan
-                },
-                onCancel: () {
-                  Get.back(); // Menutup dialog ketika membatalkan penghapusan
-                },
+                confirm: ElevatedButton(
+                  onPressed: () {
+                    Get.back();
+                    Get.snackbar('Berhasil',
+                        'Anda Anda Berhasil Menghapus data tersebut',
+                        backgroundColor: Colors.green.shade500,
+                        colorText: Colors.white,
+                        duration: Duration(seconds: 4));
+
+                    // Get.toNamed('/home-crew');
+                  },
+                  child: Text("Accept"),
+                ),
+                cancel: ElevatedButton(
+                  onPressed: () {
+                    Get.back();
+                    Get.snackbar(
+                      'Membatalkan',
+                      'Anda Berhasil Membatalkan',
+                      backgroundColor: Colors.green.shade500,
+                      colorText: Colors.white,
+                      duration: Duration(seconds: 4),
+                    );
+                  },
+                  child: Text("Cancel"),
+                ),
+                // textConfirm: 'Accept',
+                // textCancel: 'Cancel',
+                // confirmTextColor:
+                //     Colors.green, // Warna teks untuk tombol konfirmasi
+                // cancelTextColor: Colors.red,
+                // onConfirm: () {
+                //   // Tambahkan logika penghapusan item di sini
+                //   items.removeAt(index);
+                //   Get.back(); // Menutup dialog setelah mengonfirmasi penghapusan
+                // },
+                // onCancel: () {
+                //   Get.back(); // Menutup dialog ketika membatalkan penghapusan
+                // },
               );
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Item dihapus')),
-              );
+              // ScaffoldMessenger.of(context).showSnackBar(
+              //   SnackBar(content: Text('Item dihapus')),
+              // );
             },
             background: Padding(
               padding: const EdgeInsets.all(10.0),

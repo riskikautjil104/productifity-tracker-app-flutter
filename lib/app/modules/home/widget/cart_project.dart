@@ -7,20 +7,24 @@ class CartProject extends StatelessWidget {
   final String progress;
   final IconData? leadingIcon;
   final IconData? trailingIcon;
+  final VoidCallback? onTap; 
+  final double? percent;
 
   const CartProject({
     required this.namaProject,
     required this.date,
     required this.progress,
     this.leadingIcon, // Ikon untuk bagian kiri
-    this.trailingIcon, // Ikon untuk bagian kanan
+    this.trailingIcon,
+    this.onTap,
+    this.percent, // Ikon untuk bagian kanan
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: onTap,
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(14.0),
@@ -45,7 +49,7 @@ class CartProject extends StatelessWidget {
                         ),
                       Expanded(
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Flexible(
                               child: Text(
@@ -89,18 +93,16 @@ class CartProject extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Container(
                         width: MediaQuery.of(context).size.width -
-                            (MediaQuery.of(context).size.width - 210.10),
+                            (MediaQuery.of(context).size.width - 208.42),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10.0),
                           color: Color(0XFFB1B1B1),
                         ),
                         child: Row(
-                          // crossAxisAlignment: ,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Expanded(
                               child: ClipRRect(
@@ -110,7 +112,7 @@ class CartProject extends StatelessWidget {
                                   animation: true,
                                   lineHeight: 7.0,
                                   animationDuration: 3000,
-                                  percent: 0.9,
+                                  percent: percent!,
                                   progressColor: Color(0XFF197492),
                                   backgroundColor: Colors.transparent,
                                 ),
