@@ -13,24 +13,8 @@ class HomeController extends GetxController {
   void changePage(int index) {
     currentIndex.value = index;
   }
+
   void changePagePm(int index) {
     currentIndex.value = index;
   }
-
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }

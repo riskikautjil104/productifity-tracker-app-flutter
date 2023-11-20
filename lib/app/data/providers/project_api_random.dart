@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import '../modules/home/models/project.dart';
+import '../../modules/home/models/project.dart';
 
 class ApiServices extends GetConnect {
   Future<List<Project>> fetchData() async {

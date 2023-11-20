@@ -8,6 +8,14 @@ class EndPoints {
   static const forgotPassword = _baseUrl + 'auth/forgot-password';
   static const validateOtp = _baseUrl + 'auth/validate-otp';
   static const resetPassword = _baseUrl + 'auth/reset-password';
+  static const getAllProject = _baseUrl + 'auth/project/crew/get-all-project';
+  // String project;
+  // String project = _baseUrl + 'auth/project/${name}/get-all-project';
+
+  // static getAllProjectEndpoint(var name) {
+  //   String project = _baseUrl + 'auth/project/${name}/get-all-project';
+  //   return project;
+  // }
 }
 
 // http.get(Uri.parse(Apis.loginApi));

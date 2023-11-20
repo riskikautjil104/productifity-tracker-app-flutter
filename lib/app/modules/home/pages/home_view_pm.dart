@@ -14,7 +14,7 @@ import '../../../widgets/navbarAppBar.dart';
 import '../widget/cart_project.dart';
 
 class HomePm extends GetView<HomeController> {
-  const HomePm({super.key});
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,16 +65,6 @@ class HomePm extends GetView<HomeController> {
             },
             icon: Icon(
               Icons.notifications_none,
-              color: Colors.white,
-            ),
-          ),
-          IconButton(
-            onPressed: () {
-              SpUtil.clear();
-              Get.offAllNamed('/login');
-            },
-            icon: Icon(
-              Icons.logout,
               color: Colors.white,
             ),
           ),

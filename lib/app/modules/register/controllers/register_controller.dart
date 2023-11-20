@@ -4,7 +4,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 // import 'package:productivity_tracker_app/core/utils/EndPoints.dart';
 // import 'package:http/http.dart' as http;
-import 'package:productivity_tracker_app/app/data/register_provider.dart';
+import 'package:productivity_tracker_app/app/data/providers/register_provider.dart';
 
 class RegisterController extends GetxController {
   TextEditingController username = TextEditingController();

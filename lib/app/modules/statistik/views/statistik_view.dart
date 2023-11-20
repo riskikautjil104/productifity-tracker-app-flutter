@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import '../controllers/statistik_controller.dart';
+// import '../controllers/statistik_controller.dart';
 
 import '../widget/statistik_circular.dart';
 

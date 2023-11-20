@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:productivity_tracker_app/app/data/forgot_provider.dart';
+import 'package:productivity_tracker_app/app/data/providers/forgot_provider.dart';
 import 'package:sp_util/sp_util.dart';
 
 class ForgotController extends GetxController {

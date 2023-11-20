@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:productivity_tracker_app/app/modules/login/controllers/login_controller.dart';
 import 'package:productivity_tracker_app/app/modules/profile/views/editProfileView.dart';
 import 'package:productivity_tracker_app/app/widgets/appBar.dart';
 import 'package:sp_util/sp_util.dart';
@@ -8,7 +9,8 @@ import 'package:sp_util/sp_util.dart';
 import '../controllers/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
-  const ProfileView({super.key});
+  ProfileView({super.key});
+  final LoginController loginController = Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {
@@ -38,14 +40,21 @@ class ProfileView extends GetView<ProfileController> {
                     ],
                   ),
                 ),
-                const PopupMenuItem<int>(
+                PopupMenuItem<int>(
                   value: 1,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Icon(
-                        Icons.logout,
-                        color: Colors.black,
+                      IconButton(
+                        onPressed: () {
+                          SpUtil.clear();
+                          loginController.logout();
+                          Get.offAllNamed('/login');
+                        },
+                        icon: Icon(
+                          Icons.logout,
+                          color: Colors.black,
+                        ),
                       ),
                       Text(
                         'Logout',
@@ -60,7 +69,9 @@ class ProfileView extends GetView<ProfileController> {
               if (value == 0) {
                 Get.to(const EditProfileView());
               } else if (value == 1) {
-                Get.snackbar('Logout', 'Untuk Sementara Belum Bisa Logout');
+                SpUtil.clear();
+                loginController.logout();
+                Get.offAllNamed('/login');
               }
             }),
           ],
@@ -103,7 +114,8 @@ class ProfileView extends GetView<ProfileController> {
                       Padding(
                         padding: const EdgeInsets.all(10),
                         child: Text(
-                          "${SpUtil.getString('username')}",
+                          "${SpUtil.getString('username')} ",
+                          // "${SpUtil.getString('username')} ",
                           style: const TextStyle(
                             fontSize: 16,
                           ),

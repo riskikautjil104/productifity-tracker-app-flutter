@@ -23,7 +23,7 @@ import '../widget/cart_nama_task.dart';
 
 // import '../../../widgets/button_navigatorBar.dart';
 
-import '../../../data/project_api_random.dart';
+import '../../../data/providers/project_api_random.dart';
 
 class HomeViewCrew extends GetView<HomeController> {
   final LoginController loginController = Get.put(LoginController());
@@ -80,17 +80,6 @@ class HomeViewCrew extends GetView<HomeController> {
             },
             icon: Icon(
               Icons.notifications_none,
-              color: Colors.white,
-            ),
-          ),
-          IconButton(
-            onPressed: () {
-              SpUtil.clear();
-              loginController.logout();
-              // Get.offAllNamed('/login');
-            },
-            icon: Icon(
-              Icons.logout,
               color: Colors.white,
             ),
           ),

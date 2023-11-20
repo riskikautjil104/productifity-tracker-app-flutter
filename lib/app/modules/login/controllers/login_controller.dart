@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:productivity_tracker_app/app/data/login_provider.dart';
+import 'package:productivity_tracker_app/app/data/providers/login_provider.dart';
 import 'package:sp_util/sp_util.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 // import 'package:productivity_tracker_app/app/data/login_provider.dart';
@@ -60,12 +60,13 @@ class LoginController extends GetxController {
           SpUtil.putString('jwtToken', jwtToken);
           SpUtil.putString('userType', userType);
           SpUtil.putBool('already_login', true);
-          print(data);
-          if (userType == 'Crew') {
-            Get.offAllNamed('/homeCrew');
-          } else if (userType == 'Project Manager') {
-            Get.offAllNamed('/homeViewPm');
-          }
+          print(SpUtil.getString('jwtToken'));
+          // if (userType == 'Crew') {
+          //   Get.offAllNamed('/homeCrew');
+          // } else if (userType == 'Project Manager') {
+          //   Get.offAllNamed('/homeViewPm');
+          // }
+          Get.offAllNamed('/homeCrew');
 
           // print(username);
         } else if (value.statusCode == 400) {
