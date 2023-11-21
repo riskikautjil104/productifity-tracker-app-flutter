@@ -72,10 +72,17 @@ class CrewProjectView extends GetView<CrewProjectController> {
                         ),
                 ),
               ),
-              Text(
-                'Completed',
-                style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
-              ),
+              (controller.project.value.data.length == 0)
+                  ? Text(
+                      'Tidak Ada Project',
+                      style:
+                          TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
+                    )
+                  : Text(
+                      'Completed',
+                      style:
+                          TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
+                    ),
               Container(
                 margin: EdgeInsets.only(top: 11),
                 width: 1000,

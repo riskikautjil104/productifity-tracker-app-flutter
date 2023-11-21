@@ -18,10 +18,17 @@ class CrewProjectController extends GetxController {
   }
 
   void fetchDataFromApi() async {
-    print(isLoading);
+    // print(isLoading);
+    // print(project.value);
     try {
       final data = await _apiService.fetchData();
       project.value = data;
+      // if (data.data.length == 0) {
+      //   print('data kosong');
+      // } else {
+      //   print('data ada');
+      // }
+      // print(data.code);
       isLoading = false.obs;
     } catch (e) {
       // Handle error
@@ -29,6 +36,6 @@ class CrewProjectController extends GetxController {
     } finally {
       isLoading = false.obs;
     }
-    print(isLoading);
+    // print(isLoading);
   }
 }
