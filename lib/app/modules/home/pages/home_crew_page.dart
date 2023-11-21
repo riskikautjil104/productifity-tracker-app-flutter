@@ -288,7 +288,8 @@ class HomeViewCrew extends GetView<HomeController> {
                         );
                       },
                     );
-                  }).toList(),
+                  }, 
+                  ).toList(),
                 ),
               ],
             );

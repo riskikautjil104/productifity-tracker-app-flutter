@@ -44,34 +44,36 @@ class StatistikView extends GetView<StatistikController> {
               child: Container(
                 height: 50,
                 child: Obx(() {
-                  return ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: [
-                      TombolStatistik(
-                        textButton: 'Yesterday',
-                        isSelected:
-                            StatistikController.to.selectedButtonType.value ==
-                                'Yesterday',
-                      ),
-                      TombolStatistik(
-                        textButton: 'Last Week',
-                        isSelected:
-                            StatistikController.to.selectedButtonType.value ==
-                                'Last Week',
-                      ),
-                      TombolStatistik(
-                        textButton: 'Last Month',
-                        isSelected:
-                            StatistikController.to.selectedButtonType.value ==
-                                'Last Month',
-                      ),
-                      TombolStatistik(
-                        textButton: 'Quarter',
-                        isSelected:
-                            StatistikController.to.selectedButtonType.value ==
-                                'Quarter',
-                      ),
-                    ],
+                  return Center(
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        TombolStatistik(
+                          textButton: 'Yesterday',
+                          isSelected:
+                              StatistikController.to.selectedButtonType.value ==
+                                  'Yesterday',
+                        ),
+                        TombolStatistik(
+                          textButton: 'Last Week',
+                          isSelected:
+                              StatistikController.to.selectedButtonType.value ==
+                                  'Last Week',
+                        ),
+                        TombolStatistik(
+                          textButton: 'Last Month',
+                          isSelected:
+                              StatistikController.to.selectedButtonType.value ==
+                                  'Last Month',
+                        ),
+                        TombolStatistik(
+                          textButton: 'Quarter',
+                          isSelected:
+                              StatistikController.to.selectedButtonType.value ==
+                                  'Quarter',
+                        ),
+                      ],
+                    ),
                   );
                 }),
               ),
