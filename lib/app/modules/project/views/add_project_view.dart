@@ -83,6 +83,7 @@ class AddProjectView extends GetView<ProjectController> {
                   TextFormField(
                     minLines: 6,
                     maxLines: 100,
+                    controller: controller.description,
                     // onTapOutside: (event) => ,
                     keyboardType: TextInputType.multiline,
                     decoration: InputDecoration(
@@ -102,7 +103,7 @@ class AddProjectView extends GetView<ProjectController> {
                   TextFormField(
                     readOnly: true,
                     controller: TextEditingController(
-                        text: controller.selectedEndDate.value),
+                        text: controller.selectedStartDate.value),
                     decoration: InputDecoration(
                       labelText: 'Start Date',
                       labelStyle: TextStyle(color: Colors.grey),
@@ -123,7 +124,7 @@ class AddProjectView extends GetView<ProjectController> {
                     () => TextFormField(
                       readOnly: true,
                       controller: TextEditingController(
-                          text: controller.selectedStartDate.value),
+                          text: controller.selectedEndDate.value),
                       decoration: InputDecoration(
                         labelText: 'End Date',
                         labelStyle: TextStyle(color: Colors.grey),

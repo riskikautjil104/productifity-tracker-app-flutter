@@ -5,14 +5,13 @@ import 'package:get/get.dart';
 import 'package:productivity_tracker_app/app/data/models/projects_model.dart';
 import 'package:productivity_tracker_app/app/modules/home/widget/cart_project.dart';
 import 'package:productivity_tracker_app/app/modules/project/views/add_project_view.dart';
-import 'package:productivity_tracker_app/app/modules/project/views/detail_project.dart';
 import 'package:productivity_tracker_app/app/widgets/navbarAppBar.dart';
 
 import '../controllers/project_controller.dart';
 
 // ignore: must_be_immutable
 class PMProjectView extends GetView<ProjectController> {
-  final ProjectController controller = Get.put(ProjectController());
+  final ProjectController pmProjectController = Get.put(ProjectController());
   // ProjectController controller = Get.find<ProjectController>();
 
   PMProjectView({super.key});
@@ -48,7 +47,7 @@ class PMProjectView extends GetView<ProjectController> {
                 child: Column(
                   children: [
                     GetBuilder<ProjectController>(
-                      builder: (controller) {
+                      builder: (_) {
                         return ListView.builder(
                           itemCount: controller.project.value.data.length,
                           shrinkWrap: true, // Menggunakan shrinkWrap
@@ -60,8 +59,8 @@ class PMProjectView extends GetView<ProjectController> {
                               children: [
                                 (datum.status == false)
                                     ? CartProject(
-                                        onTap: () =>
-                                            Get.to(DetailProjectView()),
+                                        onTap: () => controller
+                                            .fetchDetailProjectData(datum.id),
                                         namaProject: datum.name.toString(),
                                         date: datum.endDate
                                             .toString()
@@ -94,7 +93,7 @@ class PMProjectView extends GetView<ProjectController> {
                           ),
                     SizedBox(height: 11),
                     GetBuilder<ProjectController>(
-                      builder: (controller) {
+                      builder: (_) {
                         return ListView.builder(
                           itemCount: controller.project.value.data.length,
                           shrinkWrap: true, // Menggunakan shrinkWrap
@@ -106,8 +105,8 @@ class PMProjectView extends GetView<ProjectController> {
                               children: [
                                 (datum.status == true)
                                     ? CartProject(
-                                        onTap: () =>
-                                            Get.to(DetailProjectView()),
+                                        onTap: () => controller
+                                            .fetchDetailProjectData(datum.id),
                                         namaProject: datum.name.toString(),
                                         date: datum.endDate
                                             .toString()
