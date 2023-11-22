@@ -44,7 +44,9 @@ class AddProjectView extends GetView<ProjectController> {
             ),
             actions: [
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  controller.post();
+                },
                 child: Text(
                   'Save',
                   style: TextStyle(
@@ -65,6 +67,7 @@ class AddProjectView extends GetView<ProjectController> {
                 physics: BouncingScrollPhysics(),
                 child: Column(children: [
                   TextFormField(
+                    controller: controller.projectName,
                     decoration: InputDecoration(
                       labelText: 'Project Name',
                       labelStyle: TextStyle(color: Colors.grey),
@@ -139,6 +142,7 @@ class AddProjectView extends GetView<ProjectController> {
                   ),
                   SizedBox(height: 28),
                   TextFormField(
+                    controller: controller.emails,
                     minLines: 6,
                     maxLines: 100,
                     // onTapOutside: (event) => ,

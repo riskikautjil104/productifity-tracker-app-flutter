@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:productivity_tracker_app/app/data/models/projects_model.dart';
 import 'package:productivity_tracker_app/app/modules/home/widget/cart_project.dart';
 import 'package:productivity_tracker_app/app/modules/project/views/add_project_view.dart';
+import 'package:productivity_tracker_app/app/modules/project/views/detail_project.dart';
 import 'package:productivity_tracker_app/app/widgets/navbarAppBar.dart';
 
 import '../controllers/project_controller.dart';
@@ -59,6 +60,8 @@ class PMProjectView extends GetView<ProjectController> {
                               children: [
                                 (datum.status == false)
                                     ? CartProject(
+                                        onTap: () =>
+                                            Get.to(DetailProjectView()),
                                         namaProject: datum.name.toString(),
                                         date: datum.endDate
                                             .toString()
@@ -103,6 +106,8 @@ class PMProjectView extends GetView<ProjectController> {
                               children: [
                                 (datum.status == true)
                                     ? CartProject(
+                                        onTap: () =>
+                                            Get.to(DetailProjectView()),
                                         namaProject: datum.name.toString(),
                                         date: datum.endDate
                                             .toString()

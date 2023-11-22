@@ -14,7 +14,7 @@ class LoginProvider extends GetConnect {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token'
     };
-    var body = {'': ''};
-    return await post(EndPoints.logout, body, headers: myHeader);
+    // var body = {'': ''};
+    return await post(EndPoints.logout, '', headers: myHeader);
   }
 }
