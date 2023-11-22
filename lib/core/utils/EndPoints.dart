@@ -9,6 +9,7 @@ class EndPoints {
   static const validateOtp = _baseUrl + 'auth/validate-otp';
   static const resetPassword = _baseUrl + 'auth/reset-password';
   static const getAllProject = _baseUrl + 'auth/project/crew/get-all-project';
+  static const createProject = _baseUrl + 'https://protracker.azurewebsites.net/api/project/:name/create-project';
   // String project;
   // String project = _baseUrl + 'auth/project/${name}/get-all-project';
 

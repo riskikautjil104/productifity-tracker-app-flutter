@@ -1,7 +1,8 @@
 import 'package:get/get.dart';
+import 'package:productivity_tracker_app/app/modules/project/views/detail_project.dart';
 
 import '../modules/project/bindings/project_binding.dart';
-import '../modules/project/views/crew_project_view.dart';
+import '../modules/project/views/crew_projects_view.dart';
 import '../modules/task/bindings/task_binding.dart';
 import '../modules/task/views/crew_task_view.dart';
 import '../modules/forgot/bindings/forgot_binding.dart';
@@ -104,6 +105,11 @@ class AppPages {
       name: _Paths.CREW_TASK,
       page: () => const CrewTaskView(),
       binding: CrewTaskBinding(),
+    ),
+    GetPage(
+      name: _Paths.DETAIL_PROJECT,
+      page: () => DetailProjectView(),
+      binding: CrewProjectBinding(),
     ),
   ];
 }

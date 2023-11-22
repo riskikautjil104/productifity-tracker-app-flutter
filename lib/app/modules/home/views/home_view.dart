@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:productivity_tracker_app/app/modules/project/controllers/project_controller.dart';
-import 'package:productivity_tracker_app/app/modules/project/views/crew_project_view.dart';
-import 'package:productivity_tracker_app/app/modules/project/views/pm_project_view.dart';
+import 'package:productivity_tracker_app/app/modules/project/views/crew_projects_view.dart';
+import 'package:productivity_tracker_app/app/modules/project/views/pm_projects_view.dart';
 import 'package:productivity_tracker_app/app/modules/home/pages/home_view_pm.dart';
 import 'package:productivity_tracker_app/app/modules/statistik/views/statistik_pm.dart';
 
@@ -20,8 +20,7 @@ import 'package:sp_util/sp_util.dart';
 
 class HomeView extends GetView<HomeController> {
   // const HomeView({Key? key}) : super(key: key);
-  final CrewProjectController crewProjectController =
-      Get.put(CrewProjectController());
+  final ProjectController crewProjectController = Get.put(ProjectController());
   @override
   Widget build(BuildContext context) {
     final HomeController homeCrewController = Get.put(HomeController());

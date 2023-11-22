@@ -5,8 +5,8 @@ import '../controllers/project_controller.dart';
 class CrewProjectBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<CrewProjectController>(
-      () => CrewProjectController(),
+    Get.lazyPut<ProjectController>(
+      () => ProjectController(),
     );
   }
 }

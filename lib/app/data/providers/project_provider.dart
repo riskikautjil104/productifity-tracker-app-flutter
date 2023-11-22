@@ -17,7 +17,19 @@ class ProjectProvider extends GetConnect {
     if (response.status.hasError) {
       throw Exception('Error saat mengambil data');
     }
-
     return Project.fromJson(response.body);
+  }
+
+  Future<Response> createProject(var data) async {
+    var token = SpUtil.getString('jwtToken');
+    var name = SpUtil.getString('username');
+    var myHeader = {
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+    return await post(
+        'https://protracker.azurewebsites.net/api/project/$name/create-project',
+        data,
+        headers: myHeader);
   }
 }

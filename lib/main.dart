@@ -27,12 +27,8 @@ void main() async {
       initialRoute: SpUtil.getBool('already_login', defValue: false)! == true
           ? Routes.HOME
           : AppPages.INITIAL,
-      // initialRoute: SpUtil.getBool('already_login', defValue: false)!
-      //     ? SpUtil.getString('userType') == 'Crew'
-      //         ? Routes.HOME
-      //         : Routes.HOME_PM
-      //     : AppPages.INITIAL,
-      // initialRoute: AppPages.INITIAL,
+
+      // initialRoute: Routes.DETAIL_PROJECT,
       getPages: AppPages.routes,
     ),
   );
