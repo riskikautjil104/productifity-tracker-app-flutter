@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:sp_util/sp_util.dart';
 
 import '../../../data/providers/project_api_random.dart';
@@ -12,8 +13,11 @@ import '../controllers/home_controller.dart';
 
 import '../../../widgets/navbarAppBar.dart';
 
-import '../models/project.dart';
+import '../models/project1.dart';
+
 import '../widget/cart_project.dart';
+
+import '../../../modules/project/controllers/project_controller.dart';
 
 class HomePm extends GetView<HomeController> {
   final ApiServices apiService = ApiServices();
@@ -76,10 +80,10 @@ class HomePm extends GetView<HomeController> {
 
       body: RefreshIndicator(
         onRefresh: () async {
-          await apiService.fetchData();
+          // await apiService.fetchData();
         },
-        child: FutureBuilder<List<Project>>(
-          future: apiService.fetchData(),
+        child: FutureBuilder<List<Project1>?>(
+          future: apiService.fetchData1(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
@@ -95,7 +99,7 @@ class HomePm extends GetView<HomeController> {
                 child: Text('Tidak ada data'),
               );
             } else {
-              List<Project> projects = snapshot.data!;
+              List<Project1> projects = snapshot.data!;
 
               return SingleChildScrollView(
                 child: Column(
@@ -124,14 +128,18 @@ class HomePm extends GetView<HomeController> {
                         physics: ClampingScrollPhysics(),
                         itemCount: projects.length,
                         itemBuilder: (context, index) {
-                          Project project = projects[index];
+                          Project1 project = projects[index];
                           return Padding(
                             padding: const EdgeInsets.symmetric(vertical: 9),
                             child: CartProject(
-                              namaProject: project.namaProject,
-                              date: project.date.toString(),
-                              progress: project.percend.toString() + "%",
-                              percent: project.percend / 100,
+                              onTap: () =>
+                                  controller.fetchDetailProjectData(project.id),
+                              namaProject: project.name, // Ganti properti
+                              date: DateFormat('yyyy-MM-dd').format(project
+                                  .endDate), // Konversi DateTime ke String
+                              progress:
+                                  '${project.progress}%', // Ganti properti
+                              percent: project.progress / 100, // Ganti properti
                             ),
                           );
                         },
@@ -144,103 +152,6 @@ class HomePm extends GetView<HomeController> {
           },
         ),
       ),
-
-      // SingleChildScrollView(
-      //   child: Column(
-      //     crossAxisAlignment: CrossAxisAlignment.start,
-      //     children: [
-      //       Padding(
-      //         padding: const EdgeInsets.symmetric(
-      //           horizontal: 15,
-      //           vertical: 27,
-      //         ),
-      //         child: Text(
-      //           "List Project",
-      //           style: TextStyle(
-      //             fontSize: 20,
-      //             fontWeight: FontWeight.bold,
-      //           ),
-      //           textAlign: TextAlign.left,
-      //         ),
-      //       ),
-      //       Container(
-      //         width: MediaQuery.of(context).size.width,
-      //         margin: EdgeInsets.symmetric(horizontal: 5.0),
-      //         height: 540,
-      //         child: ListView(
-      //           shrinkWrap: true,
-      //           physics: ClampingScrollPhysics(),
-      //           children: [
-      //             CartProject(
-      //               namaProject:
-      //                   'Nama Project sangat panjang sekali sumbah deh gak ada lawan',
-      //               date: '12 Nov 2023',
-      //               progress: '90%',
-      //               percent: 0.9,
-      //             ),
-      //             SizedBox(
-      //               height: 9,
-      //             ),
-      //             CartProject(
-      //               namaProject: 'Nama Project',
-      //               date: '12 Nov 2023',
-      //               progress: '90%',
-      //               percent: 0.9,
-      //             ),
-      //             SizedBox(
-      //               height: 9,
-      //             ),
-      //             CartProject(
-      //               namaProject: 'Nama Project',
-      //               date: '12 Nov 2023',
-      //               progress: '90%',
-      //               percent: 0.9,
-      //             ),
-      //             SizedBox(
-      //               height: 9,
-      //             ),
-      //             CartProject(
-      //               namaProject: 'Nama Project',
-      //               date: '12 Nov 2023',
-      //               progress: '90%',
-      //               percent: 0.9,
-      //             ),
-      //             SizedBox(
-      //               height: 9,
-      //             ),
-      //             CartProject(
-      //               namaProject: 'Nama Project',
-      //               date: '12 Nov 2023',
-      //               progress: '90%',
-      //               percent: 0.9,
-      //             ),
-      //             SizedBox(
-      //               height: 9,
-      //             ),
-      //             CartProject(
-      //               namaProject: 'Nama Project',
-      //               date: '12 Nov 2023',
-      //               progress: '90%',
-      //               percent: 0.9,
-      //             ),
-      //             SizedBox(
-      //               height: 9,
-      //             ),
-      //             CartProject(
-      //               namaProject: 'Nama Project',
-      //               date: '12 Nov 2023',
-      //               progress: '90%',
-      //               percent: 0.9,
-      //             ),
-      //             SizedBox(
-      //               height: 9,
-      //             ),
-      //           ],
-      //         ),
-      //       ),
-      //     ],
-      //   ),
-      // ),
     );
   }
 }

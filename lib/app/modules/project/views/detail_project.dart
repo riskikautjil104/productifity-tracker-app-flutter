@@ -262,12 +262,6 @@ class DetailProjectView extends GetView<ProjectController> {
                                         date: '07 Nov 2023',
                                         progress: 'progress',
                                       ),
-                                      CardTask(
-                                        namaProject: 'Nama Task',
-                                        toDos: 'toDos',
-                                        date: '07 Nov 2023',
-                                        progress: 'progress',
-                                      ),
                                     ],
                                   ),
                                 ),
