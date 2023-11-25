@@ -235,7 +235,6 @@ class DetailProjectView extends GetView<ProjectController> {
                           switch (controller.tabIndex.value) {
                             case 0:
                               return Container(
-                                // color: Colors.green,
                                 child: Center(
                                   child: Column(
                                     children: [
@@ -274,6 +273,12 @@ class DetailProjectView extends GetView<ProjectController> {
                                         ),
                                       ),
                                       SizedBox(height: 11),
+                                      CardTask(
+                                        namaProject: 'Nama Task',
+                                        toDos: 'toDos',
+                                        date: '07 Nov 2023',
+                                        progress: 'progress',
+                                      ),
                                       CardTask(
                                         namaProject: 'Nama Task',
                                         toDos: 'toDos',
