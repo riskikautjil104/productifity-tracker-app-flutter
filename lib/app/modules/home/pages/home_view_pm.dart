@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:sp_util/sp_util.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../../../data/providers/project_api_random.dart';
 import '../controllers/home_controller.dart';
@@ -17,7 +18,7 @@ import '../models/project1.dart';
 
 import '../widget/cart_project.dart';
 
-import '../../../modules/project/controllers/project_controller.dart';
+// import '../../../modules/project/controllers/project_controller.dart';
 
 class HomePm extends GetView<HomeController> {
   final ApiServices apiService = ApiServices();
@@ -78,14 +79,41 @@ class HomePm extends GetView<HomeController> {
         ],
       ),
 
-      body: RefreshIndicator(
+      body: SmartRefresher(
+        controller: controller.refreshController,
+        enablePullDown: true,
+        header: ClassicHeader(
+          refreshingText: 'Memuat...',
+          completeText: 'Selesai',
+          failedText: 'Gagal',
+          idleText: 'Tarik ke bawah untuk refresh',
+        ),
+
+        // onRefresh: () async {
+        //   await Future.delayed(Duration(milliseconds: 1000));
+        //   await ConnectionState.waiting;
+        //   await controller.loadData();
+
+        //   // await apiService.fetchData1();
+        // },
         onRefresh: () async {
-          // await apiService.fetchData();
+          controller.isRefreshing.value = true;
+          await Future.delayed(Duration(milliseconds: 1000));
+          await controller.loadData();
+          controller.isRefreshing.value = false;
         },
         child: FutureBuilder<List<Project1>?>(
-          future: apiService.fetchData1(),
+          future: controller.loadData(),
+          // future:
+          // apiService.fetchData1(),
           builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
+            if (controller.isRefreshing.value) {
+              return Center(
+                child: CircularProgressIndicator(
+                  color: Color(0XFF0F9EEA),
+                ),
+              );
+            } else if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
                   child: CircularProgressIndicator(
                 color: Color(0XFF0F9EEA),
@@ -139,7 +167,8 @@ class HomePm extends GetView<HomeController> {
                                   .endDate), // Konversi DateTime ke String
                               progress:
                                   '${project.progress}%', // Ganti properti
-                              percent: project.progress / 100, // Ganti properti
+                              percent: project.progress.toDouble() /
+                                  100, // Ganti properti
                             ),
                           );
                         },

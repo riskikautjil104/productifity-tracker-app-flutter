@@ -9,6 +9,8 @@ class CartProject extends StatelessWidget {
   final IconData? trailingIcon;
   final VoidCallback? onTap; 
   final double? percent;
+  final VoidCallback? leadingIconOnPressed;
+  final VoidCallback? tarilingIconOnPressed;
 
   const CartProject({
     required this.namaProject,
@@ -17,7 +19,9 @@ class CartProject extends StatelessWidget {
     this.leadingIcon, // Ikon untuk bagian kiri
     this.trailingIcon,
     this.onTap,
-    this.percent, // Ikon untuk bagian kanan
+    this.percent, 
+    this.leadingIconOnPressed,// Ikon untuk bagian kanan
+    this.tarilingIconOnPressed,// Ikon untuk bagian kanan
     Key? key,
   }) : super(key: key);
 
@@ -44,7 +48,7 @@ class CartProject extends StatelessWidget {
                     children: [
                       if (leadingIcon != null)
                         IconButton(
-                          onPressed: () {},
+                          onPressed: leadingIconOnPressed ?? onTap,
                           icon: Icon(leadingIcon),
                         ),
                       Expanded(
@@ -83,7 +87,7 @@ class CartProject extends StatelessWidget {
                       ),
                       if (trailingIcon != null) // Tampilkan ikon jika ada
                         IconButton(
-                          onPressed: () {},
+                          onPressed: tarilingIconOnPressed ?? onTap,
                           icon: Icon(trailingIcon),
                         ),
                     ],

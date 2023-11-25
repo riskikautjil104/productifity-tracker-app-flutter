@@ -2,16 +2,20 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:productivity_tracker_app/app/modules/project/views/detail_project.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sp_util/sp_util.dart';
 
 import '../../../data/models/detail_project.dart';
+import '../../../data/providers/project_api_random.dart';
 import '../../../data/providers/project_provider.dart';
 
 import '../../../data/models/projects_model.dart';
+import '../models/project1.dart';
 
 class HomeController extends GetxController {
   final ProjectProvider _apiService = ProjectProvider();
   final project = Project(code: 0, data: []).obs;
+  RxBool isRefreshing = false.obs; 
   var currentIndex = 0.obs;
   final count = 0.obs;
   RxBool isLoading = true.obs;
@@ -51,6 +55,7 @@ class HomeController extends GetxController {
   void changePagePm(int index) {
     currentIndex.value = index;
   }
+
   var detailProject = DetailProject(
       code: 0,
       data: DetailProjectData(
@@ -93,14 +98,26 @@ class HomeController extends GetxController {
         EasyLoading.dismiss();
       }
     });
-    // Method ini seharusnya mengambil data dari API (misalnya dengan http.get) dan mengatur nilai project
-    // Di sini kita hanya membuat contoh data untuk simulasi
   }
 
   @override
   void onInit() {
     super.onInit();
     fetchDataFromApi();
+
     // update();
+  }
+
+  RefreshController refreshController =
+      RefreshController(initialRefresh: false);
+  final ApiServices apiService = ApiServices();
+  final RxList<Project1> projects = <Project1>[].obs;
+
+// Metode untuk memuat data
+  Future<List<Project1>> loadData() async {
+    List<Project1> data = await apiService.fetchData1();
+    projects.assignAll(data);
+    refreshController.refreshCompleted();
+    return data;
   }
 }

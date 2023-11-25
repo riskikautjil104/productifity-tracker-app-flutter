@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:productivity_tracker_app/app/modules/login/controllers/login_controller.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sp_util/sp_util.dart';
 
 import '../controllers/home_controller.dart';
@@ -16,7 +18,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 
 import '../../../widgets/navbarAppBar.dart';
 
-import '../models/project.dart';
+// import '../models/project.dart';
 import '../widget/cart_project.dart';
 
 import '../widget/cart_nama_task.dart';
@@ -25,9 +27,14 @@ import '../widget/cart_nama_task.dart';
 
 import '../../../data/providers/project_api_random.dart';
 
+import '../models/project1.dart';
+
+import 'package:lottie/lottie.dart';
+
 class HomeViewCrew extends GetView<HomeController> {
   final LoginController loginController = Get.put(LoginController());
   final ApiServices apiService = ApiServices();
+  final CarouselController _carouselController = CarouselController();
   @override
   Widget build(BuildContext context) {
     final HomeController controller = Get.put(HomeController());
@@ -85,216 +92,305 @@ class HomeViewCrew extends GetView<HomeController> {
           ),
         ],
       ),
-      body: FutureBuilder<List<Project>>(
-        future: apiService.fetchData(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-                child: CircularProgressIndicator(
-              color: Color(0XFF0F9EEA),
-            ));
-          } else if (snapshot.hasError) {
-            return Center(
-              child: Text('Error1: ${snapshot.error}'),
-            );
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(
-              child: Text('Tidak ada data'),
-            );
-          } else {
-            List<Project> projects = snapshot.data!;
+      body: SmartRefresher(
+        controller: controller.refreshController,
+        enablePullDown: true,
+        header: ClassicHeader(
+          refreshingText: 'Memuat...',
+          completeText: 'Selesai',
+          failedText: 'Gagal',
+          idleText: 'Tarik ke bawah untuk refresh',
+        ),
+        onRefresh: () async {
+          await controller.loadData();
+          // await apiService.fetchData1();
+        },
+        child: FutureBuilder<List<Project1>?>(
+          future: controller.loadData(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                  child: CircularProgressIndicator(
+                color: Color(0XFF0F9EEA),
+              ));
+            } else if (snapshot.hasError) {
+              return Center(
+                child: Text('Error1: ${snapshot.error}'),
+              );
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return Center(
+                child: Text('Tidak ada data'),
+              );
+            } else {
+              List<Project1> projects = snapshot.data!;
 
-            return Column(
-              children: [
-                // Bagian atas
-                Container(
-                  width: 375,
-                  height: 185,
-                  child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CIrcularStatistik(
-                          radius: 45.0,
-                          lineWidth: 13.0,
-                          animation: true,
-                          animationDuration: 5000,
-                          percent: 0.7,
-                          centerText: "70%",
-                          centerTextColor: Color(0XFF197492),
-                          centerTextFontWeight: FontWeight.bold,
-                          centerTextFontSize: 20.0,
-                          footerText: "Productivity",
-                          footerTextFontSize: 15.0,
-                          progressColor: Color(0XFF197492),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Container(
-                          height: 113,
-                          width: 1,
-                          color: Color(0XFFB1B1B1),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        CircularPercentIndicator(
-                          radius: 45.0,
-                          lineWidth: 13.0,
-                          animation: true,
-                          animationDuration: 5000,
-                          percent: 0.3,
-                          center: Text(
-                            "30%",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20.0,
-                                color: Color(0XFF0F9EEA)),
+              return Column(
+                children: [
+                  // Bagian atas
+                  Container(
+                    width: 375,
+                    height: 185,
+                    child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CIrcularStatistik(
+                            radius: 45.0,
+                            lineWidth: 13.0,
+                            animation: true,
+                            animationDuration: 5000,
+                            percent: 0.7,
+                            centerText: "70%",
+                            centerTextColor: Color(0XFF197492),
+                            centerTextFontWeight: FontWeight.bold,
+                            centerTextFontSize: 20.0,
+                            footerText: "Productivity",
+                            footerTextFontSize: 15.0,
+                            progressColor: Color(0XFF197492),
                           ),
-                          footer: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: Text(
-                              "Contribution",
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Container(
+                            height: 113,
+                            width: 1,
+                            color: Color(0XFFB1B1B1),
+                          ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          CircularPercentIndicator(
+                            radius: 45.0,
+                            lineWidth: 13.0,
+                            animation: true,
+                            animationDuration: 5000,
+                            percent: 0.3,
+                            center: Text(
+                              "30%",
                               style: TextStyle(
-                                fontSize: 15.0,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20.0,
+                                  color: Color(0XFF0F9EEA)),
+                            ),
+                            footer: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                              child: Text(
+                                "Contribution",
+                                style: TextStyle(
+                                  fontSize: 15.0,
+                                ),
                               ),
                             ),
+                            circularStrokeCap: CircularStrokeCap.round,
+                            progressColor: Color(0XFF2699FB),
                           ),
-                          circularStrokeCap: CircularStrokeCap.round,
-                          progressColor: Color(0XFF2699FB),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                ),
 
-                // CarouselSlider
+                  // CarouselSlider
 
-                CarouselSlider(
-                  options: CarouselOptions(
-                    height: 400.0,
-                    viewportFraction: 1.0,
-                    autoPlay: true,
-                    autoPlayAnimationDuration: Duration(seconds: 5),
-                  ),
-                  items: projects.map((project) {
-                    return Builder(
-                      builder: (BuildContext context) {
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    DetailPage(project: project),
-                              ),
-                            );
-                          },
-                          child: Container(
-                            width: MediaQuery.of(context).size.width,
-                            margin: EdgeInsets.symmetric(horizontal: 5.0),
-                            child: ListView(
-                              shrinkWrap: true,
-                              physics: ClampingScrollPhysics(),
-                              children: [
-                                Column(
+                  CarouselSlider(
+                    carouselController: _carouselController,
+                    options: CarouselOptions(
+                      height: 400.0,
+                      viewportFraction: 1.0,
+                      autoPlay: projects.length > 1,
+                      autoPlayAnimationDuration: Duration(seconds: 5),
+                    ),
+                    items: projects.map(
+                      (project) {
+                        return Builder(
+                          builder: (BuildContext context) {
+                            return GestureDetector(
+                              onTap: () {
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //     builder: (context) =>
+                                //         DetailPage(project: project),
+                                //   ),
+                                // );
+                              },
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                margin: EdgeInsets.symmetric(horizontal: 5.0),
+                                child: ListView(
+                                  shrinkWrap: true,
+                                  physics: ClampingScrollPhysics(),
                                   children: [
-                                    CartProject(
-                                      date: project.date
-                                          .toRadixString(DateTime.daysPerWeek),
-                                      progress:
-                                          project.percend.toString() + '%',
-                                      namaProject: project.namaProject,
-                                      leadingIcon: Icons.arrow_back_ios,
-                                      trailingIcon: Icons.arrow_forward_ios,
-                                      percent: project.percend / 100,
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                DetailPage(project: project),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                    SizedBox(
-                                      height: 22,
-                                    ),
-                                    Text(
-                                      "New Task",
-                                      style: TextStyle(
-                                        color: Color(0XFF898989),
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    CartNamaTask(
-                                      namaProject: project.namaTask,
-                                      toDos: 'design halaman home',
-                                      date: '06 Nov 2023',
-                                      progress: '30%',
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      "Completed",
-                                      style: TextStyle(
-                                        color: Color(0XFF898989),
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 8,
-                                    ),
-                                    ListView(
-                                      shrinkWrap: true,
-                                      physics: ClampingScrollPhysics(),
+                                    Column(
                                       children: [
-                                        CartNamaTask(
-                                          namaProject: 'Nama Task 1',
-                                          toDos: 'To-Dos 1',
-                                          date: '05 Nov 2023',
-                                          progress: '100%',
+                                        CartProject(
+                                          namaProject:
+                                              project.name, // Ganti properti
+                                          date: DateFormat('yyyy-MM-dd').format(
+                                              project
+                                                  .endDate), // Konversi DateTime ke String
+                                          progress:
+                                              '${project.progress}%', // Ganti properti
+                                          percent: project.progress /
+                                              100, // Ganti properti
+                                          leadingIcon: Icons.arrow_back_ios,
+                                          leadingIconOnPressed: () {
+                                            _carouselController.previousPage();
+                                          },
+                                          trailingIcon: Icons.arrow_forward_ios,
+                                          tarilingIconOnPressed: () {
+                                            _carouselController.nextPage();
+                                          },
+                                          onTap: () {
+                                            // Navigator.push(
+                                            //   context,
+                                            //   MaterialPageRoute(
+                                            //     builder: (context) =>
+                                            //         DetailPage(project: project),
+                                            //   ),
+                                            // );
+                                          },
                                         ),
-                                        CartNamaTask(
-                                          namaProject: 'Nama Task 2',
-                                          toDos: 'To-Dos 1',
-                                          date: '05 Nov 2023',
-                                          progress: '100%',
+                                        SizedBox(
+                                          height: 22,
                                         ),
-                                        CartNamaTask(
-                                          namaProject: 'Nama Task 2',
-                                          toDos: 'To-Dos 1',
-                                          date: '05 Nov 2023',
-                                          progress: '100%',
+                                        // Text(
+                                        //   "New Task",
+                                        //   style: TextStyle(
+                                        //     color: Color(0XFF898989),
+                                        //     fontSize: 15,
+                                        //     fontWeight: FontWeight.bold,
+                                        //   ),
+                                        // ),
+                                        // CartNamaTask(
+                                        //   namaProject: "nama",
+                                        //   toDos: 'design halaman home',
+                                        //   date: '06 Nov 2023',
+                                        //   progress: '30%',
+                                        // ),
+                                        // SizedBox(
+                                        //   height: 10,
+                                        // ),
+                                        // Text(
+                                        //   "Completed",
+                                        //   style: TextStyle(
+                                        //     color: Color(0XFF898989),
+                                        //     fontSize: 15,
+                                        //     fontWeight: FontWeight.bold,
+                                        //   ),
+                                        // ),
+                                        // SizedBox(
+                                        //   height: 8,
+                                        // ),
+                                        // ListView(
+                                        //   shrinkWrap: true,
+                                        //   physics: ClampingScrollPhysics(),
+                                        //   children: [
+                                        //     // CartNamaTask(
+                                        //     //   namaProject: 'Nama Task 1',
+                                        //     //   toDos: 'To-Dos 1',
+                                        //     //   date: '05 Nov 2023',
+                                        //     //   progress: '100%',
+                                        //     // ),
+                                        //     // CartNamaTask(
+                                        //     //   namaProject: 'Nama Task 2',
+                                        //     //   toDos: 'To-Dos 1',
+                                        //     //   date: '05 Nov 2023',
+                                        //     //   progress: '100%',
+                                        //     // ),
+                                        //     // CartNamaTask(
+                                        //     //   namaProject: 'Nama Task 2',
+                                        //     //   toDos: 'To-Dos 1',
+                                        //     //   date: '05 Nov 2023',
+                                        //     //   progress: '100%',
+                                        //     // ),
+                                        //     // CartNamaTask(
+                                        //     //   namaProject: 'Nama Task 2',
+                                        //     //   toDos: 'To-Dos 1',
+                                        //     //   date: '05 Nov 2023',
+                                        //     //   progress: '100%',
+                                        //     // ),
+                                        //   ],
+                                        // ),
+                                        // Bagian "New Task"
+                                        Column(
+                                          children: [
+                                            for (var task in project.tasks)
+                                              if (task.isNew)
+                                                CartNamaTask(
+                                                  namaProject: project.name,
+                                                  toDos: task.name,
+                                                  date: 'Tanggal Tugas',
+                                                  progress: '30%',
+                                                ),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                          ],
                                         ),
-                                        CartNamaTask(
-                                          namaProject: 'Nama Task 2',
-                                          toDos: 'To-Dos 1',
-                                          date: '05 Nov 2023',
-                                          progress: '100%',
+                                        // Tampilkan "Kosong" jika tidak ada tugas baru
+                                        if (project.tasks
+                                            .every((task) => !task.isNew))
+                                          Container(
+                                            height: 50,
+                                            decoration: BoxDecoration(
+                                              color: const Color.fromARGB(
+                                                  255, 223, 223, 223),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            child: Center(
+                                              child: Text("New Task Kosong"),
+                                            ),
+                                          ),
+                                        SizedBox(
+                                          height: 8,
                                         ),
+                                        // Bagian "Completed"
+                                        ListView(
+                                          shrinkWrap: true,
+                                          physics: ClampingScrollPhysics(),
+                                          children: [
+                                            for (var task in project.tasks)
+                                              if (!task.isNew)
+                                                CartNamaTask(
+                                                  namaProject: project.name,
+                                                  toDos: task.name,
+                                                  date:
+                                                      'Tanggal Tugas', // Sesuaikan dengan tanggal tugas
+                                                  progress:
+                                                      '100%', // Sesuaikan dengan progress tugas
+                                                ),
+                                          ],
+                                        ),
+                                        // Tampilkan "Kosong" jika tidak ada tugas selesai
+                                        if (project.tasks
+                                            .every((task) => task.isNew))
+                                          Text("Task Completed Kosong"),
+                                        Container(
+                                          height: 100,
+                                          child: Lottie.asset(
+                                              'assets/lottie/Animation - 1700913385823.json'),
+                                        ),
+                                        // Animation - 1700913385823.json
                                       ],
                                     ),
                                   ],
                                 ),
-                              ],
-                            ),
-                          ),
+                              ),
+                            );
+                          },
                         );
                       },
-                    );
-                  }, 
-                  ).toList(),
-                ),
-              ],
-            );
-          }
-        },
+                    ).toList(),
+                  ),
+                ],
+              );
+            }
+          },
+        ),
       ),
     );
   }
@@ -361,31 +457,31 @@ class CIrcularStatistik extends StatelessWidget {
   }
 }
 
-class DetailPage extends StatelessWidget {
-  final Project project; // Mengganti tipe data menjadi Project
+// class DetailPage extends StatelessWidget {
+//   // final Project project; // Mengganti tipe data menjadi Project
 
-  // Mengganti parameter konstruktor dan menambahkan this.project
-  DetailPage({required this.project});
+//   // Mengganti parameter konstruktor dan menambahkan this.project
+//   DetailPage({required this.project});
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Detail Page'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Detail Page for Project:'),
-            SizedBox(height: 10),
-            Text('Project Name: ${project.namaProject}'),
-            Text('Project Date: ${project.date}'),
-            Text('Project Progress: ${project.percend}'),
-            // Tambahan informasi proyek lainnya
-          ],
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Detail Page'),
+//       ),
+//       body: Center(
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: [
+//             Text('Detail Page for Project:'),
+//             SizedBox(height: 10),
+//             Text('Project Name: ${project.namaProject}'),
+//             Text('Project Date: ${project.date}'),
+//             Text('Project Progress: ${project.percend}'),
+//             // Tambahan informasi proyek lainnya
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }

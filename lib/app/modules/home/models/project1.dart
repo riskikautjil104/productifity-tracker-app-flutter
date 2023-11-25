@@ -3,15 +3,20 @@ class Project1 {
   final String name;
   final DateTime endDate;
   final bool status;
-  final int progress;
+  final dynamic progress;
+  List<Task> tasks;
 
   Project1({
     required this.id,
     required this.name,
     required this.endDate,
     required this.status,
-    required this.progress,
-  });
+    dynamic progress,
+    required this.tasks,
+  }) : progress = progress;
+  bool hasNewTasks() {
+    return tasks.any((task) => task.isNew);
+  }
 
   factory Project1.fromJson(Map<String, dynamic> json) {
     return Project1(
@@ -20,6 +25,14 @@ class Project1 {
       endDate: DateTime.parse(json['endDate']),
       status: json['status'],
       progress: json['progress'],
+      tasks: [],
     );
   }
+}
+
+class Task {
+  String name;
+  bool isNew;
+
+  Task({required this.name, required this.isNew});
 }
