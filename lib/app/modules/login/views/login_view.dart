@@ -52,7 +52,7 @@ class LoginView extends GetView<LoginController> {
                     text: TextSpan(
                       children: <TextSpan>[
                         TextSpan(
-                          text: 'Welcom back to ',
+                          text: 'Welcome back to ',
                           style: GoogleFonts.playfairDisplay(
                             textStyle: TextStyle(
                                 fontSize: 30,

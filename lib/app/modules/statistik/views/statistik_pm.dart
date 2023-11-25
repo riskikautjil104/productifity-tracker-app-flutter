@@ -11,7 +11,7 @@ import '../controllers/statistik_controller.dart';
 
 import 'package:percent_indicator/percent_indicator.dart';
 
-import '../pages/detail_statistik_pm.dart';
+// import '../pages/detail_statistik_pm.dart';
 
 class Project {
   final String projectName;
