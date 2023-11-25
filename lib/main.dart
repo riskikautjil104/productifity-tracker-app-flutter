@@ -24,11 +24,11 @@ void main() async {
         primaryColor: Colors.white,
       ),
       title: "Application",
-      initialRoute: SpUtil.getBool('already_login', defValue: false)! == true
-          ? Routes.HOME
-          : AppPages.INITIAL,
+      // initialRoute: SpUtil.getBool('already_login', defValue: false)! == true
+      //     ? Routes.HOME
+      //     : AppPages.INITIAL,t
 
-      // initialRoute: Routes.DETAIL_PROJECT,
+      initialRoute: Routes.DETAIL_PROJECT,
       getPages: AppPages.routes,
     ),
   );

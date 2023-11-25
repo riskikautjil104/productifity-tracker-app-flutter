@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:productivity_tracker_app/app/modules/project/widgets/list_text.dart';
+import 'package:productivity_tracker_app/app/modules/project/widgets/card_target.dart';
+import 'package:productivity_tracker_app/app/modules/project/widgets/list_text_project.dart';
 import 'package:productivity_tracker_app/app/widgets/card_nama_task.dart';
 // import 'package:productivity_tracker_app/app/modules/home/widget/cart_project.dart';
 import 'package:productivity_tracker_app/app/widgets/navbarAppBar.dart';
@@ -188,7 +189,7 @@ class DetailProjectView extends GetView<ProjectController> {
                               onPressed: () => controller.tabIndex.value = 0,
                               child: Obx(() {
                                 return Text(
-                                  'Target',
+                                  'Tasks',
                                   style: TextStyle(
                                     color: (controller.tabIndex.value == 0)
                                         ? Colors.blue
@@ -197,18 +198,35 @@ class DetailProjectView extends GetView<ProjectController> {
                                 );
                               }),
                             ),
-                            TextButton(
-                              onPressed: () => controller.tabIndex.value = 1,
-                              child: Obx(() {
-                                return Text(
-                                  'Target',
-                                  style: TextStyle(
-                                      color: (controller.tabIndex.value == 1)
-                                          ? Colors.blue
-                                          : Colors.black),
-                                );
-                              }),
-                            ),
+                            (SpUtil.getString('userType') == 'Crew')
+                                ? TextButton(
+                                    onPressed: () =>
+                                        controller.tabIndex.value = 1,
+                                    child: Obx(() {
+                                      return Text(
+                                        'Target',
+                                        style: TextStyle(
+                                            color:
+                                                (controller.tabIndex.value == 1)
+                                                    ? Colors.blue
+                                                    : Colors.black),
+                                      );
+                                    }),
+                                  )
+                                : TextButton(
+                                    onPressed: () =>
+                                        controller.tabIndex.value = 2,
+                                    child: Obx(() {
+                                      return Text(
+                                        'Teams',
+                                        style: TextStyle(
+                                            color:
+                                                (controller.tabIndex.value == 2)
+                                                    ? Colors.blue
+                                                    : Colors.black),
+                                      );
+                                    }),
+                                  ),
                           ],
                         ),
                       ),
@@ -269,7 +287,34 @@ class DetailProjectView extends GetView<ProjectController> {
                             case 1:
                               return Container(
                                 child: Center(
-                                  child: Text('Target View'),
+                                  child: Column(
+                                    children: [
+                                      CardTarget(
+                                          namaProject: 'Week 1',
+                                          toDos: 'Design',
+                                          date: '15 Nov 2023 - 22 Nov 2023',
+                                          progress: '1/8'),
+                                      SizedBox(height: 10),
+                                      CardTarget(
+                                          namaProject: 'Week 1',
+                                          toDos: 'Design',
+                                          date: '15 Nov 2023 - 22 Nov 2023',
+                                          progress: '1/8'),
+                                      SizedBox(height: 10),
+                                      CardTarget(
+                                          namaProject: 'Week 1',
+                                          toDos: 'Design',
+                                          date: '15 Nov 2023 - 22 Nov 2023',
+                                          progress: '1/8'),
+                                      SizedBox(height: 10),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            case 2:
+                              return Container(
+                                child: Center(
+                                  child: Text('Team View'),
                                 ),
                               );
                             default:

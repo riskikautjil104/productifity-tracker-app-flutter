@@ -1,12 +1,11 @@
 import 'package:get/get.dart';
+import 'package:productivity_tracker_app/app/modules/task/controllers/task_controller.dart';
 
-import '../controllers/task_controller.dart';
-
-class CrewTaskBinding extends Bindings {
+class TaskBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<CrewTaskController>(
-      () => CrewTaskController(),
+    Get.lazyPut<TasksController>(
+      () => TasksController(),
     );
   }
 }
