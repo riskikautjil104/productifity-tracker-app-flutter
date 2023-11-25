@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 // import 'package:productivity_tracker_app/app/modules/home/widget/cart_project.dart';
 import 'package:productivity_tracker_app/app/data/models/projects_model.dart';
 import 'package:productivity_tracker_app/app/modules/home/widget/cart_project.dart';
@@ -80,10 +81,15 @@ class CrewProjectView extends GetView<ProjectController> {
                     ),
                     SizedBox(height: 11),
                     (controller.project.value.data.length <= 0)
-                        ? Text(
-                            'Tidak Ada Project',
-                            style: TextStyle(
-                                fontSize: 13, fontWeight: FontWeight.w700),
+                        ? Column(
+                            children: [
+                              Text(
+                                'Tidak Ada Project',
+                                style: TextStyle(
+                                    fontSize: 13, fontWeight: FontWeight.w700),
+                              ),
+                              Lottie.asset('assets/lottie/notfound.json'),
+                            ],
                           )
                         : Text(
                             'Completed',

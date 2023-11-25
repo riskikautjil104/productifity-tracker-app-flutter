@@ -370,9 +370,17 @@ class HomeViewCrew extends GetView<HomeController> {
                                             .every((task) => task.isNew))
                                           Text("Task Completed Kosong"),
                                         Container(
-                                          height: 100,
+                                          height: 70,
+                                          decoration: BoxDecoration(
+                                            color: const Color.fromARGB(
+                                                255, 223, 223, 223),
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          width:
+                                              MediaQuery.of(context).size.width,
                                           child: Lottie.asset(
-                                              'assets/lottie/Animation - 1700913385823.json'),
+                                              'assets/lottie/notfound.json'),
                                         ),
                                         // Animation - 1700913385823.json
                                       ],
