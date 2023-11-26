@@ -11,6 +11,8 @@ import '../controllers/statistik_controller.dart';
 
 import 'package:percent_indicator/percent_indicator.dart';
 
+import '../pages/detail_statistik_pm.dart';
+
 // import '../pages/detail_statistik_pm.dart';
 
 class Project {
@@ -139,16 +141,12 @@ class StatistikPm extends StatelessWidget {
                       child: InkWell(
                         splashColor: Color(0xFF197391),
                         onTap: () {
-                          // Get.to(
-                          //   () => DetailStatistikPm(
-                          //     project: project,
-                          //     projectName: project.projectName,
-                          //     dateRange: project.dateRange,
-                          //     completionPercentage:
-                          //         project.completionPercentage,
-                          //   ),
-                          // );
-                        },
+  Get.to(
+    () => DetailStatistikPm(
+      project: project,
+    ),
+  );
+},
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 10, vertical: 20),
@@ -240,7 +238,7 @@ class StatistikPm extends StatelessWidget {
                                           ),
                                           Text(
                                             DateFormat('yyyy-MM-dd')
-                                                .format(project.endDate),
+                                                .format(project.startDate),
                                             style: TextStyle(
                                               fontSize: 9,
                                             ),
@@ -264,255 +262,4 @@ class StatistikPm extends StatelessWidget {
     );
   }
 }
-            
-            // future:
-            // apiService.fetchData1(),
-           
-             
-                
-             
-         
-            
-//                 return ListView.builder(
-//                   shrinkWrap: true,
-//                           physics: ClampingScrollPhysics(),
-//                     itemCount: projects.length,
-//                     itemBuilder: (context, index) {
-//                       Project1 project = projects[index];
-//                       return Material(
-//                         elevation: 0.1,
-//                         child: InkWell(
-//                           splashColor: Color(0xFF197391),
-//                           onTap: () {
-//                             // Get.to(
-//                             //   () => DetailStatistikPm(
-//                             //     project: project,
-//                             //     projectName: project.projectName,
-//                             //     dateRange: project.dateRange,
-//                             //     completionPercentage:
-//                             //         project.completionPercentage,
-//                             //   ),
-//                             // );
-//                           },
-//                           child: Padding(
-//                             padding: const EdgeInsets.symmetric(
-//                                 horizontal: 10, vertical: 20),
-//                             child: Container(
-//                               child: Column(
-//                                 children: [
-//                                   Row(
-//                                     crossAxisAlignment: CrossAxisAlignment.center,
-//                                     children: [
-//                                       Stack(
-//                                         children: [
-//                                           Container(
-//                                             width: 60.0,
-//                                             height: 60.0,
-//                                             decoration: BoxDecoration(
-//                                               gradient: LinearGradient(
-//                                                 colors: [
-//                                                   Color(0XFF292D32),
-//                                                   Color(0XFF929197),
-//                                                 ],
-//                                                 begin: Alignment.topCenter,
-//                                                 end: Alignment.bottomCenter,
-//                                               ),
-//                                               shape: BoxShape.circle,
-//                                             ),
-//                                             child: CircularPercentIndicator(
-//                                               radius: 30.0,
-//                                               animation: true,
-//                                               animationDuration: 5200,
-//                                               lineWidth: 5.0,
-//                                               percent: 0.4,
-//                                               center: Container(
-//                                                 width: 50.0,
-//                                                 height: 50.0,
-//                                                 decoration: BoxDecoration(
-//                                                   borderRadius:
-//                                                       BorderRadius.circular(30.0),
-//                                                   color: Colors.white,
-//                                                 ),
-//                                                 child: Center(
-//                                                     child: Text(project
-//                                                         .progress)),
-//                                               ),
-//                                               circularStrokeCap:
-//                                                   CircularStrokeCap.butt,
-//                                               backgroundColor: Colors.transparent,
-//                                               progressColor: Color(0XFF2697F7),
-//                                             ),
-//                                           ),
-//                                         ],
-//                                       ),
-//                                       SizedBox(
-//                                         width: 8,
-//                                       ),
-//                                       Flexible(
-//                                         child: Text(
-//                                           project.name,
-//                                           style: TextStyle(
-//                                             fontWeight: FontWeight.bold,
-//                                           ),
-//                                           overflow: TextOverflow.ellipsis,
-//                                           softWrap: true,
-//                                           maxLines: 2,
-//                                         ),
-//                                       ),
-//                                       SizedBox(
-//                                         width: 20,
-//                                       ),
-//                                       Container(
-//                                         width: MediaQuery.of(context).size.width *
-//                                             0.4,
-//                                         child: Column(
-//                                           mainAxisAlignment:
-//                                               MainAxisAlignment.spaceEvenly,
-//                                           crossAxisAlignment:
-//                                               CrossAxisAlignment.end,
-//                                           children: [
-//                                             Text(
-//                                               project.progress,
-//                                               style: TextStyle(
-//                                                 fontSize: 9,
-//                                               ),
-//                                             ),
-//                                             Text(
-//                                               project.endDate.timeZoneName,
-//                                               style: TextStyle(
-//                                                 fontSize: 9,
-//                                               ),
-//                                             ),
-//                                           ],
-//                                         ),
-//                                       ),
-//                                     ],
-//                                   ),
-//                                 ],
-//                               ),
-//                             ),
-//                           ),
-//                         ),
-                      
-//     );
-//   }
-// }
-//             }
-//   }
-//             }
-        //  ListView.builder(
-        //   itemCount: projects.length,
-        //   itemBuilder: (context, index) {
-        //     Project project = projects[index];
-      
-        //     return Material(
-        //       elevation: 0.1,
-        //       child: InkWell(
-        //         splashColor: Color(0xFF197391),
-        //         onTap: () {
-        //           Get.to(
-        //             () => DetailStatistikPm(
-        //               project: project,
-        //               projectName: project.projectName,
-        //               dateRange: project.dateRange,
-        //               completionPercentage: project.completionPercentage,
-        //             ),
-        //           );
-        //         },
-        //         child: Padding(
-        //           padding:
-        //               const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-        //           child: Container(
-        //             child: Column(
-        //               children: [
-        // Row(
-        //   crossAxisAlignment: CrossAxisAlignment.center,
-        //   children: [
-        //     Stack(
-        //       children: [
-        //         Container(
-        //           width: 60.0,
-        //           height: 60.0,
-        //           decoration: BoxDecoration(
-        //             gradient: LinearGradient(
-        //               colors: [
-        //                 Color(0XFF292D32),
-        //                 Color(0XFF929197),
-        //               ],
-        //               begin: Alignment.topCenter,
-        //               end: Alignment.bottomCenter,
-        //             ),
-        //             shape: BoxShape.circle,
-        //           ),
-        //           child: CircularPercentIndicator(
-        //             radius: 30.0,
-        //             animation: true,
-        //             animationDuration: 5200,
-        //             lineWidth: 5.0,
-        //             percent: 0.4,
-        //             center: Container(
-        //               width: 50.0,
-        //               height: 50.0,
-        //               decoration: BoxDecoration(
-        //                 borderRadius: BorderRadius.circular(30.0),
-        //                 color: Colors.white,
-        //               ),
-        //               child: Center(
-        //                   child:
-        //                       Text(project.completionPercentage)),
-        //             ),
-        //             circularStrokeCap: CircularStrokeCap.butt,
-        //             backgroundColor: Colors.transparent,
-        //             progressColor: Color(0XFF2697F7),
-        //           ),
-        //         ),
-        //       ],
-        //     ),
-        //     SizedBox(
-        //       width: 8,
-        //     ),
-        //     Flexible(
-        //       child: Text(
-        //         project.projectName,
-        //         style: TextStyle(
-        //           fontWeight: FontWeight.bold,
-        //         ),
-        //         overflow: TextOverflow.ellipsis,
-        //         softWrap: true,
-        //         maxLines: 2,
-        //       ),
-        //     ),
-        //     SizedBox(
-        //       width: 20,
-        //     ),
-        //     Container(
-        //       width: MediaQuery.of(context).size.width * 0.4,
-        //       child: Column(
-        //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        //         crossAxisAlignment: CrossAxisAlignment.end,
-        //         children: [
-        //           Text(
-        //             project.dateRange,
-        //             style: TextStyle(
-        //               fontSize: 9,
-        //             ),
-        //           ),
-        //           Text(
-        //             project.dateAkhir,
-        //             style: TextStyle(
-        //               fontSize: 9,
-        //             ),
-        //           ),
-        //         ],
-        //       ),
-        //     ),
-        //   ],
-        // ),
-        //               ],
-        //             ),
-        //           ),
-        //         ),
-        //       ),
-        //     );
-        //   },
-        // ),
+  

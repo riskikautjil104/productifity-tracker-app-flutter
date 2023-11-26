@@ -28,7 +28,8 @@ void main() async {
       //     ? Routes.HOME
       //     : AppPages.INITIAL,t
 
-      initialRoute: Routes.DETAIL_PROJECT,
+      initialRoute: Routes.WELCOME,
+      // initialRoute: Routes.DETAIL_PROJECT,
       getPages: AppPages.routes,
     ),
   );

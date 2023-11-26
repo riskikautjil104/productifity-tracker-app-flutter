@@ -41,7 +41,7 @@ class ProjectProvider extends GetConnect {
           'Authorization': 'Bearer $token',
           'Accept': 'application/json',
         }); // Ganti 'URL_API' dengan URL API yang sesuai
-
+    print('uke punya ${response.body}');
     if (response.status.hasError) {
       throw Exception('Error saat mengambil data');
     }

@@ -2,51 +2,15 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import '../../home/models/project1.dart';
 import '../views/statistik_pm.dart';
 
-class Person {
-  final int id;
-  final String name;
-  final String role;
-  final int productify;
-  final int contribution;
-
-  Person({
-    required this.id,
-    required this.name,
-    required this.role,
-    required this.productify,
-    required this.contribution,
-  });
-}
-
 class DetailStatistikPm extends StatelessWidget {
-  final String projectName;
-  final String dateRange;
-  final String completionPercentage;
-
-  final List<Person> people = [
-    Person(
-        id: 1,
-        name: "Rizki Hi Ibrahim",
-        role: "Mobile Dev",
-        productify: 80,
-        contribution: 50),
-    Person(
-        id: 2,
-        name: "Wahyu Jihad Umaternate",
-        role: "Mobile Dev",
-        productify: 70,
-        contribution: 60),
-    // Add more data as needed
-  ];
+  final Project1 project;
 
   DetailStatistikPm({
-    required this.projectName,
-    required this.dateRange,
-    required this.completionPercentage,
+    required this.project,
     Key? key,
-    required Project project,
   }) : super(key: key);
 
   @override
@@ -94,7 +58,7 @@ class DetailStatistikPm extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Text(
-              projectName,
+              project.name,
               softWrap: true,
 
               style: TextStyle(
@@ -182,7 +146,7 @@ class DetailStatistikPm extends StatelessWidget {
                     ),
                   ],
                 ),
-                for (var person in people)
+                for (var person in project.tasks)
                   TableRow(
                     children: <Widget>[
                       // TableCell(
@@ -200,19 +164,19 @@ class DetailStatistikPm extends StatelessWidget {
                       TableCell(
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text(person.role),
+                          child: Text(person.name),
                         ),
                       ),
                       TableCell(
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text(person.productify.toString() + '%'),
+                          child: Text(person.name.toString() + '%'),
                         ),
                       ),
                       TableCell(
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text(person.contribution.toString() + '%'),
+                          child: Text(person.name.toString() + '%'),
                         ),
                       ),
                     ],

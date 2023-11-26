@@ -27,7 +27,6 @@ class StatistikController extends GetxController {
   //   } finally {
   //     isLoading(false);
   //   }
-  
 
   @override
   void onInit() {
@@ -36,14 +35,15 @@ class StatistikController extends GetxController {
     // fetchData();
   }
 
- RefreshController refreshController = RefreshController(initialRefresh: false);
+  RefreshController refreshController =
+      RefreshController(initialRefresh: false);
   final ApiServices apiService = ApiServices();
-final RxList<Project1> projects = <Project1>[].obs;
+  final RxList<Project1> projects = <Project1>[].obs;
 // Metode untuk memuat data
-Future<List<Project1>> loadData() async {
-  List<Project1> data = await apiService.fetchData1();
-  projects.assignAll(data);
-  refreshController.refreshCompleted();
-  return data;
-}
+  Future<List<Project1>> loadData() async {
+    List<Project1> data = await apiService.fetchData1();
+    projects.assignAll(data);
+    refreshController.refreshCompleted();
+    return data;
+  }
 }
