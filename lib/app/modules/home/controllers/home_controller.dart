@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:productivity_tracker_app/app/modules/project/views/detail_project.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:sp_util/sp_util.dart';
+// import 'package:sp_util/sp_util.dart';
 
 import '../../../data/models/detail_project.dart';
 import '../../../data/providers/project_api_random.dart';
@@ -15,7 +15,7 @@ import '../models/project1.dart';
 class HomeController extends GetxController {
   final ProjectProvider _apiService = ProjectProvider();
   final project = Project(code: 0, data: []).obs;
-  RxBool isRefreshing = false.obs; 
+  RxBool isRefreshing = false.obs;
   var currentIndex = 0.obs;
   final count = 0.obs;
   RxBool isLoading = true.obs;
@@ -29,17 +29,17 @@ class HomeController extends GetxController {
     try {
       final data = await _apiService.fetchData();
       project.value = data;
-      print(project.value.data.length);
+      // print(project.value.data.length);
       // if (data.data.length == 0) {
       //   print('data kosong');
       // } else {
       //   print('data ada');
       // }
       isLoading = false.obs;
-      print(isLoading);
+      // print(isLoading);
     } catch (e) {
       // Handle error
-      print(e.toString());
+      // print(e.toString());
     } finally {
       isLoading = false.obs;
     }
@@ -49,7 +49,7 @@ class HomeController extends GetxController {
 // method button_navigator
   void changePage(int index) {
     currentIndex.value = index;
-    print(SpUtil.getString('jwtToken'));
+    // print(SpUtil.getString('jwtToken'));
   }
 
   void changePagePm(int index) {
@@ -91,7 +91,7 @@ class HomeController extends GetxController {
             "status": value.data.status
           }
         };
-        print(data);
+        // print(data);
         DetailProject projectData = DetailProject.fromJson(data);
         detailProject.value = projectData;
         Get.to(DetailProjectView());

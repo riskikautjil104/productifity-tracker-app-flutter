@@ -5,15 +5,18 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:productivity_tracker_app/app/data/models/detail_project.dart';
 import 'package:productivity_tracker_app/app/data/models/projects_model.dart';
+import 'package:productivity_tracker_app/app/data/providers/project_api_random.dart';
 import 'package:productivity_tracker_app/app/data/providers/project_provider.dart';
 import 'package:intl/intl.dart';
+import 'package:productivity_tracker_app/app/modules/home/models/project1.dart';
 import 'package:productivity_tracker_app/app/modules/home/views/home_view.dart';
 import 'package:productivity_tracker_app/app/modules/project/views/detail_project.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 // import 'package:sp_util/sp_util.dart';
 // import 'package:productivity_tracker_app/app/data/providers/project_provider.dart';
 // import 'package:sp_util/sp_util.dart';
 
-class ProjectController extends GetxController {
+class Project2Controller extends GetxController {
   TextEditingController projectName = TextEditingController();
   TextEditingController description = TextEditingController();
   TextEditingController emails = TextEditingController();
@@ -33,6 +36,7 @@ class ProjectController extends GetxController {
       )).obs;
   RxBool isLoading = true.obs;
   RxInt tabIndex = 0.obs;
+  RxBool isRefreshing = false.obs;
 
   @override
   void onInit() {
@@ -230,6 +234,18 @@ class ProjectController extends GetxController {
   // hapus project
   void deleteProject(var id) {
     ProjectProvider().deleteProject(id);
+  }
+
+  RefreshController refreshController =
+      RefreshController(initialRefresh: false);
+  final ApiServices apiService = ApiServices();
+  final RxList<Project1> projects = <Project1>[].obs;
+
+  Future<List<Project1>> loadData() async {
+    List<Project1> data = await apiService.fetchData1();
+    projects.assignAll(data);
+    refreshController.refreshCompleted();
+    return data;
   }
 }
 

@@ -5,19 +5,20 @@ import 'package:lottie/lottie.dart';
 // import 'package:productivity_tracker_app/app/modules/home/widget/cart_project.dart';
 import 'package:productivity_tracker_app/app/data/models/projects_model.dart';
 import 'package:productivity_tracker_app/app/modules/home/widget/cart_project.dart';
+import 'package:productivity_tracker_app/app/modules/project/views/add_project_view.dart';
 // import 'package:productivity_tracker_app/app/modules/project/views/detail_project.dart';
 import 'package:productivity_tracker_app/app/widgets/navbarAppBar.dart';
+import 'package:sp_util/sp_util.dart';
 
 import '../controllers/project_controller.dart';
 
 // ignore: must_be_immutable
-class CrewProjectView extends GetView<ProjectController> {
-  ProjectController controller = Get.find<ProjectController>();
-
-  CrewProjectView({super.key});
+class ProjectView extends GetView<ProjectController> {
+  ProjectView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // ProjectController controller = Get.put(ProjectController());
     // final mediaQueryHeight = MediaQuery.of(context).size.height;
     final appBar = GradientAppBar(
       centerText: true,
@@ -53,22 +54,21 @@ class CrewProjectView extends GetView<ProjectController> {
                           shrinkWrap: true, // Menggunakan shrinkWrap
                           physics: ClampingScrollPhysics(),
                           itemBuilder: (context, index) {
-                            Projects datum =
+                            Projects data =
                                 controller.project.value.data[index];
                             return Column(
                               children: [
-                                (datum.status == false)
+                                (data.status == false)
                                     ? CartProject(
                                         onTap: () => controller
-                                            .fetchDetailProjectData(datum.id),
-                                        namaProject: datum.name.toString(),
-                                        date: datum.endDate
+                                            .fetchDetailProjectData(data.id),
+                                        namaProject: data.name.toString(),
+                                        date: data.endDate
                                             .toString()
                                             .substring(0, 10),
                                         progress:
-                                            datum.progress.toString() + ' %',
-                                        percent:
-                                            datum.progress.toDouble() / 100,
+                                            data.progress.toString() + ' %',
+                                        percent: data.progress.toDouble() / 100,
                                         // percent: 75.5 / 100,
                                       )
                                     : Container(),
@@ -104,22 +104,21 @@ class CrewProjectView extends GetView<ProjectController> {
                           shrinkWrap: true, // Menggunakan shrinkWrap
                           physics: ClampingScrollPhysics(),
                           itemBuilder: (context, index) {
-                            Projects datum =
+                            Projects data =
                                 controller.project.value.data[index];
                             return Column(
                               children: [
-                                (datum.status == true)
+                                (data.status == true)
                                     ? CartProject(
                                         onTap: () => controller
-                                            .fetchDetailProjectData(datum.id),
-                                        namaProject: datum.name.toString(),
-                                        date: datum.endDate
+                                            .fetchDetailProjectData(data.id),
+                                        namaProject: data.name.toString(),
+                                        date: data.endDate
                                             .toString()
                                             .substring(0, 10),
                                         progress:
-                                            datum.progress.toString() + ' %',
-                                        percent:
-                                            datum.progress.toDouble() / 100,
+                                            data.progress.toString() + ' %',
+                                        percent: data.progress.toDouble() / 100,
                                         // percent: 75.5 / 100,
                                       )
                                     : Container(),
@@ -137,6 +136,20 @@ class CrewProjectView extends GetView<ProjectController> {
                 child: CircularProgressIndicator(),
               ),
       ),
+      floatingActionButton: (SpUtil.getString('userType') == 'Crew')
+          ? Container()
+          : FloatingActionButton(
+              onPressed: () {
+                Get.to(AddProjectView());
+              },
+              // foregroundColor: customizations[index].$1,
+              backgroundColor: Color(0xFF0F9EEA),
+              // shape: customizations[index].$3,
+              child: const Icon(
+                Icons.add,
+                size: 40,
+              ),
+            ),
     );
   }
 }

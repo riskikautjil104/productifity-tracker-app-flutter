@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:productivity_tracker_app/app/modules/project/views/add_target_view.dart';
+// import 'package:productivity_tracker_app/app/modules/project/views/add_target_view.dart';
 import 'package:productivity_tracker_app/app/modules/task/views/add_task_view.dart';
 import 'package:productivity_tracker_app/app/modules/project/widgets/card_target.dart';
 import 'package:productivity_tracker_app/app/widgets/navbarAppBar.dart';
@@ -16,7 +16,7 @@ class TargetView extends GetView<ProjectController> {
   @override
   Widget build(BuildContext context) {
     // ProjectController controller = Get.find<ProjectController>();
-    final mediaQueryHeight = MediaQuery.of(context).size.height;
+    // final mediaQueryHeight = MediaQuery.of(context).size.height;
     final mediaQuerywidth = MediaQuery.of(context).size.width;
 
     final appBar = GradientAppBar(
@@ -132,9 +132,9 @@ class TargetView extends GetView<ProjectController> {
             ],
     );
 
-    final bodyHeight = mediaQueryHeight -
-        appBar.preferredSize.height -
-        MediaQuery.of(context).padding.top;
+    // final bodyHeight = mediaQueryHeight -
+    //     appBar.preferredSize.height -
+    //     MediaQuery.of(context).padding.top;
 
     return Scaffold(
       appBar: appBar,

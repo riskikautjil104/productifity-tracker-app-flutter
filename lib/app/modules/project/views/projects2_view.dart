@@ -1,0 +1,149 @@
+import 'package:flutter/material.dart';
+
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+// import 'package:lottie/lottie.dart';
+// import 'package:productivity_tracker_app/app/modules/home/widget/cart_project.dart';
+import 'package:productivity_tracker_app/app/modules/home/models/project1.dart';
+import 'package:productivity_tracker_app/app/modules/home/widget/cart_project.dart';
+import 'package:productivity_tracker_app/app/modules/project/controllers/project2_controller.dart';
+import 'package:productivity_tracker_app/app/modules/project/views/add_project_view.dart';
+// import 'package:productivity_tracker_app/app/modules/project/views/detail_project.dart';
+import 'package:productivity_tracker_app/app/widgets/navbarAppBar.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:sp_util/sp_util.dart';
+
+// ignore: must_be_immutable
+class Project2View extends GetView<Project2Controller> {
+  Project2View({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    Project2Controller controller = Get.put(Project2Controller());
+    // final mediaQueryHeight = MediaQuery.of(context).size.height;
+    final appBar = GradientAppBar(
+      centerText: true,
+      title: Text('Project'),
+      gradient: LinearGradient(
+        colors: [
+          Color(0xFF197391),
+          Color(0xFF0F9EEA),
+        ],
+        begin: Alignment.centerLeft,
+        end: Alignment.centerRight,
+      ),
+    );
+
+    // final bodyHeight = mediaQueryHeight -
+    //     appBar.preferredSize.height -
+    //     MediaQuery.of(context).padding.top;
+
+    return Scaffold(
+      appBar: appBar,
+      body: SmartRefresher(
+        controller: controller.refreshController,
+        enablePullDown: true,
+        header: ClassicHeader(
+          refreshingText: 'Memuat...',
+          completeText: 'Selesai',
+          failedText: 'Gagal',
+          idleText: 'Tarik ke bawah untuk refresh',
+        ),
+
+        // onRefresh: () async {
+        //   await Future.delayed(Duration(milliseconds: 1000));
+        //   await ConnectionState.waiting;
+        //   await controller.loadData();
+
+        //   // await apiService.fetchData1();
+        // },
+        onRefresh: () async {
+          controller.isRefreshing.value = true;
+          await Future.delayed(Duration(milliseconds: 1000));
+          await controller.loadData();
+          controller.isRefreshing.value = false;
+        },
+        child: FutureBuilder<List<Project1>?>(
+          future: controller.loadData(),
+          // future:
+          // apiService.fetchData1(),
+          builder: (context, snapshot) {
+            if (controller.isRefreshing.value) {
+              return Center(
+                child: CircularProgressIndicator(
+                  color: Color(0XFF0F9EEA),
+                ),
+              );
+            } else if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                  child: CircularProgressIndicator(
+                color: Color(0XFF0F9EEA),
+              ));
+            } else if (snapshot.hasError) {
+              return Center(
+                child: Text('Error1: ${snapshot.error}'),
+              );
+            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              return Center(
+                child: Text('Tidak ada data'),
+              );
+            } else {
+              List<Project1> projects = snapshot.data!;
+
+              return SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Center(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        margin: EdgeInsets.symmetric(vertical: 20),
+                        height: 540,
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          physics: ClampingScrollPhysics(),
+                          itemCount: projects.length,
+                          itemBuilder: (context, index) {
+                            Project1 project = projects[index];
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 9),
+                              child: CartProject(
+                                onTap: () => controller
+                                    .fetchDetailProjectData(project.id),
+                                namaProject: project.name, // Ganti properti
+                                date: DateFormat('yyyy-MM-dd').format(project
+                                    .endDate), // Konversi DateTime ke String
+                                progress:
+                                    '${project.progress}%', // Ganti properti
+                                percent: project.progress.toDouble() /
+                                    100, // Ganti properti
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }
+          },
+        ),
+      ),
+      floatingActionButton: (SpUtil.getString('userType') == 'Crew')
+          ? Container()
+          : FloatingActionButton(
+              onPressed: () {
+                Get.to(AddProjectView());
+              },
+              // foregroundColor: customizations[index].$1,
+              backgroundColor: Color(0xFF0F9EEA),
+              // shape: customizations[index].$3,
+              child: const Icon(
+                Icons.add,
+                size: 40,
+              ),
+            ),
+    );
+  }
+}

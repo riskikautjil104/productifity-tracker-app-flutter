@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import 'package:get/get.dart';
+import 'package:productivity_tracker_app/app/modules/project/bindings/project_binding.dart';
 import 'package:sp_util/sp_util.dart';
 
 import 'app/routes/app_pages.dart';
@@ -24,11 +25,12 @@ void main() async {
         primaryColor: Colors.white,
       ),
       title: "Application",
-      // initialRoute: SpUtil.getBool('already_login', defValue: false)! == true
-      //     ? Routes.HOME
-      //     : AppPages.INITIAL,t
+      initialBinding: ProjectBinding(),
+      initialRoute: SpUtil.getBool('already_login', defValue: false)! == true
+          ? Routes.HOME
+          : AppPages.INITIAL,
 
-      initialRoute: Routes.WELCOME,
+      // initialRoute: Routes.WELCOME,
       // initialRoute: Routes.DETAIL_PROJECT,
       getPages: AppPages.routes,
     ),

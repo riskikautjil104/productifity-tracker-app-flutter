@@ -3,7 +3,7 @@ import 'package:productivity_tracker_app/app/modules/project/views/detail_projec
 import 'package:productivity_tracker_app/app/modules/project/views/target.dart';
 
 import '../modules/project/bindings/project_binding.dart';
-import '../modules/project/views/crew_projects_view.dart';
+import '../modules/project/views/projects_view.dart';
 import '../modules/task/bindings/task_binding.dart';
 import '../modules/task/views/crew_task_view.dart';
 import '../modules/forgot/bindings/forgot_binding.dart';
@@ -98,8 +98,8 @@ class AppPages {
       binding: NotificationBinding(),
     ),
     GetPage(
-      name: _Paths.CREW_PROJECT,
-      page: () => CrewProjectView(),
+      name: _Paths.PROJECT,
+      page: () => ProjectView(),
       binding: ProjectBinding(),
     ),
     GetPage(
