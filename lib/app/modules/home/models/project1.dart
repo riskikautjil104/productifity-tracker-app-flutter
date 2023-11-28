@@ -5,7 +5,7 @@ class Project1 {
   final DateTime startDate;
   final bool status;
   final dynamic progress;
-  List<Task> tasks;
+  final List<Task>? tasks;
 
   Project1({
     required this.id,
@@ -14,11 +14,11 @@ class Project1 {
     required this.startDate,
     required this.status,
     dynamic progress,
-    required this.tasks,
+    this.tasks,
   }) : progress = progress;
-  bool hasNewTasks() {
-    return tasks.any((task) => task.isNew);
-  }
+  // bool hasNewTasks() {
+  //   return tasks.any((task) => task.isNew);
+  // }
 
   factory Project1.fromJson(Map<String, dynamic> json) {
     return Project1(
@@ -36,15 +36,30 @@ class Project1 {
       progress: json[
           'progress'],
           
-      tasks: [], 
+      tasks: json['tasks'] != null
+          ? List<Task>.from(json['tasks'].map((task) => Task.fromJson(task)))
+          : null,
       
     );
   }
 }
 
 class Task {
-  String name;
-  bool isNew;
+  final String taskId;
+  final String taskName;
+  final bool isNew;
 
-  Task({required this.name, required this.isNew});
+  Task({
+    required this.taskId,
+    required this.taskName,
+    required this.isNew,
+  });
+
+  factory Task.fromJson(Map<String, dynamic> json) {
+    return Task(
+      taskId: json['taskId'],
+      taskName: json['taskName'],
+      isNew: json['isNew'] ?? false, // Ganti dengan kunci yang sesuai dengan status "isNew"
+    );
+  }
 }

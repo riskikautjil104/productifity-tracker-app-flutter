@@ -7,6 +7,7 @@ import 'package:sp_util/sp_util.dart';
 class ProjectProvider extends GetConnect {
   var token = SpUtil.getString('jwtToken');
   var name = SpUtil.getString('username');
+  var ids = SpUtil.getString('projectId');
   Future<Project> fetchData() async {
     final response = await get(
         'https://protracker.azurewebsites.net/api/project/$name/get-all-project',
@@ -14,10 +15,15 @@ class ProjectProvider extends GetConnect {
           'Authorization': 'Bearer $token',
           'Accept': 'application/json',
         }); // Ganti 'URL_API' dengan URL API yang sesuai
-
+    print('id task ${ids}');
     if (response.status.hasError) {
       throw Exception('Error saat mengambil data');
     }
+    // simpan project id
+    SpUtil.putString('projectId', response.body['data']['id']);
+
+    print('raspons ${response.body}');
+
     return Project.fromJson(response.body);
   }
 

@@ -25,9 +25,11 @@ import '../widget/cart_nama_task.dart';
 
 // import '../../../widgets/button_navigatorBar.dart';
 
-import '../../../data/providers/project_api_random.dart';
+// import '../../../data/providers/project_api_random.dart';
 
-import '../models/project1.dart';
+// import '../models/project1.dart';
+import '../../../data/providers/home_provider.dart';
+import '../../../data/models/home_model.dart';
 
 import 'package:lottie/lottie.dart';
 
@@ -105,8 +107,9 @@ class HomeViewCrew extends GetView<HomeController> {
           await controller.loadData();
           // await apiService.fetchData1();
         },
-        child: FutureBuilder<List<Project1>?>(
-          future: controller.loadData(),
+        child: FutureBuilder<List<ProjectHomeCrew>?>(
+          future: apiService.fetchDataHome(),
+          // future: controller.loadData(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
@@ -122,7 +125,7 @@ class HomeViewCrew extends GetView<HomeController> {
                 child: Text('Tidak ada data'),
               );
             } else {
-              List<Project1> projects = snapshot.data!;
+              List<ProjectHomeCrew> projects = snapshot.data!;
 
               return Column(
                 children: [
@@ -139,8 +142,13 @@ class HomeViewCrew extends GetView<HomeController> {
                             lineWidth: 13.0,
                             animation: true,
                             animationDuration: 5000,
-                            percent: 0.7,
-                            centerText: "70%",
+                            percent: projects.isEmpty
+                                ? 0.0
+                                : (projects.first.productivity * 100.0)
+                                    .clamp(0.0, 1.0),
+                            centerText:
+                                "${(projects.first.productivity).toStringAsFixed(0)}00%",
+                            // centerText: "70%",
                             centerTextColor: Color(0XFF197492),
                             centerTextFontWeight: FontWeight.bold,
                             centerTextFontSize: 20.0,
@@ -164,9 +172,12 @@ class HomeViewCrew extends GetView<HomeController> {
                             lineWidth: 13.0,
                             animation: true,
                             animationDuration: 5000,
-                            percent: 0.3,
+                            percent: projects.isEmpty
+                                ? 0.0
+                                : (projects.first.contribution / 100.0)
+                                    .clamp(0.0, 1.0),
                             center: Text(
-                              "30%",
+                              "${(projects.first.contribution / 100).toStringAsFixed(0)}%",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20.0,
@@ -240,148 +251,127 @@ class HomeViewCrew extends GetView<HomeController> {
                                           tarilingIconOnPressed: () {
                                             _carouselController.nextPage();
                                           },
-                                          onTap: () {
-                                            // Navigator.push(
-                                            //   context,
-                                            //   MaterialPageRoute(
-                                            //     builder: (context) =>
-                                            //         DetailPage(project: project),
-                                            //   ),
-                                            // );
-                                          },
+                                          onTap: () {},
                                         ),
                                         SizedBox(
                                           height: 22,
                                         ),
-                                        // Text(
-                                        //   "New Task",
-                                        //   style: TextStyle(
-                                        //     color: Color(0XFF898989),
-                                        //     fontSize: 15,
-                                        //     fontWeight: FontWeight.bold,
-                                        //   ),
-                                        // ),
-                                        // CartNamaTask(
-                                        //   namaProject: "nama",
-                                        //   toDos: 'design halaman home',
-                                        //   date: '06 Nov 2023',
-                                        //   progress: '30%',
-                                        // ),
-                                        // SizedBox(
-                                        //   height: 10,
-                                        // ),
-                                        // Text(
-                                        //   "Completed",
-                                        //   style: TextStyle(
-                                        //     color: Color(0XFF898989),
-                                        //     fontSize: 15,
-                                        //     fontWeight: FontWeight.bold,
-                                        //   ),
-                                        // ),
-                                        // SizedBox(
-                                        //   height: 8,
-                                        // ),
-                                        // ListView(
-                                        //   shrinkWrap: true,
-                                        //   physics: ClampingScrollPhysics(),
-                                        //   children: [
-                                        //     // CartNamaTask(
-                                        //     //   namaProject: 'Nama Task 1',
-                                        //     //   toDos: 'To-Dos 1',
-                                        //     //   date: '05 Nov 2023',
-                                        //     //   progress: '100%',
-                                        //     // ),
-                                        //     // CartNamaTask(
-                                        //     //   namaProject: 'Nama Task 2',
-                                        //     //   toDos: 'To-Dos 1',
-                                        //     //   date: '05 Nov 2023',
-                                        //     //   progress: '100%',
-                                        //     // ),
-                                        //     // CartNamaTask(
-                                        //     //   namaProject: 'Nama Task 2',
-                                        //     //   toDos: 'To-Dos 1',
-                                        //     //   date: '05 Nov 2023',
-                                        //     //   progress: '100%',
-                                        //     // ),
-                                        //     // CartNamaTask(
-                                        //     //   namaProject: 'Nama Task 2',
-                                        //     //   toDos: 'To-Dos 1',
-                                        //     //   date: '05 Nov 2023',
-                                        //     //   progress: '100%',
-                                        //     // ),
-                                        //   ],
-                                        // ),
-                                        // Bagian "New Task"
+
                                         Column(
                                           children: [
-                                            for (var task in project.tasks)
-                                              if (task.isNew)
+                                            // Bagian "New Task"
+                                            Text("Task 🚀👨‍💻"),
+                                            if ((project.tasks ?? [])
+                                                .isNotEmpty)
+                                              for (var task in project.tasks!)
                                                 CartNamaTask(
                                                   namaProject: project.name,
                                                   toDos: task.name,
-                                                  date: 'Tanggal Tugas',
-                                                  progress: '30%',
+                                                  date: DateFormat('yyyy-MM-dd')
+                                                      .format(task
+                                                          .createdAt), // Sesuaikan dengan tanggal tugas
+                                                  progress: task.status
+                                                      .toString(), // Sesuaikan dengan progress tugas
                                                 ),
-                                            SizedBox(
-                                              height: 10,
+                                            if ((project.tasks ?? []).isEmpty)
+                                              SizedBox(height: 10),
+                                            // Bagian "New Task" kosong
+                                            if ((project.tasks ?? []).isEmpty)
+                                              Container(
+                                                height: 50,
+                                                decoration: BoxDecoration(
+                                                  color: const Color.fromARGB(
+                                                      255, 223, 223, 223),
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                child: Center(
+                                                  child: Container(
+                                                    height: 70,
+                                                    decoration: BoxDecoration(
+                                                      color:
+                                                          const Color.fromARGB(
+                                                              255,
+                                                              223,
+                                                              223,
+                                                              223),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                    ),
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                            .size
+                                                            .width,
+                                                    child: Lottie.asset(
+                                                        'assets/lottie/notfound.json'),
+                                                    // child: Text("New Task Kosong"),
+                                                  ),
+                                                ),
+                                              ),
+                                            SizedBox(height: 8),
+                                            // Bagian "Completed"
+                                            if ((project.tasks ?? [])
+                                                .isNotEmpty)
+                                              ListView(
+                                                shrinkWrap: true,
+                                                physics:
+                                                    ClampingScrollPhysics(),
+                                                children: [
+                                                  Center(
+                                                    child:
+                                                        Text("Task Completed✅"),
+                                                  ),
+                                                  for (var task
+                                                      in project.tasks!)
+                                                    CartNamaTask(
+                                                      namaProject: project.name,
+                                                      toDos: task.name,
+                                                      date: DateFormat(
+                                                              'yyyy-MM-dd')
+                                                          .format(task
+                                                              .createdAt), // Sesuaikan dengan tanggal tugas
+                                                      progress: task.status
+                                                          .toString(), // Sesuaikan dengan progress tugas
+                                                    ),
+                                                ],
+                                              ),
+                                            // Bagian "Completed" kosong
+                                            if ((project.tasks ?? []).isEmpty)
+                                              Center(
+                                                child: Text(
+                                                    "Task Completed Kosong"),
+                                              ),
+                                            Container(
+                                              height: 70,
+                                              decoration: BoxDecoration(
+                                                color: const Color.fromARGB(
+                                                    255, 223, 223, 223),
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                              child: LottieBuilder.asset(
+                                                  'assets/lottie/notfound.json'),
                                             ),
                                           ],
                                         ),
-                                        // Tampilkan "Kosong" jika tidak ada tugas baru
-                                        if (project.tasks
-                                            .every((task) => !task.isNew))
-                                          Container(
-                                            height: 50,
-                                            decoration: BoxDecoration(
-                                              color: const Color.fromARGB(
-                                                  255, 223, 223, 223),
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                            ),
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width,
-                                            child: Center(
-                                              child: Text("New Task Kosong"),
-                                            ),
-                                          ),
-                                        SizedBox(
-                                          height: 8,
-                                        ),
-                                        // Bagian "Completed"
-                                        ListView(
-                                          shrinkWrap: true,
-                                          physics: ClampingScrollPhysics(),
-                                          children: [
-                                            for (var task in project.tasks)
-                                              if (!task.isNew)
-                                                CartNamaTask(
-                                                  namaProject: project.name,
-                                                  toDos: task.name,
-                                                  date:
-                                                      'Tanggal Tugas', // Sesuaikan dengan tanggal tugas
-                                                  progress:
-                                                      '100%', // Sesuaikan dengan progress tugas
-                                                ),
-                                          ],
-                                        ),
-                                        // Tampilkan "Kosong" jika tidak ada tugas selesai
-                                        if (project.tasks
-                                            .every((task) => task.isNew))
-                                          Text("Task Completed Kosong"),
-                                        Container(
-                                          height: 70,
-                                          decoration: BoxDecoration(
-                                            color: const Color.fromARGB(
-                                                255, 223, 223, 223),
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          child: Lottie.asset(
-                                              'assets/lottie/notfound.json'),
-                                        ),
+
+                                        // Container(
+                                        //   height: 70,
+                                        // decoration: BoxDecoration(
+                                        //   color: const Color.fromARGB(
+                                        //       255, 223, 223, 223),
+                                        //   borderRadius:
+                                        //       BorderRadius.circular(10),
+                                        // ),
+                                        // width:
+                                        //     MediaQuery.of(context).size.width,
+                                        // child: Lottie.asset(
+                                        //     'assets/lottie/notfound.json'),
+                                        // ),
                                         // Animation - 1700913385823.json
                                       ],
                                     ),

@@ -7,6 +7,8 @@ import '../../home/models/project1.dart';
 class StatistikController extends GetxController {
   RxBool isLoading = true.obs;
   RxBool isDataLoaded = false.obs;
+  RxInt myIntData = 0.obs;
+  
 
   // Future<void> loadData() async {
   //   try {

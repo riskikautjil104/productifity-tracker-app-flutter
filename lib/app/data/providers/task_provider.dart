@@ -1,35 +1,38 @@
-// import 'package:get/get.dart';
-// import 'package:productivity_tracker_app/app/data/models/task_models.dart';
-// import 'package:sp_util/sp_util.dart';
+import 'package:get/get.dart';
+import 'package:sp_util/sp_util.dart';
 
-// class TaskProvider extends GetConnect{
-//   var token = SpUtil.getString('jwtToken');
-//   var name = SpUtil.getString('username');
+import '../models/task_models.dart';
 
-//   Future<List<TaskModel>> fetchData1() async {
-//     final response = await get(
-//       'https://protracker.azurewebsites.net/api/task/:$name/get-all-task?projectId=$token',
-//       headers: {
-//         'Authorization': 'Bearer $token',
-//         'Accept': 'application/json',
-//         'Content-Type': 'application/json',
-//       },
-//     );
+class ApiService extends GetConnect {
+  // ...
 
-//     print("data data nya ${response.status.isOk}");
-//     if (response.status.isOk) {
-//       // Map<String, dynamic> responseData = response.body;
-//       // List<dynamic> data = responseData['data'];
-//       // print("ini adalah ${data}");
+  Future<List<TaskData>> fetchDataTask() async {
+    var token = SpUtil.getString('jwtToken');
+    var name = SpUtil.getString('username');
+    var taskId = SpUtil.getString('projectId');
 
-//       return data.map((json) => TaskModel.fromJson(json)).toList();
-//       // List<dynamic> data = response.body;
-//       // return data.map((json) => Project1.fromJson(json)).toList();
-//     } else {
-//       throw Exception('Gagal mengambil data\nHarap muat ulang');
-//     }
-//   }
+    final response = await get(
+      'https://protracker.azurewebsites.net/api/task/$name/get-all-task?projectId=$taskId',
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+    );
 
-  
-  
-// }
+    print('nama $name');
+    print('nama id task $taskId');
+    print('token $token');
+    print("data data nya heitsaaa ${response.body}");
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> responseData = response.body['data'];
+      List<dynamic> data = [responseData];
+      print("ini adalah $data");
+
+      return data.map((json) => TaskData.fromJson(json)).toList();
+    } else {
+      throw Exception('Gagal mengambil data\nHarap muat ulang');
+    }
+  }
+}

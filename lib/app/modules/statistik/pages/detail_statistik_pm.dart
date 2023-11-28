@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
+import '../../../data/models/statistik_models.dart';
 import '../../home/models/project1.dart';
 import '../views/statistik_pm.dart';
 
 class DetailStatistikPm extends StatelessWidget {
-  final Project1 project;
+  final Project project;
 
   DetailStatistikPm({
     required this.project,
@@ -50,32 +51,26 @@ class DetailStatistikPm extends StatelessWidget {
           ),
         ),
       ),
-      body: ListView(
+       body: ListView(
         children: [
-          SizedBox(
-            height: 10,
-          ),
+          SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Text(
               project.name,
               softWrap: true,
-
               style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
               ),
               textAlign: TextAlign.center,
-              // overflow: TextOver ,
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Table(
-              // border: TableBorder.all(),
               border: TableBorder.all(color: Colors.transparent),
               columnWidths: const <int, TableColumnWidth>{
-                // 0: IntrinsicColumnWidth(),
                 1: FlexColumnWidth(),
                 2: FlexColumnWidth(),
                 3: FlexColumnWidth(),
@@ -85,17 +80,6 @@ class DetailStatistikPm extends StatelessWidget {
               children: <TableRow>[
                 TableRow(
                   children: <Widget>[
-                    // TableCell(
-                    //   child: Padding(
-                    //     padding: const EdgeInsets.all(8.0),
-                    //     child: Text(
-                    //       "No",
-                    //       style: TextStyle(
-                    //         fontWeight: FontWeight.bold,
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
                     TableCell(
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -146,37 +130,31 @@ class DetailStatistikPm extends StatelessWidget {
                     ),
                   ],
                 ),
-                for (var person in project.tasks)
+                for (var person in project.details)
                   TableRow(
                     children: <Widget>[
-                      // TableCell(
-                      //   child: Padding(
-                      //     padding: const EdgeInsets.all(8.0),
-                      //     child: Text(person.id.toString()),
-                      //   ),
-                      // ),
                       TableCell(
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text(person.name),
+                          child: Text(person.crewName),
                         ),
                       ),
                       TableCell(
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text(person.name),
+                          child: Text(person.crewRole),
                         ),
                       ),
                       TableCell(
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text(person.name.toString() + '%'),
+                          child: Text("${person.productivity * 100}%"),
                         ),
                       ),
                       TableCell(
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text(person.name.toString() + '%'),
+                          child: Text("${person.contribution * 100}%"),
                         ),
                       ),
                     ],
