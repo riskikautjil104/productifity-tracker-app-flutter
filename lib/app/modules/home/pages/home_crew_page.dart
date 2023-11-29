@@ -144,10 +144,8 @@ class HomeViewCrew extends GetView<HomeController> {
                             animationDuration: 5000,
                             percent: projects.isEmpty
                                 ? 0.0
-                                : (projects.first.productivity * 100.0)
-                                    .clamp(0.0, 1.0),
-                            centerText:
-                                "${(projects.first.productivity).toStringAsFixed(0)}00%",
+                                : (projects.first.productivity).clamp(0.0, 1.0),
+                            centerText: "${(projects.first.productivity)}%",
                             // centerText: "70%",
                             centerTextColor: Color(0XFF197492),
                             centerTextFontWeight: FontWeight.bold,

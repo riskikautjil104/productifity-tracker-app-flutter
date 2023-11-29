@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:productivity_tracker_app/app/modules/project/controllers/project2_controller.dart';
 import 'package:sp_util/sp_util.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -24,6 +25,7 @@ class HomePm extends GetView<HomeController> {
   final ApiServices apiService = ApiServices();
   @override
   Widget build(BuildContext context) {
+    final Project2Controller controller2 = Project2Controller();
     return Scaffold(
       // navbar
       appBar: GradientAppBar(
@@ -160,8 +162,8 @@ class HomePm extends GetView<HomeController> {
                           return Padding(
                             padding: const EdgeInsets.symmetric(vertical: 9),
                             child: CartProject(
-                              onTap: () =>
-                                  controller.fetchDetailProjectData(project.id),
+                              onTap: () => controller2
+                                  .fetchDetailProjectData(project.id),
                               namaProject: project.name, // Ganti properti
                               date: DateFormat('yyyy-MM-dd').format(project
                                   .endDate), // Konversi DateTime ke String

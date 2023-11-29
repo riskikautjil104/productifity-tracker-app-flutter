@@ -214,3 +214,38 @@ class StatistikDataDay {
     );
   }
 }
+
+// data quarter
+class StatistikDataQuarterResponse {
+  final dynamic code;
+  final StatistikDataDay data;
+
+  StatistikDataQuarterResponse({required this.code, required this.data});
+
+  factory StatistikDataQuarterResponse.fromJson(Map<String, dynamic> json) {
+    return StatistikDataQuarterResponse(
+      code: json['code'] ?? 0,
+      data: StatistikDataDay.fromJson(json['data'] ?? {}),
+    );
+  }
+}
+
+class StatistikDataQuarter {
+  final DateTime? date;
+  final dynamic productivity;
+  final dynamic contribution;
+
+  StatistikDataQuarter({
+    this.date,
+    required this.productivity,
+    required this.contribution,
+  });
+
+  factory StatistikDataQuarter.fromJson(Map<String, dynamic> json) {
+    return StatistikDataQuarter(
+      date: json['date'] != null ? DateTime.parse(json['date']) : null,
+      productivity: json['productivity'] ?? 0.0,
+      contribution: json['contribution'] ?? 0.0,
+    );
+  }
+}

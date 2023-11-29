@@ -148,11 +148,37 @@ class ApiServicess extends GetConnect {
     }
   }
 
+  // quarter
+  Future<List<StatistikDataQuarter>> fetchDataStatistikQuarter() async {
+    final response = await get(
+      'https://protracker.azurewebsites.net/api/stat/$name/get-stat-quarter',
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+    );
+
+    print("ini pusing ${response.body}");
+    if (response.status.isOk) {
+      Map<String, dynamic> data = response.body['data'];
+
+      // Konversi data JSON menjadi objek StatistikDataLastWeek
+      return [
+        StatistikDataQuarter.fromJson(data),
+      ];
+    } else {
+      throw Exception(
+          'Gagal mengambil data proyek periksa server error 500\nHarap muat ulang');
+    }
+  }
+
   // post data statistik day
 
   Future<Response> postData(int inputData) async {
     if (inputData < 1 || inputData > 8) {
       print('Error: Add working time between 1 to 8 hours.');
+      
       // Return response dengan status error
       return Response(
         body: 'Add working time between 1 to 8 hours.',

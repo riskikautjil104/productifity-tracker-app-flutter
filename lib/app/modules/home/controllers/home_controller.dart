@@ -68,37 +68,18 @@ class HomeController extends GetxController {
         endDate: DateTime.now(),
         status: false,
       )).obs;
-  void fetchDetailProjectData(var id) {
+
+      
+ void fetchDetailProjectData() {
     EasyLoading.show(status: 'loading...');
-    ProjectProvider().detailProject(id).then((value) {
-      // print(value.code);
-      // print(value.data.name);
-      // print(value.data.pmName);
-      // print(value.data.status);
-      // print(value.data.startDate);
-      // print(value.data.endDate);
-      // print(value.data.createdAt);
-      // print(value.data.description);
-      if (value.code == 200) {
-        var data = {
-          "code": 200,
-          "data": {
-            "name": value.data.name,
-            "description": value.data.description,
-            "pmName": value.data.pmName,
-            "createdAt": DateFormat('yyyy-MM-dd').format(value.data.createdAt),
-            "startDate": DateFormat('yyyy-MM-dd').format(value.data.startDate),
-            "endDate": DateFormat('yyyy-MM-dd').format(value.data.endDate),
-            "status": value.data.status
-          }
-        };
+ 
+ 
+
         // print(data);
-        DetailProject projectData = DetailProject.fromJson(data);
-        detailProject.value = projectData;
-        Get.to(DetailProjectView());
+      
+        
+        Get.toNamed('/project');
         EasyLoading.dismiss();
-      }
-    });
   }
 
   @override
