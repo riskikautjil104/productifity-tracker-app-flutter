@@ -13,6 +13,7 @@ class DetailProject {
 }
 
 class DetailProjectData {
+  final String id;
   final String name;
   final String description;
   final String pmName;
@@ -22,6 +23,7 @@ class DetailProjectData {
   final bool status;
 
   DetailProjectData({
+    required this.id,
     required this.name,
     required this.description,
     required this.pmName,
@@ -33,6 +35,7 @@ class DetailProjectData {
 
   factory DetailProjectData.fromJson(Map<String, dynamic> json) {
     return DetailProjectData(
+      id: json['id'] ?? '',
       name: json['name'] ?? '',
       description: json['description'] ?? '',
       pmName: json['pmName'] ?? '',

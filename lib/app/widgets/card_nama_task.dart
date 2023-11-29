@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:productivity_tracker_app/app/modules/project/controllers/project_controller.dart';
+// import 'package:get/get.dart';
+// import 'package:productivity_tracker_app/app/modules/project/controllers/project_controller.dart';
 
 class CardTask extends StatelessWidget {
   final String namaProject;
   final String toDos;
   final String date;
   final String progress;
+  final chekBox;
 
   const CardTask({
     Key? key,
@@ -14,11 +15,12 @@ class CardTask extends StatelessWidget {
     required this.toDos,
     required this.date,
     required this.progress,
+    required this.chekBox,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    ProjectController controller = Get.find<ProjectController>();
+    // ProjectController controller = Get.find<ProjectController>();
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(14.0),
@@ -32,17 +34,7 @@ class CardTask extends StatelessWidget {
           child: Expanded(
             child: Row(
               children: [
-                Obx(
-                  () => Checkbox(
-                    value: controller.taskIsChecked.value,
-                    onChanged: (value) {
-                      controller.taskToggleCheckbox(value);
-                      print(value);
-                    },
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0)),
-                  ),
-                ),
+                chekBox,
                 SizedBox(width: 17),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,

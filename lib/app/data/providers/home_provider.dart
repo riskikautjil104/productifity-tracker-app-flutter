@@ -16,7 +16,7 @@ class ApiServices extends GetConnect {
       },
     );
 
-    print("ini adalah token ${token}");
+    // print("ini adalah token ${token}");
     if (response.status.isOk) {
       Map<String, dynamic> responseData = response.body;
       List<dynamic> data = responseData['data'];

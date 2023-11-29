@@ -59,6 +59,7 @@ class HomeController extends GetxController {
   var detailProject = DetailProject(
       code: 0,
       data: DetailProjectData(
+        id: '',
         name: '',
         description: '',
         pmName: '',

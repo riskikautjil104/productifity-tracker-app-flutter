@@ -23,6 +23,7 @@ class ProjectController extends GetxController {
   var detailProject = DetailProject(
       code: 0,
       data: DetailProjectData(
+        id: '',
         name: '',
         description: '',
         pmName: '',
@@ -207,6 +208,7 @@ class ProjectController extends GetxController {
         var data = {
           "code": 200,
           "data": {
+            "id": value.data.id,
             "name": value.data.name,
             "description": value.data.description,
             "pmName": value.data.pmName,
