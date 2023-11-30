@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:productivity_tracker_app/app/data/models/target.dart';
 import 'package:productivity_tracker_app/app/data/models/tasks.dart';
 import 'package:productivity_tracker_app/app/data/models/team.dart';
 import 'package:productivity_tracker_app/app/modules/project/controllers/project2_controller.dart';
@@ -243,7 +244,7 @@ class DetailProjectView extends GetView<Project2Controller> {
                       switch (controller.tabIndex.value) {
                         // tasks
                         case 0:
-                        // tasks
+                          // tasks
                           return (SpUtil.getString('userType') == 'Crew')
                               ?
                               // Crew
@@ -280,13 +281,11 @@ class DetailProjectView extends GetView<Project2Controller> {
                                                           CircularProgressIndicator());
                                                 } else if (snapshot.hasError) {
                                                   return Center(
-                                                      child: Text(
-                                                          'Tidak ada Tasks'));
+                                                      child: Text('No Tasks'));
                                                 } else if (!snapshot.hasData ||
                                                     snapshot.data!.isEmpty) {
                                                   return Center(
-                                                      child: Text(
-                                                          'Tidak ada Tasks'));
+                                                      child: Text('No Tasks'));
                                                 } else {
                                                   return ListView.builder(
                                                     itemCount:
@@ -353,12 +352,12 @@ class DetailProjectView extends GetView<Project2Controller> {
                                                 } else if (snapshot.hasError) {
                                                   return Center(
                                                       child: Text(
-                                                          'Tidak ada Tasks'));
+                                                          'No Tasks Completed'));
                                                 } else if (!snapshot.hasData ||
                                                     snapshot.data!.isEmpty) {
                                                   return Center(
                                                       child: Text(
-                                                          'Tidak ada Tasks'));
+                                                          'No Tasks Completed'));
                                                 } else {
                                                   return ListView.builder(
                                                     itemCount:
@@ -438,13 +437,11 @@ class DetailProjectView extends GetView<Project2Controller> {
                                                           CircularProgressIndicator());
                                                 } else if (snapshot.hasError) {
                                                   return Center(
-                                                      child: Text(
-                                                          'Tidak ada Tasks'));
+                                                      child: Text('No Tasks'));
                                                 } else if (!snapshot.hasData ||
                                                     snapshot.data!.isEmpty) {
                                                   return Center(
-                                                      child: Text(
-                                                          'Tidak ada Tasks'));
+                                                      child: Text('No Tasks'));
                                                 } else {
                                                   return ListView.builder(
                                                     itemCount:
@@ -508,12 +505,12 @@ class DetailProjectView extends GetView<Project2Controller> {
                                                 } else if (snapshot.hasError) {
                                                   return Center(
                                                       child: Text(
-                                                          'Tidak ada Tasks'));
+                                                          'No Tasks Completed'));
                                                 } else if (!snapshot.hasData ||
                                                     snapshot.data!.isEmpty) {
                                                   return Center(
                                                       child: Text(
-                                                          'Tidak ada Tasks'));
+                                                          'No Tasks Completed'));
                                                 } else {
                                                   return ListView.builder(
                                                     itemCount:
@@ -561,34 +558,68 @@ class DetailProjectView extends GetView<Project2Controller> {
                                     ),
                                   );
                                 });
+                        // target
                         case 1:
-                          return Container(
-                            child: Center(
-                              child: Column(
-                                children: [
-                                  CardTarget(
-                                      week: 'Week 1',
-                                      label: 'Design',
-                                      date: '15 Nov 2023 - 22 Nov 2023',
-                                      progress: '1/8'),
-                                  SizedBox(height: 10),
-                                  CardTarget(
-                                      week: 'Week 1',
-                                      label: 'Design',
-                                      date: '15 Nov 2023 - 22 Nov 2023',
-                                      progress: '1/8'),
-                                  SizedBox(height: 10),
-                                  CardTarget(
-                                      week: 'Week 1',
-                                      label: 'Design',
-                                      date: '15 Nov 2023 - 22 Nov 2023',
-                                      progress: '1/8'),
-                                  SizedBox(height: 10),
-                                ],
+                          // target
+                          return GetBuilder<Project2Controller>(
+                              builder: (controler) {
+                            return Container(
+                              height: mediaQueryHeight * 0.7,
+                              child: Center(
+                                child: Column(
+                                  children: [
+                                    SizedBox(height: 11),
+                                    Container(
+                                      height: mediaQueryHeight * 0.6,
+                                      width: mediaQuerywidth * 0.9,
+                                      child: FutureBuilder<List<Target>>(
+                                        future: controller.getAllCrewTarget(
+                                            controller
+                                                .detailProject.value.data.id,
+                                            SpUtil.getString('username')),
+                                        builder: (context, snapshot) {
+                                          if (snapshot.connectionState ==
+                                              ConnectionState.waiting) {
+                                            return Center(
+                                                child:
+                                                    CircularProgressIndicator());
+                                          } else if (snapshot.hasError) {
+                                            return Center(
+                                                child: Text('No Target'));
+                                          } else if (!snapshot.hasData ||
+                                              snapshot.data!.isEmpty) {
+                                            return Center(
+                                                child: Text('No Target'));
+                                          } else {
+                                            return ListView.builder(
+                                              itemCount: snapshot.data!.length,
+                                              itemBuilder: (context, index) {
+                                                Target target =
+                                                    snapshot.data![index];
+                                                return CardTarget(
+                                                  week: target.week.toString(),
+                                                  label:
+                                                      target.labels.toString(),
+                                                  date:
+                                                      "${DateFormat('yyyy-MM-dd').format(target.startDate)} - ${DateFormat('yyyy-MM-dd').format(target.endDate)}",
+                                                  progress:
+                                                      "${target.taskCompleted}/${target.target}",
+                                                );
+                                              },
+                                            );
+                                          }
+                                        },
+                                      ),
+                                    ),
+                                    SizedBox(height: 11),
+                                  ],
+                                ),
                               ),
-                            ),
-                          );
+                            );
+                          });
+                        // teams
                         case 2:
+                          // teams
                           return (SpUtil.getString('userType') == 'Crew')
                               ?
                               // Crew
@@ -622,12 +653,12 @@ class DetailProjectView extends GetView<Project2Controller> {
                                                 } else if (snapshot.hasError) {
                                                   return Center(
                                                       child: Text(
-                                                          'Tidak ada Tasks'));
+                                                          'Tidak ada Teams'));
                                                 } else if (!snapshot.hasData ||
                                                     snapshot.data!.isEmpty) {
                                                   return Center(
                                                       child: Text(
-                                                          'Tidak ada Tasks'));
+                                                          'Tidak ada Teams'));
                                                 } else {
                                                   return ListView.builder(
                                                     itemCount:

@@ -51,7 +51,9 @@ class AddTargetView extends GetView<Project2Controller> {
             ),
             actions: [
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  controller.createTarget(projectId, crewName);
+                },
                 child: Text(
                   'Save',
                   style: TextStyle(
@@ -87,6 +89,7 @@ class AddTargetView extends GetView<Project2Controller> {
                   ),
                   SizedBox(height: 28),
                   TextFormField(
+                    keyboardType: TextInputType.number,
                     controller: controller.week,
                     decoration: InputDecoration(
                       labelText: 'Week',
@@ -157,6 +160,7 @@ class AddTargetView extends GetView<Project2Controller> {
                   ),
                   SizedBox(height: 28),
                   TextFormField(
+                    keyboardType: TextInputType.number,
                     controller: controller.targetTask,
                     decoration: InputDecoration(
                       labelText: 'Target Task',

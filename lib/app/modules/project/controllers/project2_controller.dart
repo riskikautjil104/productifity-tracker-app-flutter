@@ -24,10 +24,11 @@ import 'package:sp_util/sp_util.dart';
 class Project2Controller extends GetxController {
   TextEditingController projectName = TextEditingController();
   TextEditingController description = TextEditingController();
+  TextEditingController emails = TextEditingController();
+  // target
   TextEditingController targetTask = TextEditingController();
   TextEditingController label = TextEditingController();
   TextEditingController week = TextEditingController();
-  TextEditingController emails = TextEditingController();
 
   final ProjectProvider _apiService = ProjectProvider();
   final project = Project(code: 0, data: []).obs;
@@ -193,6 +194,86 @@ class Project2Controller extends GetxController {
           //     ? Get.offAll(HomeViewCrew())
           //     : Get.offAll(HomePm());
           Get.offAll(HomeView());
+        } else if (value.statusCode == 400) {
+          print(value.body['Errors']);
+          EasyLoading.dismiss();
+          Get.snackbar(
+            'Failed',
+            value.body['Errors'],
+            backgroundColor: Colors.red.shade500,
+            colorText: Colors.white,
+          );
+        }
+      });
+      // EasyLoading.dismiss();
+    }
+    update();
+  }
+
+  // create project
+  void createTarget(var projectId, var nameCrew) {
+    if (targetTask.text.isEmpty) {
+      Get.snackbar(
+        'Failed',
+        'Target cannot be empty',
+        backgroundColor: Colors.red.shade500,
+        colorText: Colors.white,
+      );
+    } else if (label.text.isEmpty) {
+      Get.snackbar(
+        'Failed',
+        'Label cannot be empty',
+        backgroundColor: Colors.red.shade500,
+        colorText: Colors.white,
+      );
+    } else if (selectedStartDate.value.isEmpty) {
+      Get.snackbar(
+        'Failed',
+        'Start Date cannot be empty',
+        backgroundColor: Colors.red.shade500,
+        colorText: Colors.white,
+      );
+    } else if (selectedEndDate.value.isEmpty) {
+    } else if (week.text.isEmpty) {
+      Get.snackbar(
+        'Failed',
+        'Start Date cannot be empty',
+        backgroundColor: Colors.red.shade500,
+        colorText: Colors.white,
+      );
+    } else if (selectedEndDate.value.isEmpty) {
+      Get.snackbar(
+        'Failed',
+        'End Date cannot be empty',
+        backgroundColor: Colors.red.shade500,
+        colorText: Colors.white,
+      );
+    } else {
+      EasyLoading.show(status: 'loading...');
+      var data = {
+        "week": week.text,
+        "labels": label.text,
+        "startDate": selectedStartDate.value,
+        "endDate": selectedEndDate.value,
+        "target": targetTask.text,
+      };
+
+      ProjectProvider().createTarget(data, projectId, nameCrew).then((value) {
+        // final data = jsonDecode(value.body) as Map<String, dynamic>;
+        print(value.body);
+        if (value.statusCode == 200) {
+          Get.snackbar('Successful', value.body['data'],
+              backgroundColor: Colors.green.shade500,
+              colorText: Colors.white,
+              duration: Duration(seconds: 3));
+          week.clear();
+          targetTask.clear();
+          label.clear();
+          selectedStartDate.value = '';
+          selectedEndDate.value = '';
+          EasyLoading.dismiss();
+          update();
+          Get.off(DetailProjectView());
         } else if (value.statusCode == 400) {
           print(value.body['Errors']);
           EasyLoading.dismiss();

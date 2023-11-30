@@ -179,7 +179,7 @@ class TargetView extends GetView<Project2Controller> {
                       children: [
                         SizedBox(height: 11),
                         Container(
-                          height: mediaQueryHeight * 0.8,
+                          height: mediaQueryHeight * 0.7,
                           width: mediaQuerywidth * 0.9,
                           child: FutureBuilder<List<Target>>(
                             future: controller.getAllCrewTarget(
