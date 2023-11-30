@@ -3,9 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:productivity_tracker_app/app/data/models/target.dart';
 import 'package:productivity_tracker_app/app/data/models/tasks.dart';
 import 'package:productivity_tracker_app/app/data/models/detail_project.dart';
 import 'package:productivity_tracker_app/app/data/models/projects_model.dart';
+import 'package:productivity_tracker_app/app/data/models/team.dart';
 import 'package:productivity_tracker_app/app/data/providers/project_api_random.dart';
 import 'package:productivity_tracker_app/app/data/providers/project_provider.dart';
 import 'package:intl/intl.dart';
@@ -14,6 +16,7 @@ import 'package:productivity_tracker_app/app/modules/home/views/home_view.dart';
 import 'package:productivity_tracker_app/app/modules/project/views/detail_project.dart';
 // import 'package:productivity_tracker_app/app/modules/project/views/projects2_view.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:sp_util/sp_util.dart';
 // import 'package:sp_util/sp_util.dart';
 // import 'package:productivity_tracker_app/app/data/providers/project_provider.dart';
 // import 'package:sp_util/sp_util.dart';
@@ -21,6 +24,9 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 class Project2Controller extends GetxController {
   TextEditingController projectName = TextEditingController();
   TextEditingController description = TextEditingController();
+  TextEditingController targetTask = TextEditingController();
+  TextEditingController label = TextEditingController();
+  TextEditingController week = TextEditingController();
   TextEditingController emails = TextEditingController();
 
   final ProjectProvider _apiService = ProjectProvider();
@@ -303,8 +309,32 @@ class Project2Controller extends GetxController {
     }
   }
 
+// get team project
+  Future<List<Team>> getAllTeamProject(var id) async {
+    try {
+      var data = await _apiService.getTeamProject(id);
+      print(data);
+      return data;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+// get team project
+  Future<List<Target>> getAllCrewTarget(var id, var name) async {
+    try {
+      var data = await _apiService.getTargetCrew(id, name);
+      print(data);
+      return data;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
   // detail projects
   void fetchDetailProjectData(var id) {
+    print(id);
+    print(SpUtil.getString('jwtToken'));
     EasyLoading.show(status: 'loading...');
     ProjectProvider().detailProject(id).then((value) {
       if (value.code == 200) {
@@ -356,6 +386,8 @@ class Project2Controller extends GetxController {
     refreshController.refreshCompleted();
     return data;
   }
+
+  //
 }
 
 // {

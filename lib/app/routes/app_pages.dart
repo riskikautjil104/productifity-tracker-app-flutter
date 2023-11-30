@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:productivity_tracker_app/app/modules/project/views/detail_project.dart';
-import 'package:productivity_tracker_app/app/modules/project/views/target.dart';
+// import 'package:productivity_tracker_app/app/modules/project/views/target.dart';
 
 import '../modules/project/bindings/project_binding.dart';
 import '../modules/project/views/projects_view.dart';
@@ -112,10 +112,10 @@ class AppPages {
       page: () => DetailProjectView(),
       binding: ProjectBinding(),
     ),
-    GetPage(
-      name: _Paths.TARGET,
-      page: () => TargetView(),
-      binding: ProjectBinding(),
-    ),
+    // GetPage(
+    //   name: _Paths.TARGET,
+    //   page: () => TargetView(),
+    //   binding: ProjectBinding(),
+    // ),
   ];
 }

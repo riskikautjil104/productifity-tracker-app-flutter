@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:productivity_tracker_app/app/data/models/tasks.dart';
+import 'package:productivity_tracker_app/app/data/models/team.dart';
 import 'package:productivity_tracker_app/app/modules/project/controllers/project2_controller.dart';
 import 'package:productivity_tracker_app/app/modules/project/views/update_project_view.dart';
 import 'package:productivity_tracker_app/app/modules/project/widgets/card_target.dart';
+import 'package:productivity_tracker_app/app/modules/project/widgets/card_team.dart';
 import 'package:productivity_tracker_app/app/modules/project/widgets/list_text_project.dart';
 import 'package:productivity_tracker_app/app/modules/task/views/add_task_view.dart';
 import 'package:productivity_tracker_app/app/widgets/card_nama_task.dart';
@@ -239,7 +241,9 @@ class DetailProjectView extends GetView<Project2Controller> {
                   Expanded(
                     child: Obx(() {
                       switch (controller.tabIndex.value) {
+                        // tasks
                         case 0:
+                        // tasks
                           return (SpUtil.getString('userType') == 'Crew')
                               ?
                               // Crew
@@ -563,20 +567,20 @@ class DetailProjectView extends GetView<Project2Controller> {
                               child: Column(
                                 children: [
                                   CardTarget(
-                                      namaProject: 'Week 1',
-                                      toDos: 'Design',
+                                      week: 'Week 1',
+                                      label: 'Design',
                                       date: '15 Nov 2023 - 22 Nov 2023',
                                       progress: '1/8'),
                                   SizedBox(height: 10),
                                   CardTarget(
-                                      namaProject: 'Week 1',
-                                      toDos: 'Design',
+                                      week: 'Week 1',
+                                      label: 'Design',
                                       date: '15 Nov 2023 - 22 Nov 2023',
                                       progress: '1/8'),
                                   SizedBox(height: 10),
                                   CardTarget(
-                                      namaProject: 'Week 1',
-                                      toDos: 'Design',
+                                      week: 'Week 1',
+                                      label: 'Design',
                                       date: '15 Nov 2023 - 22 Nov 2023',
                                       progress: '1/8'),
                                   SizedBox(height: 10),
@@ -585,11 +589,74 @@ class DetailProjectView extends GetView<Project2Controller> {
                             ),
                           );
                         case 2:
-                          return Container(
-                            child: Center(
-                              child: Text('Team View'),
-                            ),
-                          );
+                          return (SpUtil.getString('userType') == 'Crew')
+                              ?
+                              // Crew
+                              Container()
+                              :
+                              // pm
+                              GetBuilder<Project2Controller>(
+                                  builder: (controler) {
+                                  return Container(
+                                    height: mediaQueryHeight * 0.6,
+                                    child: Center(
+                                      child: Column(
+                                        children: [
+                                          SizedBox(height: 11),
+                                          Container(
+                                            height: mediaQueryHeight * 0.6,
+                                            width: mediaQuerywidth * 0.9,
+                                            child: FutureBuilder<List<Team>>(
+                                              future: controller
+                                                  .getAllTeamProject(controller
+                                                      .detailProject
+                                                      .value
+                                                      .data
+                                                      .id),
+                                              builder: (context, snapshot) {
+                                                if (snapshot.connectionState ==
+                                                    ConnectionState.waiting) {
+                                                  return Center(
+                                                      child:
+                                                          CircularProgressIndicator());
+                                                } else if (snapshot.hasError) {
+                                                  return Center(
+                                                      child: Text(
+                                                          'Tidak ada Tasks'));
+                                                } else if (!snapshot.hasData ||
+                                                    snapshot.data!.isEmpty) {
+                                                  return Center(
+                                                      child: Text(
+                                                          'Tidak ada Tasks'));
+                                                } else {
+                                                  return ListView.builder(
+                                                    itemCount:
+                                                        snapshot.data!.length,
+                                                    itemBuilder:
+                                                        (context, index) {
+                                                      Team team =
+                                                          snapshot.data![index];
+                                                      return CardTeam(
+                                                          name: team.username,
+                                                          role: team.crewRole,
+                                                          teamId: team.id,
+                                                          projectId: controller
+                                                              .detailProject
+                                                              .value
+                                                              .data
+                                                              .id);
+                                                    },
+                                                  );
+                                                }
+                                              },
+                                            ),
+                                          ),
+                                          SizedBox(height: 11),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                });
                         default:
                           return Container();
                       }

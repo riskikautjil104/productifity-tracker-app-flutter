@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:productivity_tracker_app/app/modules/project/controllers/project_controller.dart';
+import 'package:productivity_tracker_app/app/modules/project/controllers/project2_controller.dart';
 
-class AddTargetView extends GetView<ProjectController> {
+// ignore: must_be_immutable
+class AddTargetView extends GetView<Project2Controller> {
+  String projectId;
+  String crewName;
+  AddTargetView({
+    required this.projectId,
+    required this.crewName,
+  });
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -67,6 +74,21 @@ class AddTargetView extends GetView<ProjectController> {
                   TextFormField(
                     // controller: controller.projectName,
                     decoration: InputDecoration(
+                      enabled: false,
+                      hintText: "Add Target to " + crewName,
+                      labelStyle: TextStyle(color: Colors.grey),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 28),
+                  TextFormField(
+                    controller: controller.week,
+                    decoration: InputDecoration(
                       labelText: 'Week',
                       labelStyle: TextStyle(color: Colors.grey),
                       border: OutlineInputBorder(
@@ -79,7 +101,7 @@ class AddTargetView extends GetView<ProjectController> {
                   ),
                   SizedBox(height: 28),
                   TextFormField(
-                    // controller: controller.projectName,
+                    controller: controller.label,
                     decoration: InputDecoration(
                       labelText: 'Label',
                       labelStyle: TextStyle(color: Colors.grey),
@@ -135,7 +157,7 @@ class AddTargetView extends GetView<ProjectController> {
                   ),
                   SizedBox(height: 28),
                   TextFormField(
-                    // controller: controller.projectName,
+                    controller: controller.targetTask,
                     decoration: InputDecoration(
                       labelText: 'Target Task',
                       labelStyle: TextStyle(color: Colors.grey),

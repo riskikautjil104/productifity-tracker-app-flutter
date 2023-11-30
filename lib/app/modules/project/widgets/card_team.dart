@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:productivity_tracker_app/app/modules/project/controllers/project2_controller.dart';
+import 'package:productivity_tracker_app/app/modules/project/views/target.dart';
 
-class CardTarget extends StatelessWidget {
-  final String week;
-  final String label;
-  final String date;
-  final String progress;
+// ignore: must_be_immutable
+class CardTeam extends StatelessWidget {
+  Project2Controller controller = Project2Controller();
+  final String name;
+  final String role;
+  final String teamId;
+  final String projectId;
 
-  const CardTarget({
+  CardTeam({
     Key? key,
-    required this.week,
-    required this.label,
-    required this.date,
-    required this.progress,
+    required this.name,
+    required this.role,
+    required this.teamId,
+    required this.projectId,
   }) : super(key: key);
 
   @override
@@ -37,7 +42,7 @@ class CardTarget extends StatelessWidget {
                       alignment: Alignment.centerLeft,
                       clipBehavior: Clip.antiAlias,
                       child: Text(
-                        "Week " + week,
+                        name,
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 15,
@@ -50,7 +55,7 @@ class CardTarget extends StatelessWidget {
                     ),
                     SizedBox(height: 5),
                     Text(
-                      label,
+                      role,
                       style: TextStyle(
                         fontSize: 11,
                         color: Color(0XFF737373),
@@ -63,35 +68,17 @@ class CardTarget extends StatelessWidget {
                 ),
               ),
               SizedBox(width: 20),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  FittedBox(
-                    fit: BoxFit.scaleDown,
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      progress,
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: Color(0XFF000000),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 5),
-                  FittedBox(
-                    fit: BoxFit.scaleDown,
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      date,
-                      style: TextStyle(
-                        fontSize: 11,
-                        color: Color(0XFFB1B1B1),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerLeft,
+                  child: IconButton(
+                      onPressed: () {
+                        Get.to(TargetView(projectId:projectId,name: name, crewRole: role));
+                        controller.getAllCrewTarget(projectId, name);
+                      },
+                      icon: Icon(
+                        Icons.add_box_outlined,
+                      ))),
             ],
           ),
         ),

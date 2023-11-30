@@ -7,7 +7,7 @@ class CartProject extends StatelessWidget {
   final String progress;
   final IconData? leadingIcon;
   final IconData? trailingIcon;
-  final VoidCallback? onTap; 
+  final VoidCallback? onTap;
   final double? percent;
   final VoidCallback? leadingIconOnPressed;
   final VoidCallback? tarilingIconOnPressed;
@@ -19,9 +19,9 @@ class CartProject extends StatelessWidget {
     this.leadingIcon, // Ikon untuk bagian kiri
     this.trailingIcon,
     this.onTap,
-    this.percent, 
-    this.leadingIconOnPressed,// Ikon untuk bagian kanan
-    this.tarilingIconOnPressed,// Ikon untuk bagian kanan
+    this.percent,
+    this.leadingIconOnPressed, // Ikon untuk bagian kanan
+    this.tarilingIconOnPressed, // Ikon untuk bagian kanan
     Key? key,
   }) : super(key: key);
 
