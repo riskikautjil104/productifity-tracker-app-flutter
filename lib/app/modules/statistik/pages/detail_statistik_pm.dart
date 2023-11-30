@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -51,7 +53,7 @@ class DetailStatistikPm extends StatelessWidget {
           ),
         ),
       ),
-       body: ListView(
+      body: ListView(
         children: [
           SizedBox(height: 10),
           Padding(
@@ -148,13 +150,15 @@ class DetailStatistikPm extends StatelessWidget {
                       TableCell(
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text("${person.productivity * 100}%"),
+                          child: Text(
+                            // perubahan
+                              "${(person.productivity * 100).toStringAsFixed(2)}%"),
                         ),
                       ),
                       TableCell(
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text("${person.contribution * 100}%"),
+                          child: Text("${(person.contribution * 100).toStringAsFixed(2)}%"),
                         ),
                       ),
                     ],

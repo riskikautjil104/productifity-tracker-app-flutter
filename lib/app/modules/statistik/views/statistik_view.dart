@@ -388,7 +388,7 @@ class LastWeek extends GetView<StatistikController> {
                           percent:
                               productivityPercentage, // Gunakan nilai dari API
                           centerText:
-                              "${(productivityPercentage * 100).toStringAsFixed(1)}%",
+                              "${(productivityPercentage * 100).toStringAsFixed(2)}%",
                           centerTextColor: Color(0XFFF197492),
                           centerTextFontWeight: FontWeight.bold,
                           centerTextFontSize: 20.0,
@@ -404,7 +404,7 @@ class LastWeek extends GetView<StatistikController> {
                           percent:
                               contributionPercentage, // Gunakan nilai dari API
                           centerText:
-                              "${(contributionPercentage * 100).toStringAsFixed(1)}%",
+                              "${(contributionPercentage * 100).toStringAsFixed(2)}%",
                           centerTextColor: Color(0XFFF2699FB),
                           centerTextFontWeight: FontWeight.bold,
                           centerTextFontSize: 20.0,
@@ -551,7 +551,7 @@ class LastMonth extends GetView<StatistikController> {
                           percent:
                               productivityPercentage, // Gunakan nilai dari API
                           centerText:
-                              "${(productivityPercentage * 100).toStringAsFixed(1)}%",
+                              "${(productivityPercentage * 100).toStringAsFixed(2)}%",
                           centerTextColor: Color(0XFFF197492),
                           centerTextFontWeight: FontWeight.bold,
                           centerTextFontSize: 20.0,
@@ -567,7 +567,7 @@ class LastMonth extends GetView<StatistikController> {
                           percent:
                               contributionPercentage, // Gunakan nilai dari API
                           centerText:
-                              "${(contributionPercentage * 100).toStringAsFixed(1)}%",
+                              "${(contributionPercentage * 100).toStringAsFixed(2)}%",
                           centerTextColor: Color(0XFFF2699FB),
                           centerTextFontWeight: FontWeight.bold,
                           centerTextFontSize: 20.0,

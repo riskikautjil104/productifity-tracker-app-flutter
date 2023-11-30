@@ -3,7 +3,7 @@ class ProjectHomeCrew {
   String name;
   DateTime endDate;
   bool status;
-  int progress;
+  dynamic progress;
   dynamic productivity;
   dynamic contribution;
   List<Task>? tasks; // List of tasks, nullable

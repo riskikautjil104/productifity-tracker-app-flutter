@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class StatistikJson {
   final int code;
   final StatistikData data;
@@ -127,8 +129,8 @@ class StatistikDataMonthResponse {
 
 class StatistikDataMonth {
   final DateTime? date;
-  final int productivity;
-  final int contribution;
+  final dynamic productivity;
+  final dynamic contribution;
 
   StatistikDataMonth({
     this.date,
@@ -161,8 +163,8 @@ class StatistikDataLastWeekResponse {
 
 class StatistikDataLastWeek {
   final DateTime? date;
-  final int productivity;
-  final int contribution;
+  final dynamic productivity;
+  final dynamic contribution;
 
   StatistikDataLastWeek({
     this.date,
