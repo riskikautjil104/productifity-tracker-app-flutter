@@ -83,7 +83,7 @@ class Project2Controller extends GetxController {
 
   void taskToggleStatus(var id) {
     // EasyLoading.show(status: 'loading...');
-    // Future.delayed(Duration(milliseconds: 5000));
+    Future.delayed(Duration(milliseconds: 5000));
     print("Id Task" + id);
     ProjectProvider().changeStatusTask(id);
     update();

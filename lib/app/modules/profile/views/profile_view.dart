@@ -90,7 +90,7 @@ class ProfileView extends GetView<ProfileController> {
                     child: ClipOval(
                       child: SizedBox.fromSize(
                         size: const Size.fromRadius(100), // Image radius
-                        child: Image.asset('assets/image/profilePic.jpg',
+                        child: Image.asset('assets/image/profilePic.png',
                             fit: BoxFit.cover),
                       ),
                     ),
