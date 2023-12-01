@@ -127,7 +127,8 @@ class StatistikPm extends StatelessWidget {
                                           animation: true,
                                           animationDuration: 5200,
                                           lineWidth: 5.0,
-                                          percent: project.progress / 100,
+                                          percent:
+                                              project.progress.toDouble() / 100,
                                           center: Container(
                                             width: 50.0,
                                             height: 50.0,
@@ -138,7 +139,8 @@ class StatistikPm extends StatelessWidget {
                                             ),
                                             child: Center(
                                               child: Text(
-                                                '${(project.progress / 100).toStringAsFixed(2)}%',
+                                                '${(project.progress)}%',
+                                                // ${project.progress}%
                                               ),
                                             ),
                                           ),

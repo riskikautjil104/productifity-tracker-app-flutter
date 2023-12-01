@@ -145,7 +145,8 @@ class HomeViewCrew extends GetView<HomeController> {
                             percent: projects.isEmpty
                                 ? 0.0
                                 : (projects.first.productivity).clamp(0.0, 1.0),
-                            centerText: "${(projects.first.productivity)}%",
+                            centerText:
+                                "${(projects.first.productivity * 100).toStringAsFixed(0)}%",
                             // centerText: "70%",
                             centerTextColor: Color(0XFF197492),
                             centerTextFontWeight: FontWeight.bold,
@@ -170,12 +171,20 @@ class HomeViewCrew extends GetView<HomeController> {
                             lineWidth: 13.0,
                             animation: true,
                             animationDuration: 5000,
-                            percent: projects.isEmpty
-                                ? 0.0
-                                : (projects.first.contribution / 100.0)
-                                    .clamp(0.0, 1.0),
+                            percent:
+                                // projects.first.contribution / 100,
+                                projects.isEmpty
+                                    ? 0.0
+                                    : projects.first.contribution == 1
+                                        ? 1
+                                        : projects.first.contribution
+                                            .toDouble(),
+                            // projects.isEmpty
+                            //     ? 0.0
+                            //     : (projects.first.contribution)
+                            //         .clamp(0.0, 1.0),
                             center: Text(
-                              "${(projects.first.contribution / 100).toStringAsFixed(0)}%",
+                              "${(projects.first.contribution * 100)}%",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20.0,
@@ -231,26 +240,39 @@ class HomeViewCrew extends GetView<HomeController> {
                                   children: [
                                     Column(
                                       children: [
-                                        CartProject(
-                                          namaProject:
-                                              project.name, // Ganti properti
-                                          date: DateFormat('yyyy-MM-dd').format(
-                                              project
-                                                  .endDate), // Konversi DateTime ke String
-                                          progress:
-                                              '${project.progress}%', // Ganti properti
-                                          percent: project.progress /
-                                              100, // Ganti properti
-                                          leadingIcon: Icons.arrow_back_ios,
-                                          leadingIconOnPressed: () {
-                                            _carouselController.previousPage();
-                                          },
-                                          trailingIcon: Icons.arrow_forward_ios,
-                                          tarilingIconOnPressed: () {
-                                            _carouselController.nextPage();
-                                          },
-                                          onTap: () {},
-                                        ),
+                                        project.status == true
+                                            ? Text(
+                                                "Project ${project.name}, Complete")
+                                            : Column(
+                                                children: [
+                                                  CartProject(
+                                                    namaProject:
+                                                        project.name.toString(),
+                                                    date: DateFormat(
+                                                            'yyyy-MM-dd')
+                                                        .format(
+                                                            project.endDate),
+                                                    progress:
+                                                        '${project.progress}%',
+                                                    percent:
+                                                        project.progress / 100,
+                                                    leadingIcon:
+                                                        Icons.arrow_back_ios,
+                                                    leadingIconOnPressed: () {
+                                                      _carouselController
+                                                          .previousPage();
+                                                    },
+                                                    trailingIcon:
+                                                        Icons.arrow_forward_ios,
+                                                    tarilingIconOnPressed: () {
+                                                      _carouselController
+                                                          .nextPage();
+                                                    },
+                                                    onTap: () {},
+                                                  ),
+                                                  SizedBox(height: 22),
+                                                ],
+                                              ),
                                         SizedBox(
                                           height: 22,
                                         ),
@@ -262,15 +284,29 @@ class HomeViewCrew extends GetView<HomeController> {
                                             if ((project.tasks ?? [])
                                                 .isNotEmpty)
                                               for (var task in project.tasks!)
-                                                CartNamaTask(
-                                                  namaProject: project.name,
-                                                  toDos: task.name,
-                                                  date: DateFormat('yyyy-MM-dd')
-                                                      .format(task
-                                                          .createdAt), // Sesuaikan dengan tanggal tugas
-                                                  progress: task.status
-                                                      .toString(), // Sesuaikan dengan progress tugas
-                                                ),
+                                                if (task.status ==
+                                                    false) // Hanya menampilkan jika status true
+                                                  CartNamaTask(
+                                                    namaProject: task.name,
+                                                    toDos: task.name,
+                                                    date: DateFormat(
+                                                            'yyyy-MM-dd')
+                                                        .format(task.createdAt),
+                                                    // progress:
+                                                    //     task.status.toString(),
+                                                    progress: task.status
+                                                        ? 'Selesai'
+                                                        : 'Belum Selesai',
+                                                  ),
+                                            // CartNamaTask(
+                                            //   namaProject: project.name,
+                                            //   toDos: task.name,
+                                            //   date: DateFormat('yyyy-MM-dd')
+                                            //       .format(task
+                                            //           .createdAt), // Sesuaikan dengan tanggal tugas
+                                            //   progress: task.status
+                                            //       .toString(), // Sesuaikan dengan progress tugas
+                                            // ),
                                             if ((project.tasks ?? []).isEmpty)
                                               SizedBox(height: 10),
                                             // Bagian "New Task" kosong
@@ -325,16 +361,21 @@ class HomeViewCrew extends GetView<HomeController> {
                                                   ),
                                                   for (var task
                                                       in project.tasks!)
-                                                    CartNamaTask(
-                                                      namaProject: project.name,
-                                                      toDos: task.name,
-                                                      date: DateFormat(
-                                                              'yyyy-MM-dd')
-                                                          .format(task
-                                                              .createdAt), // Sesuaikan dengan tanggal tugas
-                                                      progress: task.status
-                                                          .toString(), // Sesuaikan dengan progress tugas
-                                                    ),
+                                                    if (task.status ==
+                                                        true) // Hanya menampilkan jika status true
+                                                      CartNamaTask(
+                                                        namaProject: task.name,
+                                                        toDos: task.name,
+                                                        date: DateFormat(
+                                                                'yyyy-MM-dd')
+                                                            .format(
+                                                                task.createdAt),
+                                                        // progress: task.status
+                                                        //     .toString(),
+                                                        progress: task.status
+                                                            ? 'Selesai'
+                                                            : 'Belum Selesai',
+                                                      ),
                                                 ],
                                               ),
                                             // Bagian "Completed" kosong
