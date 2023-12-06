@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 // import 'package:productivity_tracker_app/app/modules/statistik/views/statistik_pm.dart';
 import '../models/statistik_models.dart';
@@ -178,12 +180,16 @@ class ApiServicess extends GetConnect {
   Future<Response> postData(int inputData) async {
     if (inputData < 1 || inputData > 8) {
       print('Error: Add working time between 1 to 8 hours.');
-      
+
       // Return response dengan status error
-      return Response(
-        body: 'Add working time between 1 to 8 hours.',
-        statusCode: 400,
-      );
+        // Return response dengan status error
+    return Response(
+      body: jsonEncode({
+        "Code": 400,
+        "Data": "Add working time between 1 to 8 hours.",
+      }),
+      statusCode: 400,
+    );
     }
 
     var myHeader = {
@@ -192,7 +198,8 @@ class ApiServicess extends GetConnect {
       'Content-Type': 'application/json',
     };
 
-    String jsonData = '{"input_data": $inputData}';
+    // Membuat Map untuk body permintaan
+    Map<String, dynamic> jsonData = {"hour": inputData};
 
     final response = await post(
       'https://protracker.azurewebsites.net/api/stat/$name/add-working-time',

@@ -24,17 +24,32 @@ class StatistikView extends GetView<StatistikController> {
     void sendData() async {
       // Dapatkan nilai dari TextField
       int contribution = int.tryParse(contributionController.text) ?? 0;
+      print("contibusi ${contribution}");
 
       // Panggil metode postData dari ApiService
-      var response = await apiServicess.postData(contribution);
+      var response = await apiServicess.postData(contribution.toInt());
+      print("ini ini ini ${response.body}");
+      print("ini ini status ${response.statusCode}");
 
       if (response.statusCode == 200) {
         print('Berhasil terhubung: ${response.body}');
-        Get.snackbar('Berhasil', '${response.body}',
+        Get.snackbar('Berhasil', 'Ditambahkan jam kerja anda',
             backgroundColor: Colors.green[200]);
+      } else if (response.body == "Add working time between 1 to 8 hours") {
+        Get.snackbar(
+          'Gagal',
+          '${response.body}',
+          backgroundColor: Colors.red[200],
+          duration: Duration(seconds: 5),
+        );
+        print('Gagal terhubung. Status code: ${response.statusCode}');
       } else {
-        Get.snackbar('error', 'Error: Add working time between 1 to 8 hours.',
-            backgroundColor: Colors.red[200]);
+        Get.snackbar(
+          'Gagal',
+          'Anda Sudah Mengisi Jam Kerja anda Tunggu 1X24 jam',
+          backgroundColor: Colors.red[200],
+          duration: Duration(seconds: 5),
+        );
         print('Gagal terhubung. Status code: ${response.statusCode}');
       }
     }
@@ -152,7 +167,7 @@ class StatistikView extends GetView<StatistikController> {
                           centerTextColor: Color(0XFFF197492),
                           centerTextFontWeight: FontWeight.bold,
                           centerTextFontSize: 20.0,
-                          footerText: "Productivity",
+                          footerText: "\tProductivity\nHari Kemarin",
                           footerTextFontSize: 15.0,
                           progressColor: Color(0xFFF197492),
                         ),
@@ -166,7 +181,7 @@ class StatistikView extends GetView<StatistikController> {
                       keyboardType: TextInputType.number,
                       // decoration: InputDecoration(labelText: 'Input (int)'),
                       decoration: InputDecoration(
-                        labelText: 'Masukkan Contribution',
+                        labelText: 'Masukkan Jam Kerja Hari ini 1-8 Jam',
                       ),
                     ),
                   ),
