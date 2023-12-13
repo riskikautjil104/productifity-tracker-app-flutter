@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
+import 'package:productivity_tracker_app/core/utils/EndPoints.dart';
 // import 'package:productivity_tracker_app/app/modules/statistik/views/statistik_pm.dart';
 import '../models/statistik_models.dart';
 import 'package:sp_util/sp_util.dart';
@@ -10,7 +11,7 @@ class ApiServicess extends GetConnect {
   var name = SpUtil.getString('username');
   Future<List<Project>> fetchData1() async {
     final response = await get(
-      'https://protracker.azurewebsites.net/api/stat/$name/get-stats-project',
+      EndPoints.baseUrl + 'stat/$name/get-stats-project',
       headers: {
         'Authorization': 'Bearer $token',
         'Accept': 'application/json',
@@ -80,7 +81,7 @@ class ApiServicess extends GetConnect {
 
   Future<List<StatistikDataMonth>> fetchDataStatistikMonthDay() async {
     final response = await get(
-      'https://protracker.azurewebsites.net/api/stat/$name/get-stat-month',
+      EndPoints.baseUrl + 'stat/$name/get-stat-month',
       headers: {
         'Authorization': 'Bearer $token',
         'Accept': 'application/json',
@@ -104,7 +105,7 @@ class ApiServicess extends GetConnect {
   // lastweek
   Future<List<StatistikDataLastWeek>> fetchDataStatistikLastWeek() async {
     final response = await get(
-      'https://protracker.azurewebsites.net/api/stat/$name/get-stat-week',
+      EndPoints.baseUrl + 'stat/$name/get-stat-week',
       headers: {
         'Authorization': 'Bearer $token',
         'Accept': 'application/json',
@@ -128,7 +129,7 @@ class ApiServicess extends GetConnect {
   // day
   Future<List<StatistikDataDay>> fetchDataStatistikDay() async {
     final response = await get(
-      'https://protracker.azurewebsites.net/api/stat/$name/get-stat-day',
+      EndPoints.baseUrl + 'stat/$name/get-stat-day',
       headers: {
         'Authorization': 'Bearer $token',
         'Accept': 'application/json',
@@ -153,7 +154,7 @@ class ApiServicess extends GetConnect {
   // quarter
   Future<List<StatistikDataQuarter>> fetchDataStatistikQuarter() async {
     final response = await get(
-      'https://protracker.azurewebsites.net/api/stat/$name/get-stat-quarter',
+      EndPoints.baseUrl + 'stat/$name/get-stat-quarter',
       headers: {
         'Authorization': 'Bearer $token',
         'Accept': 'application/json',
@@ -182,14 +183,14 @@ class ApiServicess extends GetConnect {
       print('Error: Add working time between 1 to 8 hours.');
 
       // Return response dengan status error
-        // Return response dengan status error
-    return Response(
-      body: jsonEncode({
-        "Code": 400,
-        "Data": "Add working time between 1 to 8 hours.",
-      }),
-      statusCode: 400,
-    );
+      // Return response dengan status error
+      return Response(
+        body: jsonEncode({
+          "Code": 400,
+          "Data": "Add working time between 1 to 8 hours.",
+        }),
+        statusCode: 400,
+      );
     }
 
     var myHeader = {
@@ -202,7 +203,7 @@ class ApiServicess extends GetConnect {
     Map<String, dynamic> jsonData = {"hour": inputData};
 
     final response = await post(
-      'https://protracker.azurewebsites.net/api/stat/$name/add-working-time',
+      EndPoints.baseUrl + 'stat/$name/add-working-time',
       jsonData,
       headers: myHeader,
     );

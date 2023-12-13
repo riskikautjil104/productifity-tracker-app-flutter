@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:productivity_tracker_app/core/utils/EndPoints.dart';
 
 import '../../modules/home/models/project1.dart';
 // import '../../modules/home/models/project.dart';
@@ -93,7 +94,7 @@ class ApiServices extends GetConnect {
     var name = SpUtil.getString('username');
 
     final response = await get(
-      'https://protracker.azurewebsites.net/api/project/$name/get-all-project',
+      EndPoints.baseUrl + 'project/$name/get-all-project',
       headers: {
         'Authorization': 'Bearer $token',
         'Accept': 'application/json',
