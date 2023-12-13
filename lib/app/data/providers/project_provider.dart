@@ -192,6 +192,46 @@ class ProjectProvider extends GetConnect {
         });
   }
 
+  // static  baseUrl = 'https://pro-pracker.azurewebsites.net/api';
+
+  Future<List<String>> fetchNamesTargetFromApi() async {
+    try {
+      final response = await get(
+          EndPoints.baseUrl + 'week-target/$name/get-all-target',
+          query: {
+            'projectId': SpUtil.getString('idProject')
+          },
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Accept': 'application/json',
+          });
+
+      if (response.status.isOk) {
+        // List<String> names = (response.body as List)
+        //     .map((data) => data['data']['name'].toString())
+        //     .toList();
+        // List<String> names = (response.body as List<dynamic>)
+        //     .map((data) => data['data']['name'].toString())
+        //     .toList();
+        print(response.body['data']['week']);
+        List<String> names = [
+          (response.body as Map<String, dynamic>)['data']['week'].toString()
+        ];
+        // List<String> names = (response.body as List<dynamic>)
+        //     .map((data) => data['name'].toString())
+        //     .toList();
+
+        print(names);
+        print('names');
+        return names;
+      } else {
+        throw Exception('Gagal mengambil data dari API');
+      }
+    } catch (e) {
+      throw Exception('Terjadi kesalahan Target: $e');
+    }
+  }
+
   Future<Response> changeStatusTask(var id) async {
     // final response =  // Ganti 'URL_API' dengan URL API yang sesuai
 

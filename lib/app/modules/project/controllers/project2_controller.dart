@@ -415,6 +415,7 @@ class Project2Controller extends GetxController {
   // detail projects
   void fetchDetailProjectData(var id) {
     print(id);
+    SpUtil.putString('idProject', id);
     print(SpUtil.getString('jwtToken'));
     EasyLoading.show(status: 'loading...');
     ProjectProvider().detailProject(id).then((value) {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:productivity_tracker_app/app/data/models/Week.dart';
 import 'package:productivity_tracker_app/app/modules/task/controllers/task_controller.dart';
 
 class AddTaskView extends GetView<TasksController> {
@@ -78,94 +79,50 @@ class AddTaskView extends GetView<TasksController> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 28),
-                  TextFormField(
-                    readOnly: true,
-                    controller: TextEditingController(
-                        text: controller.selectedStartDate.value),
-                    decoration: InputDecoration(
-                      labelText: 'Start Date',
-                      labelStyle: TextStyle(color: Colors.grey),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      suffixIcon: IconButton(
-                        icon: Icon(Icons.calendar_month),
-                        onPressed: () => controller.pickStartDate(context),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 28),
-                  Obx(
-                    () => TextFormField(
-                      readOnly: true,
-                      controller: TextEditingController(
-                          text: controller.selectedEndDate.value),
-                      decoration: InputDecoration(
-                        labelText: 'End Date',
-                        labelStyle: TextStyle(color: Colors.grey),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        suffixIcon: IconButton(
-                          icon: Icon(Icons.calendar_month),
-                          onPressed: () => controller.pickEndDate(context),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 28),
-                  TextFormField(
-                    controller: controller.emails,
-                    minLines: 6,
-                    maxLines: 100,
-                    // onTapOutside: (event) => ,
-                    keyboardType: TextInputType.multiline,
-                    decoration: InputDecoration(
-                      // hintText: 'Description (opsional)',
-                      labelStyle: TextStyle(color: Colors.grey),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      alignLabelWithHint: true,
-                      labelText: 'Choose who’s on the project',
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                    ),
-                  ),
-                  // SizedBox(height: 54),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  //   children: [
-                  //     TextButton(
-                  //       onPressed: () {},
-                  //       child: Text(
-                  //         'Cancel',
-                  //         style: TextStyle(
-                  //             fontSize: 14,
-                  //             fontWeight: FontWeight.w700,
-                  //             color: Colors.black),
-                  //       ),
-                  //     ),
-                  //     TextButton(
-                  //       onPressed: () {},
-                  //       child: Text(
-                  //         'Save',
-                  //         style: TextStyle(
-                  //             fontSize: 14,
-                  //             fontWeight: FontWeight.w700,
-                  //             color: Colors.black),
-                  //       ),
-                  //     ),
-                  //   ],
-                  // )
+                  SizedBox(height: 20),
+                  // Obx(() => DropdownButton<Week>(
+                  //       value: controller.selectedWeek.value,
+                  //       items: controller.weeks.map((Week value) {
+                  //         return DropdownMenuItem<Week>(
+                  //           value: value,
+                  //           child: Text("Week ${value.week}"),
+                  //         );
+                  //       }).toList(),
+                  //       onChanged: (Week? newValue) {
+                  //         if (newValue != null) {
+                  //           controller.selectedWeek.value = newValue;
+                  //         }
+                  //       },
+                  //     )),
+                  Obx(() => DropdownButton<Week>(
+                        value: controller.selectedWeek.value,
+                        items: controller.weeks.map((Week value) {
+                          return DropdownMenuItem<Week>(
+                              value: value,
+                              child: Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.8,
+                                  height: 50,
+                                  child: Center(
+                                    child: Text(
+                                      "Week ${value.week}",
+                                      style: TextStyle(
+                                          fontSize:
+                                              18), // Ubah ukuran teks sesuai keinginan Anda
+                                    ),
+                                  )));
+                        }).toList(),
+                        onChanged: (Week? newValue) {
+                          if (newValue != null) {
+                            controller.selectedWeek.value = newValue;
+                          }
+                        },
+                      )),
+                  SizedBox(height: 20),
+                  Obx(() => Text(
+                        'Minggu yang Dipilih: ${controller.selectedWeek.value.week}',
+                        style: TextStyle(fontSize: 16),
+                      )),
                 ]),
               ),
             ),
