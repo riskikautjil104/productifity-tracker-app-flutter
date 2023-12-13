@@ -1,5 +1,5 @@
 class EndPoints {
-  static const baseUrl = 'https://protracker.azurewebsites.net/api/';
+  static const baseUrl = 'https://pro-pracker.azurewebsites.net/api/';
 
   static const register = baseUrl + 'auth/register';
   static const login = baseUrl + 'auth/mobile/login';
@@ -9,8 +9,7 @@ class EndPoints {
   static const validateOtp = baseUrl + 'auth/validate-otp';
   static const resetPassword = baseUrl + 'auth/reset-password';
   static const getAllProject = baseUrl + 'auth/project/crew/get-all-project';
-  static const createProject = baseUrl +
-      'https://protracker.azurewebsites.net/api/project/:name/create-project';
+  static const createProject = baseUrl + 'project/:name/create-project';
   // String project;
   // String project = _baseUrl + 'auth/project/${name}/get-all-project';
 

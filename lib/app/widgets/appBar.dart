@@ -33,7 +33,10 @@ appBar(String title, actions) {
       ),
       title: Text(
         title,
-        style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
+        style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w700,
+            color: Color(0xFFFFFFFF)),
       ),
       actions: actions);
 }

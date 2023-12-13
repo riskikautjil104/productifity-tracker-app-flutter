@@ -57,7 +57,7 @@ class Project2Controller extends GetxController {
   }
 
   Future fetchDataFromApi() async {
-    print(isLoading);
+    print(SpUtil.getString('jwtToken'));
     try {
       final data = await _apiService.fetchData();
       project.value = data;

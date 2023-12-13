@@ -14,7 +14,7 @@ class ProjectProvider extends GetConnect {
   var ids = SpUtil.getString('projectId');
   Future<Project> fetchData() async {
     final response = await get(
-        EndPoints.baseUrl + '/project/$name/get-all-project',
+        EndPoints.baseUrl + 'project/$name/get-all-project',
         headers: {
           'Authorization': 'Bearer $token',
           'Accept': 'application/json',
@@ -38,7 +38,7 @@ class ProjectProvider extends GetConnect {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     };
-    return await post(EndPoints.baseUrl + '/project/$name/create-project', data,
+    return await post(EndPoints.baseUrl + 'project/$name/create-project', data,
         headers: myHeader);
   }
 
@@ -50,13 +50,13 @@ class ProjectProvider extends GetConnect {
       'Authorization': 'Bearer $token',
     };
     return await put(
-        EndPoints.baseUrl + '/project/$name/update-project?projectId=$id', data,
+        EndPoints.baseUrl + 'project/$name/update-project?projectId=$id', data,
         headers: myHeader);
   }
 
   Future<DetailProject> detailProject(var id) async {
     final response = await get(
-        EndPoints.baseUrl + '/project/$name/get-project?projectId=$id',
+        EndPoints.baseUrl + 'project/$name/get-project?projectId=$id',
         headers: {
           'Authorization': 'Bearer $token',
           'Accept': 'application/json',
@@ -69,7 +69,7 @@ class ProjectProvider extends GetConnect {
 
   Future<List<Tasks>> getPmTasks(var id) async {
     final response = await get(
-        'https://protracker.azurewebsites.net/api/task/get-all-task?projectId=$id',
+        EndPoints.baseUrl + 'task/get-all-task?projectId=$id',
         headers: {
           'Authorization': 'Bearer $token',
           'Accept': 'application/json',
@@ -95,7 +95,7 @@ class ProjectProvider extends GetConnect {
 // get team
   Future<List<Team>> getTeamProject(var id) async {
     final response = await get(
-        'https://protracker.azurewebsites.net/api/project/get-project-team?projectId=$id',
+        EndPoints.baseUrl + 'project/get-project-team?projectId=$id',
         headers: {
           'Authorization': 'Bearer $token',
           'Accept': 'application/json',
@@ -121,7 +121,8 @@ class ProjectProvider extends GetConnect {
 // get crew taget
   Future<List<Target>> getTargetCrew(var id, var nameCrew) async {
     final response = await get(
-        'https://protracker.azurewebsites.net/api/week-target/$nameCrew/get-all-target?projectId=$id',
+        EndPoints.baseUrl +
+            'week-target/$nameCrew/get-all-target?projectId=$id',
         headers: {
           'Authorization': 'Bearer $token',
           'Accept': 'application/json',
@@ -146,7 +147,7 @@ class ProjectProvider extends GetConnect {
     };
     return await post(
         EndPoints.baseUrl +
-            '/week-target/$nameCrew/create-target?projectId=$projectId',
+            'week-target/$nameCrew/create-target?projectId=$projectId',
         data,
         headers: myHeader);
   }
@@ -154,7 +155,7 @@ class ProjectProvider extends GetConnect {
 // get crew tasks
   Future<List<Tasks>> getCrewTasks(var id) async {
     final response = await get(
-        'https://protracker.azurewebsites.net/api/task/$name/get-all-task?projectId=$id',
+        EndPoints.baseUrl + 'task/$name/get-all-task?projectId=$id',
         headers: {
           'Authorization': 'Bearer $token',
           'Accept': 'application/json',
@@ -184,7 +185,7 @@ class ProjectProvider extends GetConnect {
     //   throw Exception('Error saat mengambil data');
     // }
     return await delete(
-        'https://protracker.azurewebsites.net/api/project/$name/delete-project?projectId=$id',
+        EndPoints.baseUrl + 'project/$name/delete-project?projectId=$id',
         headers: {
           'Authorization': 'Bearer $token',
           'Accept': 'application/json',
@@ -200,8 +201,7 @@ class ProjectProvider extends GetConnect {
     // var body = {};
 
     return await patch(
-        'https://protracker.azurewebsites.net/api/task/$name/update-task-status?taskId=$id',
-        {},
+        EndPoints.baseUrl + 'task/$name/update-task-status?taskId=$id', {},
         headers: {
           'Authorization': 'Bearer $token',
           'Accept': 'application/json',
