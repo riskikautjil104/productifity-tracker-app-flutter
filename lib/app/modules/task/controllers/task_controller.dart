@@ -1,8 +1,11 @@
 // import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:productivity_tracker_app/app/data/models/Week.dart';
+import 'package:productivity_tracker_app/app/data/providers/project_provider.dart';
+import 'package:productivity_tracker_app/app/modules/project/views/detail_project.dart';
 import 'package:productivity_tracker_app/core/utils/EndPoints.dart';
 // import 'package:productivity_tracker_app/app/data/providers/project_provider.dart';
 import 'package:sp_util/sp_util.dart';
@@ -13,26 +16,8 @@ class TasksController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    print(SpUtil.getString('idProject'));
     getWeek();
   }
-
-  // var dropdownItems = <String>[].obs;
-  // var selectedValue = ''.obs;
-
-  // Future<void> fetchData() async {
-  //   try {
-  //     print(SpUtil.getString('idProject'));
-  //     print(SpUtil.getString('username'));
-  //     final apiService = ProjectProvider();
-  //     List<String> names = await apiService.fetchNamesTargetFromApi();
-  //     dropdownItems.value = names;
-  //     selectedValue.value = dropdownItems.isNotEmpty ? dropdownItems.first : '';
-  //     SpUtil.remove('idProject');
-  //   } catch (e) {
-  //     print('Terjadi kesalahan: $e');
-  //   }
-  // }
 
   var weeks = <Week>[].obs;
   var selectedWeek = Week(week: 0).obs;
@@ -66,5 +51,57 @@ class TasksController extends GetxController {
     } catch (e) {
       throw Exception('Terjadi kesalahan: $e');
     }
+  }
+
+  void createTask() {
+    if (taskName.text.isEmpty) {
+      Get.snackbar(
+        'Failed',
+        'Task Name cannot be empty',
+        backgroundColor: Colors.red.shade500,
+        colorText: Colors.white,
+      );
+    } else if (selectedWeek.value == 0) {
+      Get.snackbar(
+        'Failed',
+        'Week cannot be empty',
+        backgroundColor: Colors.red.shade500,
+        colorText: Colors.white,
+      );
+    } else {
+      EasyLoading.show(status: 'loading...');
+      var data = {
+        "name": taskName.text,
+        "week": selectedWeek.value.week,
+      };
+
+      ProjectProvider().createTask(data).then((value) {
+        // final data = jsonDecode(value.body) as Map<String, dynamic>;
+        print(value.body);
+        if (value.statusCode == 200) {
+          Get.snackbar('Successful', value.body['data'],
+              backgroundColor: Colors.green.shade500,
+              colorText: Colors.white,
+              duration: Duration(seconds: 3));
+          taskName.clear();
+
+          EasyLoading.dismiss();
+          update();
+          Get.off(DetailProjectView());
+        } else if (value.statusCode == 400) {
+          print(value.body['Errors']);
+          EasyLoading.dismiss();
+          Get.snackbar(
+            'Failed',
+            value.body['Errors'],
+            backgroundColor: Colors.red.shade500,
+            colorText: Colors.white,
+          );
+        }
+      });
+      print(taskName.text);
+      print(selectedWeek.value.week);
+    }
+    update();
   }
 }

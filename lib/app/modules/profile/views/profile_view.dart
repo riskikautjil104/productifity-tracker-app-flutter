@@ -20,60 +20,64 @@ class ProfileView extends GetView<ProfileController> {
           <Widget>[
             PopupMenuButton(
                 // add icon, by default "3 dot" icon
-                // icon: Icon(Icons.book)
+                icon: Icon(
+                  Icons.more_vert,
+                  color: Colors.white,
+                ),
                 itemBuilder: (context) {
-              return [
-                const PopupMenuItem<int>(
-                  value: 0,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Icon(
-                        Icons.edit,
-                        color: Colors.black,
+                  return [
+                    const PopupMenuItem<int>(
+                      value: 0,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Icon(
+                            Icons.edit,
+                            color: Colors.black,
+                          ),
+                          Text(
+                            'Edit',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w700),
+                          ),
+                        ],
                       ),
-                      Text(
-                        'Edit',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w700),
+                    ),
+                    PopupMenuItem<int>(
+                      value: 1,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              SpUtil.clear();
+                              loginController.logout();
+                              Get.offAllNamed('/login');
+                            },
+                            icon: Icon(
+                              Icons.logout,
+                              color: Colors.black,
+                            ),
+                          ),
+                          Text(
+                            'Logout',
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w700),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
-                PopupMenuItem<int>(
-                  value: 1,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          SpUtil.clear();
-                          loginController.logout();
-                          Get.offAllNamed('/login');
-                        },
-                        icon: Icon(
-                          Icons.logout,
-                          color: Colors.black,
-                        ),
-                      ),
-                      Text(
-                        'Logout',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w700),
-                      ),
-                    ],
-                  ),
-                ),
-              ];
-            }, onSelected: (value) {
-              if (value == 0) {
-                Get.to(const EditProfileView());
-              } else if (value == 1) {
-                SpUtil.clear();
-                loginController.logout();
-                Get.offAllNamed('/login');
-              }
-            }),
+                    ),
+                  ];
+                },
+                onSelected: (value) {
+                  if (value == 0) {
+                    Get.to(const EditProfileView());
+                  } else if (value == 1) {
+                    SpUtil.clear();
+                    loginController.logout();
+                    Get.offAllNamed('/login');
+                  }
+                }),
           ],
         ),
         body: Column(

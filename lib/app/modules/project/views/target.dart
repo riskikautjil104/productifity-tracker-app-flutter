@@ -30,7 +30,22 @@ class TargetView extends GetView<Project2Controller> {
 
     final appBar = GradientAppBar(
       centerText: true,
-      title: Text('Target'),
+      leading: IconButton(
+          onPressed: () {
+            Get.back();
+          },
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.white,
+          )),
+      title: Text(
+        'Target',
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w700,
+          color: Colors.white,
+        ),
+      ),
       gradient: LinearGradient(
         colors: [
           Color(0xFF197391),
@@ -39,106 +54,112 @@ class TargetView extends GetView<Project2Controller> {
         begin: Alignment.centerLeft,
         end: Alignment.centerRight,
       ),
-      actions: (SpUtil.getString('userType') == 'crew')
-          ? []
-          : <Widget>[
-              PopupMenuButton(
-                  // add icon, by default "3 dot" icon
-                  // icon: Icon(Icons.book)
-                  itemBuilder: (context) {
-                return [
-                  const PopupMenuItem<int>(
-                    value: 0,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Icon(
-                          Icons.edit,
-                          color: Colors.black,
-                        ),
-                        Text(
-                          'Edit',
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w700),
-                        ),
-                      ],
-                    ),
-                  ),
-                  PopupMenuItem<int>(
-                    value: 1,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.delete,
-                            color: Colors.black,
-                          ),
-                        ),
-                        Text(
-                          'Delete',
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w700),
-                        ),
-                      ],
-                    ),
-                  ),
-                ];
-              }, onSelected: (value) {
-                if (value == 0) {
-                  // Get.to(const EditProfileView());
-                } else if (value == 1) {
-                  Get.dialog(
-                    Center(
-                      child: Container(
-                        padding: EdgeInsets.all(20.0),
-                        width: mediaQuerywidth * 0.8,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text('This project will be permanently deleted'),
-                            SizedBox(height: 20),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                TextButton(
-                                  onPressed: () {
-                                    Get.back(); // Menutup modal
-                                  },
-                                  child: Text(
-                                    'Cancel',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                ),
-                                TextButton(
-                                  onPressed: () {},
-                                  child: Text(
-                                    'Accept',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                }
-              }),
-            ],
+      // actions: (SpUtil.getString('userType') == 'crew')
+      //     ? []
+      //     : <Widget>[
+      //         PopupMenuButton(
+      //             // add icon, by default "3 dot" icon
+      //             icon: Icon(
+      //               Icons.more_vert,
+      //               color: Colors.white,
+      //             ),
+      //             itemBuilder: (context) {
+      //               return [
+      //                 const PopupMenuItem<int>(
+      //                   value: 0,
+      //                   child: Row(
+      //                     mainAxisAlignment: MainAxisAlignment.spaceAround,
+      //                     children: [
+      //                       Icon(
+      //                         Icons.edit,
+      //                         color: Colors.black,
+      //                       ),
+      //                       Text(
+      //                         'Edit',
+      //                         style: TextStyle(
+      //                             fontSize: 16, fontWeight: FontWeight.w700),
+      //                       ),
+      //                     ],
+      //                   ),
+      //                 ),
+      //                 PopupMenuItem<int>(
+      //                   value: 1,
+      //                   child: Row(
+      //                     mainAxisAlignment: MainAxisAlignment.spaceAround,
+      //                     children: [
+      //                       IconButton(
+      //                         onPressed: () {},
+      //                         icon: Icon(
+      //                           Icons.delete,
+      //                           color: Colors.black,
+      //                         ),
+      //                       ),
+      //                       Text(
+      //                         'Delete',
+      //                         style: TextStyle(
+      //                             fontSize: 16, fontWeight: FontWeight.w700),
+      //                       ),
+      //                     ],
+      //                   ),
+      //                 ),
+      //               ];
+      //             },
+      //             onSelected: (value) {
+      //               if (value == 0) {
+      //                 // Get.to(const EditProfileView());
+      //               } else if (value == 1) {
+      //                 Get.dialog(
+      //                   Center(
+      //                     child: Container(
+      //                       padding: EdgeInsets.all(20.0),
+      //                       width: mediaQuerywidth * 0.8,
+      //                       decoration: BoxDecoration(
+      //                           color: Colors.white,
+      //                           borderRadius: BorderRadius.circular(20)),
+      //                       child: Column(
+      //                         mainAxisSize: MainAxisSize.min,
+      //                         children: [
+      //                           Text(
+      //                               'This project will be permanently deleted'),
+      //                           SizedBox(height: 20),
+      //                           Row(
+      //                             mainAxisAlignment:
+      //                                 MainAxisAlignment.spaceAround,
+      //                             children: [
+      //                               TextButton(
+      //                                 onPressed: () {
+      //                                   Get.back(); // Menutup modal
+      //                                 },
+      //                                 child: Text(
+      //                                   'Cancel',
+      //                                   style: TextStyle(
+      //                                     color: Colors.black,
+      //                                     fontSize: 14,
+      //                                     fontWeight: FontWeight.w700,
+      //                                   ),
+      //                                 ),
+      //                               ),
+      //                               TextButton(
+      //                                 onPressed: () {},
+      //                                 child: Text(
+      //                                   'Accept',
+      //                                   style: TextStyle(
+      //                                     color: Colors.black,
+      //                                     fontSize: 14,
+      //                                     fontWeight: FontWeight.w700,
+      //                                   ),
+      //                                 ),
+      //                               ),
+      //                             ],
+      //                           )
+      //                         ],
+      //                       ),
+      //                     ),
+      //                   ),
+      //                 );
+      //               }
+      //             }),
+      //       ],
     );
 
     // final bodyHeight = mediaQueryHeight -
@@ -240,6 +261,7 @@ class TargetView extends GetView<Project2Controller> {
               child: const Icon(
                 Icons.add,
                 size: 40,
+                color: Colors.white,
               ),
             ),
     );

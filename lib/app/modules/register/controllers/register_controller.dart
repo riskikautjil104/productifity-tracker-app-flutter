@@ -120,7 +120,7 @@ class RegisterController extends GetxController {
           // String userNameFailed = data['Faileds']['Username'][0];
           // String passwordError = data['errors']['Password'][0];
           // String confirmPasswordError = data['errors']['ConfirmPassword'][0];
-          print(value.body['Errors']);
+          // print(value.body['Errors']);
           EasyLoading.dismiss();
           Get.snackbar(
             'Failed',

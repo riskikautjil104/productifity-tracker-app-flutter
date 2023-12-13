@@ -24,7 +24,14 @@ class Project2View extends GetView<Project2Controller> {
     // final mediaQueryHeight = MediaQuery.of(context).size.height;
     final appBar = GradientAppBar(
       centerText: true,
-      title: Text('Project'),
+      title: Text(
+        'Project',
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w700,
+          color: Colors.white,
+        ),
+      ),
       gradient: LinearGradient(
         colors: [
           Color(0xFF197391),
@@ -189,6 +196,7 @@ class Project2View extends GetView<Project2Controller> {
               child: const Icon(
                 Icons.add,
                 size: 40,
+                color: Colors.white,
               ),
             ),
     );

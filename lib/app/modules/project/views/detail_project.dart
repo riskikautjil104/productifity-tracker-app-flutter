@@ -21,15 +21,30 @@ import 'package:sp_util/sp_util.dart';
 // ignore: must_be_immutable
 class DetailProjectView extends GetView<Project2Controller> {
   // Project2Controller detailProjectcontroller = Get.find<Project2Controller>().refresh();
-  // Project2Controller controller = Get.put(Project2Controller()).refresh();
 
   @override
   Widget build(BuildContext context) {
+    Project2Controller controller = Get.put(Project2Controller());
     final mediaQueryHeight = MediaQuery.of(context).size.height;
     final mediaQuerywidth = MediaQuery.of(context).size.width;
     final appBar = GradientAppBar(
       centerText: true,
-      title: Text(controller.detailProject.value.data.name),
+      leading: IconButton(
+          onPressed: () {
+            Get.back();
+          },
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.white,
+          )),
+      title: Text(
+        controller.detailProject.value.data.name,
+        style: TextStyle(
+          fontSize: 15,
+          fontWeight: FontWeight.w700,
+          color: Colors.white,
+        ),
+      ),
       gradient: LinearGradient(
         colors: [
           Color(0xFF197391),
@@ -43,110 +58,118 @@ class DetailProjectView extends GetView<Project2Controller> {
           : <Widget>[
               PopupMenuButton(
                   // add icon, by default "3 dot" icon
-                  // icon: Icon(Icons.book)
+                  icon: Icon(
+                    Icons.more_vert,
+                    color: Colors.white,
+                  ),
                   itemBuilder: (context) {
-                return [
-                  const PopupMenuItem<int>(
-                    value: 0,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Icon(
-                          Icons.edit,
-                          color: Colors.black,
-                        ),
-                        Text(
-                          'Edit',
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w700),
-                        ),
-                      ],
-                    ),
-                  ),
-                  PopupMenuItem<int>(
-                    value: 1,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.delete,
-                            color: Colors.black,
-                          ),
-                        ),
-                        Text(
-                          'Delete',
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w700),
-                        ),
-                      ],
-                    ),
-                  ),
-                ];
-              }, onSelected: (value) {
-                if (value == 0) {
-                  Get.to(UpdateProjectView(
-                      projectId: controller.detailProject.value.data.id,
-                      projectName: controller.detailProject.value.data.name,
-                      description:
-                          controller.detailProject.value.data.description,
-                      startDate: controller.detailProject.value.data.startDate,
-                      endDate: controller.detailProject.value.data.endDate));
-                } else if (value == 1) {
-                  Get.dialog(
-                    Center(
-                      child: Container(
-                        padding: EdgeInsets.all(20.0),
-                        width: mediaQuerywidth * 0.8,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
+                    return [
+                      const PopupMenuItem<int>(
+                        value: 0,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Text('This project will be permanently deleted'),
-                            SizedBox(height: 20),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                TextButton(
-                                  onPressed: () {
-                                    Get.back(); // Menutup modal
-                                  },
-                                  child: Text(
-                                    'Cancel',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    controller.deleteProject(
-                                        controller.detailProject.value.data.id);
-                                    Get.offAllNamed('/home');
-                                  },
-                                  child: Text(
-                                    'Accept',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )
+                            Icon(
+                              Icons.edit,
+                              color: Colors.black,
+                            ),
+                            Text(
+                              'Edit',
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.w700),
+                            ),
                           ],
                         ),
                       ),
-                    ),
-                  );
-                }
-              }),
+                      PopupMenuItem<int>(
+                        value: 1,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            IconButton(
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.delete,
+                                color: Colors.black,
+                              ),
+                            ),
+                            Text(
+                              'Delete',
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.w700),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ];
+                  },
+                  onSelected: (value) {
+                    if (value == 0) {
+                      Get.to(UpdateProjectView(
+                          projectId: controller.detailProject.value.data.id,
+                          projectName: controller.detailProject.value.data.name,
+                          description:
+                              controller.detailProject.value.data.description,
+                          startDate:
+                              controller.detailProject.value.data.startDate,
+                          endDate:
+                              controller.detailProject.value.data.endDate));
+                    } else if (value == 1) {
+                      Get.dialog(
+                        Center(
+                          child: Container(
+                            padding: EdgeInsets.all(20.0),
+                            width: mediaQuerywidth * 0.8,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                    'This project will be permanently deleted'),
+                                SizedBox(height: 20),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Get.back(); // Menutup modal
+                                      },
+                                      child: Text(
+                                        'Cancel',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        controller.deleteProject(controller
+                                            .detailProject.value.data.id);
+                                        Get.offAllNamed('/home');
+                                      },
+                                      child: Text(
+                                        'Accept',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    }
+                  }),
             ],
     );
 
@@ -410,12 +433,12 @@ class DetailProjectView extends GetView<Project2Controller> {
                               GetBuilder<Project2Controller>(
                                   builder: (controler) {
                                   return Container(
-                                    height: mediaQueryHeight * 0.6,
+                                    height: mediaQueryHeight * 0.7,
                                     child: Center(
                                       child: Column(
                                         children: [
                                           Text(
-                                            'On-Progress',
+                                            'All Tasks',
                                             style: TextStyle(
                                               fontSize: 15,
                                               fontWeight: FontWeight.w700,
@@ -423,7 +446,7 @@ class DetailProjectView extends GetView<Project2Controller> {
                                           ),
                                           SizedBox(height: 11),
                                           Container(
-                                            height: mediaQueryHeight * 0.3,
+                                            height: mediaQueryHeight * 0.6,
                                             width: mediaQuerywidth * 0.9,
                                             child: FutureBuilder<List<Tasks>>(
                                               future: controller.getAllPmTasks(
@@ -450,30 +473,16 @@ class DetailProjectView extends GetView<Project2Controller> {
                                                         (context, index) {
                                                       Tasks task =
                                                           snapshot.data![index];
-                                                      return (task.status ==
-                                                              false)
-                                                          ? CardTask(
-                                                              namaProject:
-                                                                  task.name,
-                                                              toDos: 'toDos',
-                                                              date: DateFormat(
-                                                                      'yyyy-MM-dd')
-                                                                  .format(task
-                                                                      .createdAt),
-                                                              progress:
-                                                                  'progress',
-                                                              chekBox:
-                                                                  IconButton(
-                                                                onPressed: () {
-                                                                  controller
-                                                                      .taskToggleStatus(
-                                                                          task.id);
-                                                                },
-                                                                icon: Icon(Icons
-                                                                    .check_box_outline_blank),
-                                                              ),
-                                                            )
-                                                          : Container();
+                                                      return CardTask(
+                                                          namaProject:
+                                                              task.name,
+                                                          toDos: 'toDos',
+                                                          date: DateFormat(
+                                                                  'yyyy-MM-dd')
+                                                              .format(task
+                                                                  .createdAt),
+                                                          progress: 'progress',
+                                                          chekBox: Text(''));
                                                     },
                                                   );
                                                 }
@@ -481,83 +490,234 @@ class DetailProjectView extends GetView<Project2Controller> {
                                             ),
                                           ),
                                           SizedBox(height: 11),
-                                          Text(
-                                            'Completed',
-                                            style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.w700,
-                                            ),
-                                          ),
-                                          SizedBox(height: 11),
-                                          Container(
-                                            height: mediaQueryHeight * 0.3,
-                                            width: mediaQuerywidth * 0.9,
-                                            child: FutureBuilder<List<Tasks>>(
-                                              future: controller.getAllPmTasks(
-                                                  controller.detailProject.value
-                                                      .data.id),
-                                              builder: (context, snapshot) {
-                                                if (snapshot.connectionState ==
-                                                    ConnectionState.waiting) {
-                                                  return Center(
-                                                      child:
-                                                          CircularProgressIndicator());
-                                                } else if (snapshot.hasError) {
-                                                  return Center(
-                                                      child: Text(
-                                                          'No Tasks Completed'));
-                                                } else if (!snapshot.hasData ||
-                                                    snapshot.data!.isEmpty) {
-                                                  return Center(
-                                                      child: Text(
-                                                          'No Tasks Completed'));
-                                                } else {
-                                                  return ListView.builder(
-                                                    itemCount:
-                                                        snapshot.data!.length,
-                                                    itemBuilder:
-                                                        (context, index) {
-                                                      Tasks task =
-                                                          snapshot.data![index];
-                                                      return (task.status ==
-                                                              true)
-                                                          ? CardTask(
-                                                              namaProject:
-                                                                  task.name,
-                                                              toDos: 'toDos',
-                                                              date: DateFormat(
-                                                                      'yyyy-MM-dd')
-                                                                  .format(task
-                                                                      .createdAt),
-                                                              progress:
-                                                                  'progress',
-                                                              chekBox:
-                                                                  IconButton(
-                                                                onPressed: () {
-                                                                  controller
-                                                                      .taskToggleStatus(
-                                                                          task.id);
-                                                                },
-                                                                icon: Icon(
-                                                                  Icons
-                                                                      .check_box,
-                                                                  color: Colors
-                                                                      .blue,
-                                                                ),
-                                                              ),
-                                                            )
-                                                          : Container();
-                                                    },
-                                                  );
-                                                }
-                                              },
-                                            ),
-                                          ),
+                                          // Text(
+                                          //   'Completed',
+                                          //   style: TextStyle(
+                                          //     fontSize: 15,
+                                          //     fontWeight: FontWeight.w700,
+                                          //   ),
+                                          // ),
+                                          // SizedBox(height: 11),
+                                          // Container(
+                                          //   height: mediaQueryHeight * 0.3,
+                                          //   width: mediaQuerywidth * 0.9,
+                                          //   child: FutureBuilder<List<Tasks>>(
+                                          //     future: controller.getAllPmTasks(
+                                          //         controller.detailProject.value
+                                          //             .data.id),
+                                          //     builder: (context, snapshot) {
+                                          //       if (snapshot.connectionState ==
+                                          //           ConnectionState.waiting) {
+                                          //         return Center(
+                                          //             child:
+                                          //                 CircularProgressIndicator());
+                                          //       } else if (snapshot.hasError) {
+                                          //         return Center(
+                                          //             child: Text(
+                                          //                 'No Tasks Completed'));
+                                          //       } else if (!snapshot.hasData ||
+                                          //           snapshot.data!.isEmpty) {
+                                          //         return Center(
+                                          //             child: Text(
+                                          //                 'No Tasks Completed'));
+                                          //       } else {
+                                          //         return ListView.builder(
+                                          //           itemCount:
+                                          //               snapshot.data!.length,
+                                          //           itemBuilder:
+                                          //               (context, index) {
+                                          //             Tasks task =
+                                          //                 snapshot.data![index];
+                                          //             return (task.status ==
+                                          //                     true)
+                                          //                 ? CardTask(
+                                          //                     namaProject:
+                                          //                         task.name,
+                                          //                     toDos: 'toDos',
+                                          //                     date: DateFormat(
+                                          //                             'yyyy-MM-dd')
+                                          //                         .format(task
+                                          //                             .createdAt),
+                                          //                     progress:
+                                          //                         'progress',
+                                          //                     chekBox:
+                                          //                         IconButton(
+                                          //                       onPressed: () {
+                                          //                         controller
+                                          //                             .taskToggleStatus(
+                                          //                                 task.id);
+                                          //                       },
+                                          //                       icon: Icon(
+                                          //                         Icons
+                                          //                             .check_box,
+                                          //                         color: Colors
+                                          //                             .blue,
+                                          //                       ),
+                                          //                     ),
+                                          //                   )
+                                          //                 : Container();
+                                          //           },
+                                          //         );
+                                          //       }
+                                          //     },
+                                          //   ),
+                                          // ),
                                         ],
                                       ),
                                     ),
                                   );
                                 });
+                        // GetBuilder<Project2Controller>(
+                        //     builder: (controler) {
+                        //     return Container(
+                        //       height: mediaQueryHeight * 0.6,
+                        //       child: Center(
+                        //         child: Column(
+                        //           children: [
+                        //             Text(
+                        //               'On-Progress',
+                        //               style: TextStyle(
+                        //                 fontSize: 15,
+                        //                 fontWeight: FontWeight.w700,
+                        //               ),
+                        //             ),
+                        //             SizedBox(height: 11),
+                        //             Container(
+                        //               height: mediaQueryHeight * 0.3,
+                        //               width: mediaQuerywidth * 0.9,
+                        //               child: FutureBuilder<List<Tasks>>(
+                        //                 future: controller.getAllPmTasks(
+                        //                     controller.detailProject.value
+                        //                         .data.id),
+                        //                 builder: (context, snapshot) {
+                        //                   if (snapshot.connectionState ==
+                        //                       ConnectionState.waiting) {
+                        //                     return Center(
+                        //                         child:
+                        //                             CircularProgressIndicator());
+                        //                   } else if (snapshot.hasError) {
+                        //                     return Center(
+                        //                         child: Text('No Tasks'));
+                        //                   } else if (!snapshot.hasData ||
+                        //                       snapshot.data!.isEmpty) {
+                        //                     return Center(
+                        //                         child: Text('No Tasks'));
+                        //                   } else {
+                        //                     return ListView.builder(
+                        //                       itemCount:
+                        //                           snapshot.data!.length,
+                        //                       itemBuilder:
+                        //                           (context, index) {
+                        //                         Tasks task =
+                        //                             snapshot.data![index];
+                        //                         return (task.status ==
+                        //                                 false)
+                        //                             ? CardTask(
+                        //                                 namaProject:
+                        //                                     task.name,
+                        //                                 toDos: 'toDos',
+                        //                                 date: DateFormat(
+                        //                                         'yyyy-MM-dd')
+                        //                                     .format(task
+                        //                                         .createdAt),
+                        //                                 progress:
+                        //                                     'progress',
+                        //                                 chekBox:
+                        //                                     IconButton(
+                        //                                   onPressed: () {
+                        //                                     controller
+                        //                                         .taskToggleStatus(
+                        //                                             task.id);
+                        //                                   },
+                        //                                   icon: Icon(Icons
+                        //                                       .check_box_outline_blank),
+                        //                                 ),
+                        //                               )
+                        //                             : Container();
+                        //                       },
+                        //                     );
+                        //                   }
+                        //                 },
+                        //               ),
+                        //             ),
+                        //             SizedBox(height: 11),
+                        //             Text(
+                        //               'Completed',
+                        //               style: TextStyle(
+                        //                 fontSize: 15,
+                        //                 fontWeight: FontWeight.w700,
+                        //               ),
+                        //             ),
+                        //             SizedBox(height: 11),
+                        //             Container(
+                        //               height: mediaQueryHeight * 0.3,
+                        //               width: mediaQuerywidth * 0.9,
+                        //               child: FutureBuilder<List<Tasks>>(
+                        //                 future: controller.getAllPmTasks(
+                        //                     controller.detailProject.value
+                        //                         .data.id),
+                        //                 builder: (context, snapshot) {
+                        //                   if (snapshot.connectionState ==
+                        //                       ConnectionState.waiting) {
+                        //                     return Center(
+                        //                         child:
+                        //                             CircularProgressIndicator());
+                        //                   } else if (snapshot.hasError) {
+                        //                     return Center(
+                        //                         child: Text(
+                        //                             'No Tasks Completed'));
+                        //                   } else if (!snapshot.hasData ||
+                        //                       snapshot.data!.isEmpty) {
+                        //                     return Center(
+                        //                         child: Text(
+                        //                             'No Tasks Completed'));
+                        //                   } else {
+                        //                     return ListView.builder(
+                        //                       itemCount:
+                        //                           snapshot.data!.length,
+                        //                       itemBuilder:
+                        //                           (context, index) {
+                        //                         Tasks task =
+                        //                             snapshot.data![index];
+                        //                         return (task.status ==
+                        //                                 true)
+                        //                             ? CardTask(
+                        //                                 namaProject:
+                        //                                     task.name,
+                        //                                 toDos: 'toDos',
+                        //                                 date: DateFormat(
+                        //                                         'yyyy-MM-dd')
+                        //                                     .format(task
+                        //                                         .createdAt),
+                        //                                 progress:
+                        //                                     'progress',
+                        //                                 chekBox:
+                        //                                     IconButton(
+                        //                                   onPressed: () {
+                        //                                     controller
+                        //                                         .taskToggleStatus(
+                        //                                             task.id);
+                        //                                   },
+                        //                                   icon: Icon(
+                        //                                     Icons
+                        //                                         .check_box,
+                        //                                     color: Colors
+                        //                                         .blue,
+                        //                                   ),
+                        //                                 ),
+                        //                               )
+                        //                             : Container();
+                        //                       },
+                        //                     );
+                        //                   }
+                        //                 },
+                        //               ),
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       ),
+                        //     );
+                        //   });
                         // target
                         case 1:
                           // target
@@ -711,6 +871,7 @@ class DetailProjectView extends GetView<Project2Controller> {
               child: const Icon(
                 Icons.add,
                 size: 40,
+                color: Colors.white,
               ),
             ),
     );

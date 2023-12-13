@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:productivity_tracker_app/app/modules/project/controllers/project_controller.dart';
+import 'package:productivity_tracker_app/app/modules/project/controllers/project2_controller.dart';
 
-class AddProjectView extends GetView<ProjectController> {
+class AddProjectView extends GetView<Project2Controller> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

@@ -46,7 +46,9 @@ class AddTaskView extends GetView<TasksController> {
             ),
             actions: [
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  controller.createTask();
+                },
                 child: Text(
                   'Save',
                   style: TextStyle(
@@ -80,20 +82,6 @@ class AddTaskView extends GetView<TasksController> {
                     ),
                   ),
                   SizedBox(height: 20),
-                  // Obx(() => DropdownButton<Week>(
-                  //       value: controller.selectedWeek.value,
-                  //       items: controller.weeks.map((Week value) {
-                  //         return DropdownMenuItem<Week>(
-                  //           value: value,
-                  //           child: Text("Week ${value.week}"),
-                  //         );
-                  //       }).toList(),
-                  //       onChanged: (Week? newValue) {
-                  //         if (newValue != null) {
-                  //           controller.selectedWeek.value = newValue;
-                  //         }
-                  //       },
-                  //     )),
                   Obx(() => DropdownButton<Week>(
                         value: controller.selectedWeek.value,
                         items: controller.weeks.map((Week value) {
@@ -101,14 +89,14 @@ class AddTaskView extends GetView<TasksController> {
                               value: value,
                               child: Container(
                                   width:
-                                      MediaQuery.of(context).size.width * 0.8,
-                                  height: 50,
+                                      MediaQuery.of(context).size.width * 0.7,
                                   child: Center(
                                     child: Text(
                                       "Week ${value.week}",
                                       style: TextStyle(
-                                          fontSize:
-                                              18), // Ubah ukuran teks sesuai keinginan Anda
+                                          fontSize: 18,
+                                          color: Colors.grey
+                                              .shade600), // Ubah ukuran teks sesuai keinginan Anda
                                     ),
                                   )));
                         }).toList(),
