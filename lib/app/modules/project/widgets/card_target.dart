@@ -22,7 +22,7 @@ class CardTarget extends StatelessWidget {
       ),
       color: Color(0XFFD6D6D6),
       child: SizedBox(
-        height: 87,
+        height: 100,
         width: 344,
         child: Padding(
           padding: const EdgeInsets.all(20.0),
