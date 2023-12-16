@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:lottie/lottie.dart';
+import 'package:productivity_tracker_app/app/modules/home/views/home_view.dart';
+// import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 // import '../controllers/statistik_controller.dart';
 
@@ -33,20 +35,14 @@ class StatistikView extends GetView<StatistikController> {
 
       if (response.statusCode == 200) {
         print('Berhasil terhubung: ${response.body}');
-        Get.snackbar('Berhasil', 'Ditambahkan jam kerja anda',
+        Get.snackbar('Berhasil', "${response.body['data']}",
+            //  'Ditambahkan jam kerja anda',
             backgroundColor: Colors.green[200]);
-      } else if (response.body == "Add working time between 1 to 8 hours") {
-        Get.snackbar(
-          'Gagal',
-          '${response.body}',
-          backgroundColor: Colors.red[200],
-          duration: Duration(seconds: 5),
-        );
-        print('Gagal terhubung. Status code: ${response.statusCode}');
+        Get.offAll(HomeView());
       } else {
         Get.snackbar(
           'Gagal',
-          'Anda Sudah Mengisi Jam Kerja anda Tunggu 1X24 jam',
+          "${response.body['Errors']}",
           backgroundColor: Colors.red[200],
           duration: Duration(seconds: 5),
         );
@@ -85,21 +81,60 @@ class StatistikView extends GetView<StatistikController> {
             );
           } else if (snapshot.hasError) {
             return Center(
-              child: Text('Error1: ${snapshot.error}'),
+              child: Column(
+                children: [
+                  SizedBox(
+                      width:
+                          10), // Jarak antara teks dan animasi, sesuaikan sesuai kebutuhan
+                  Lottie.asset(
+                    'assets/lottie/Animation-cat-serevr.json',
+                    width: 200, // Sesuaikan ukuran animasi sesuai kebutuhan
+                    height: 200,
+                    fit: BoxFit.contain,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Text(
+                      '${snapshot.error}',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             );
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return Center(
-              child: Text('Tidak ada data'),
+              child: Column(
+                children: [
+                  SizedBox(width: 10),
+                  Lottie.network(
+                    'https://lottie.host/21f699d1-5f97-405e-b338-e31d1a80cb9d/07uDzn6POU.json',
+                    width: 200, // Sesuaikan ukuran animasi sesuai kebutuhan
+                    height: 200,
+                    fit: BoxFit.contain,
+                  ),
+                  Text(
+                    'No Data',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
             );
           } else {
             List<StatistikDataDay> dataMonth = snapshot.data!;
 
-            // Ambil nilai dari data pertama (anda mungkin perlu mengatur logika sesuai kebutuhan anda)
+   
             double productivityPercentage =
                 dataMonth.first.productivity.toDouble();
-            double contributionPercentage =
-                dataMonth.first.contribution.toDouble();
-
+     
             return SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -163,7 +198,7 @@ class StatistikView extends GetView<StatistikController> {
                           percent:
                               productivityPercentage, // Gunakan nilai dari API
                           centerText:
-                              "${(productivityPercentage * 100).toStringAsFixed(1)}%",
+                              "${(productivityPercentage * 100).toStringAsFixed(0)}%",
                           centerTextColor: Color(0XFFF197492),
                           centerTextFontWeight: FontWeight.bold,
                           centerTextFontSize: 20.0,
@@ -198,97 +233,6 @@ class StatistikView extends GetView<StatistikController> {
           }
         },
       ),
-
-      // SingleChildScrollView(
-      //   child: Column(
-      //     crossAxisAlignment: CrossAxisAlignment.start,
-      //     children: [
-      //       Padding(
-      //         padding: const EdgeInsets.symmetric(
-      //           vertical: 35,
-      //           horizontal: 10,
-      //         ),
-      //         child: Container(
-      //           height: 50,
-      //           child: Center(
-      //             child: ListView(
-      //               scrollDirection: Axis.horizontal,
-      //               children: [
-      //                 TombolStatistik(
-      //                   textButton: "Day",
-      //                   isSelected: true,
-      //                 ),
-      //                 TombolStatistik(
-      //                   textButton: "Last Week",
-      //                   isSelected: false,
-      //                   onPress: () {
-      //                     Get.to(() => LastWeek());
-      //                   },
-      //                 ),
-      //                 TombolStatistik(
-      //                   textButton: "Last Month",
-      //                   isSelected: false,
-      //                   onPress: () {
-      //                     Get.to(() => LastMonth());
-      //                   },
-      //                 ),
-      //                 TombolStatistik(
-      //                   textButton: "Quarter",
-      //                   isSelected: false,
-      //                   onPress: () {
-      //                     Get.to(() => Quarter());
-      //                   },
-      //                 ),
-      //               ],
-      //             ),
-      //           ),
-      //         ),
-      //       ),
-      //       Container(
-      //         width: MediaQuery.of(context).size.width,
-      //         margin: EdgeInsets.symmetric(horizontal: 5.0),
-      //         height: 200,
-      //         // color: Colors.amber,
-      //         child: ListView(
-      //           children: [
-      //             CIrcularStatistik(
-      //               radius: 60.0,
-      //               lineWidth: 15.0,
-      //               animation: true,
-      //               animationDuration: 5000,
-      //               percent: 0.1,
-      //               centerText: "30%",
-      //               centerTextColor: Color(0XFFF197492),
-      //               centerTextFontWeight: FontWeight.bold,
-      //               centerTextFontSize: 20.0,
-      //               footerText: "Productifity",
-      //               footerTextFontSize: 15.0,
-      //               progressColor: Color(0xFFF197492),
-      //             ),
-      //           ],
-      //         ),
-      //         // akhir listview
-      //       ),
-      //       Padding(
-      //         padding: const EdgeInsets.all(10.0),
-      //         child: TextField(
-      //           controller: null,
-      //           keyboardType: TextInputType.number,
-      //           // decoration: InputDecoration(labelText: 'Input (int)'),
-      //           decoration: InputDecoration(
-      //             labelText: 'Masukkan Contribution',
-      //           ),
-      //         ),
-      //       ),
-      //       Center(
-      //         child: ElevatedButton(
-      //           onPressed: () {},
-      //           child: Text('Kirim Data'),
-      //         ),
-      //       ),
-      //     ],
-      //   ),
-      // ),
     );
   }
 }
@@ -328,7 +272,30 @@ class LastWeek extends GetView<StatistikController> {
             );
           } else if (snapshot.hasError) {
             return Center(
-              child: Text('Error1: ${snapshot.error}'),
+              child: Column(
+                children: [
+                  SizedBox(
+                      width:
+                          10), // Jarak antara teks dan animasi, sesuaikan sesuai kebutuhan
+                  Lottie.asset(
+                    'assets/lottie/Animation-cat-serevr.json',
+                    width: 200, // Sesuaikan ukuran animasi sesuai kebutuhan
+                    height: 200,
+                    fit: BoxFit.contain,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Text(
+                      '${snapshot.error}',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             );
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return Center(
@@ -403,7 +370,7 @@ class LastWeek extends GetView<StatistikController> {
                           percent:
                               productivityPercentage, // Gunakan nilai dari API
                           centerText:
-                              "${(productivityPercentage * 100).toStringAsFixed(2)}%",
+                              "${(productivityPercentage * 100).toStringAsFixed(0)}%",
                           centerTextColor: Color(0XFFF197492),
                           centerTextFontWeight: FontWeight.bold,
                           centerTextFontSize: 20.0,
@@ -419,7 +386,7 @@ class LastWeek extends GetView<StatistikController> {
                           percent:
                               contributionPercentage, // Gunakan nilai dari API
                           centerText:
-                              "${(contributionPercentage * 100).toStringAsFixed(2)}%",
+                              "${(contributionPercentage * 100).toStringAsFixed(0)}%",
                           centerTextColor: Color(0XFFF2699FB),
                           centerTextFontWeight: FontWeight.bold,
                           centerTextFontSize: 20.0,
@@ -491,7 +458,30 @@ class LastMonth extends GetView<StatistikController> {
             );
           } else if (snapshot.hasError) {
             return Center(
-              child: Text('Error1: ${snapshot.error}'),
+              child: Column(
+                children: [
+                  SizedBox(
+                      width:
+                          10), // Jarak antara teks dan animasi, sesuaikan sesuai kebutuhan
+                  Lottie.asset(
+                    'assets/lottie/Animation-cat-serevr.json',
+                    width: 200, // Sesuaikan ukuran animasi sesuai kebutuhan
+                    height: 200,
+                    fit: BoxFit.contain,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Text(
+                      '${snapshot.error}',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             );
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return Center(
@@ -566,7 +556,7 @@ class LastMonth extends GetView<StatistikController> {
                           percent:
                               productivityPercentage, // Gunakan nilai dari API
                           centerText:
-                              "${(productivityPercentage * 100).toStringAsFixed(2)}%",
+                              "${(productivityPercentage * 100).toStringAsFixed(0)}%",
                           centerTextColor: Color(0XFFF197492),
                           centerTextFontWeight: FontWeight.bold,
                           centerTextFontSize: 20.0,
@@ -582,7 +572,7 @@ class LastMonth extends GetView<StatistikController> {
                           percent:
                               contributionPercentage, // Gunakan nilai dari API
                           centerText:
-                              "${(contributionPercentage * 100).toStringAsFixed(2)}%",
+                              "${(contributionPercentage * 100).toStringAsFixed(0)}%",
                           centerTextColor: Color(0XFFF2699FB),
                           centerTextFontWeight: FontWeight.bold,
                           centerTextFontSize: 20.0,
@@ -601,97 +591,6 @@ class LastMonth extends GetView<StatistikController> {
           }
         },
       ),
-      // ),
-
-      // SingleChildScrollView(
-      // child: Column(
-      //   crossAxisAlignment: CrossAxisAlignment.start,
-      //   children: [
-      //     Padding(
-      // padding: const EdgeInsets.symmetric(
-      //   vertical: 35,
-      //   horizontal: 10,
-      // ),
-      //       child: Container(
-      //         height: 50,
-      //         child: Center(
-      //           child: ListView(
-      //             scrollDirection: Axis.horizontal,
-      // children: [
-      //   TombolStatistik(
-      //     textButton: "Day",
-      //     isSelected: false,
-      //     onPress: () {
-      //       Get.to(() => StatistikView());
-      //     },
-      //   ),
-      //   TombolStatistik(
-      //     textButton: "Last Week",
-      //     isSelected: false,
-      //     onPress: () {
-      //       Get.to(() => LastWeek());
-      //     },
-      //   ),
-      //   TombolStatistik(
-      //     textButton: "Last Month",
-      //     isSelected: true,
-      //     // onPress: () {
-      //     //   Get.to(() => LastWeek());
-      //     // },
-      //   ),
-      //   TombolStatistik(
-      //     textButton: "Quarter",
-      //     isSelected: false,
-      //     onPress: () {
-      //       Get.to(() => Quarter());
-      //     },
-      //   ),
-      // ],
-      //           ),
-      //           ),
-      //         ),
-      //       ),
-      // Container(
-      //   width: MediaQuery.of(context).size.width,
-      //   margin: EdgeInsets.symmetric(horizontal: 5.0),
-      //   height: 540,
-      //   // color: Colors.amber,
-      //   child: ListView(
-      //     children: [
-      //       CIrcularStatistik(
-      //         radius: 60.0,
-      //         lineWidth: 15.0,
-      //         animation: true,
-      //         animationDuration: 5000,
-      //         percent: 0.1,
-      //         centerText: "30%",
-      //         centerTextColor: Color(0XFFF197492),
-      //         centerTextFontWeight: FontWeight.bold,
-      //         centerTextFontSize: 20.0,
-      //         footerText: "Productifity",
-      //         footerTextFontSize: 15.0,
-      //         progressColor: Color(0xFFF197492),
-      //       ),
-      //       CIrcularStatistik(
-      //         radius: 60.0,
-      //         lineWidth: 15.0,
-      //         animation: true,
-      //         animationDuration: 5000,
-      //         percent: 0.1,
-      //         centerText: "30%",
-      //         centerTextColor: Color(0XFFF2699FB),
-      //         centerTextFontWeight: FontWeight.bold,
-      //         centerTextFontSize: 20.0,
-      //         footerText: "Contribution",
-      //         footerTextFontSize: 15.0,
-      //         progressColor: Color(0xFFF2699FB),
-      //       ),
-      //     ],
-      //   ),
-      //   // akhir listview
-      // ),
-      //     ],
-      //   ),
       // ),
     );
   }
@@ -732,7 +631,30 @@ class Quarter extends GetView<StatistikController> {
             );
           } else if (snapshot.hasError) {
             return Center(
-              child: Text('Error1: ${snapshot.error}'),
+              child: Column(
+                children: [
+                  SizedBox(
+                      width:
+                          10), // Jarak antara teks dan animasi, sesuaikan sesuai kebutuhan
+                  Lottie.asset(
+                    'assets/lottie/Animation-cat-serevr.json',
+                    width: 200, // Sesuaikan ukuran animasi sesuai kebutuhan
+                    height: 200,
+                    fit: BoxFit.contain,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Text(
+                      '${snapshot.error}',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             );
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return Center(
@@ -810,7 +732,7 @@ class Quarter extends GetView<StatistikController> {
                           percent:
                               productivityPercentage, // Gunakan nilai dari API
                           centerText:
-                              "${(productivityPercentage * 100).toStringAsFixed(1)}%",
+                              "${(productivityPercentage * 100).toStringAsFixed(0)}%",
                           centerTextColor: Color(0XFFF197492),
                           centerTextFontWeight: FontWeight.bold,
                           centerTextFontSize: 20.0,
@@ -826,7 +748,7 @@ class Quarter extends GetView<StatistikController> {
                           percent:
                               contributionPercentage, // Gunakan nilai dari API
                           centerText:
-                              "${(contributionPercentage * 100).toStringAsFixed(1)}%",
+                              "${(contributionPercentage * 100).toStringAsFixed(0)}%",
                           centerTextColor: Color(0XFFF2699FB),
                           centerTextFontWeight: FontWeight.bold,
                           centerTextFontSize: 20.0,
@@ -845,340 +767,9 @@ class Quarter extends GetView<StatistikController> {
           }
         },
       ),
-
-      // SingleChildScrollView(
-      //   child: Column(
-      //     crossAxisAlignment: CrossAxisAlignment.start,
-      //     children: [
-      //       Padding(
-      //         padding: const EdgeInsets.symmetric(
-      //           vertical: 35,
-      //           horizontal: 10,
-      //         ),
-      //         child: Container(
-      //           height: 50,
-      //           child: Center(
-      //             child: ListView(
-      //               scrollDirection: Axis.horizontal,
-      //               children: [
-      //                 TombolStatistik(
-      //                   textButton: "Day",
-      //                   isSelected: false,
-      //                   onPress: () {
-      //                     Get.to(() => StatistikView());
-      //                   },
-      //                 ),
-      //                 TombolStatistik(
-      //                   textButton: "Last Week",
-      //                   isSelected: false,
-      //                   onPress: () {
-      //                     Get.to(() => LastWeek());
-      //                   },
-      //                 ),
-      //                 TombolStatistik(
-      //                   textButton: "Last Month",
-      //                   isSelected: false,
-      //                   onPress: () {
-      //                     Get.to(() => LastMonth());
-      //                   },
-      //                 ),
-      //                 TombolStatistik(
-      //                   textButton: "Quarter",
-      //                   isSelected: true,
-      //                 ),
-      //               ],
-      //             ),
-      //           ),
-      //         ),
-      //       ),
-      //       Container(
-      //         width: MediaQuery.of(context).size.width,
-      //         margin: EdgeInsets.symmetric(horizontal: 5.0),
-      //         height: 540,
-      //         // color: Colors.amber,
-      //         child: ListView(
-      //           children: [
-      //             CIrcularStatistik(
-      //               radius: 60.0,
-      //               lineWidth: 15.0,
-      //               animation: true,
-      //               animationDuration: 5000,
-      //               percent: 0.1,
-      //               centerText: "30%",
-      //               centerTextColor: Color(0XFFF197492),
-      //               centerTextFontWeight: FontWeight.bold,
-      //               centerTextFontSize: 20.0,
-      //               footerText: "Productifity",
-      //               footerTextFontSize: 15.0,
-      //               progressColor: Color(0xFFF197492),
-      //             ),
-      //             CIrcularStatistik(
-      //               radius: 60.0,
-      //               lineWidth: 15.0,
-      //               animation: true,
-      //               animationDuration: 5000,
-      //               percent: 0.1,
-      //               centerText: "30%",
-      //               centerTextColor: Color(0XFFF2699FB),
-      //               centerTextFontWeight: FontWeight.bold,
-      //               centerTextFontSize: 20.0,
-      //               footerText: "Contribution",
-      //               footerTextFontSize: 15.0,
-      //               progressColor: Color(0xFFF2699FB),
-      //             ),
-      //           ],
-      //         ),
-      //         // akhir listview
-      //       ),
-      //     ],
-      //   ),
-      // ),
     );
   }
 }
-
-// class StatistikView extends GetView<StatistikController> {
-//   const StatistikView({Key? key});
-
-//   // TextEditingController inputController = TextEditingController();
-
-//   @override
-//   Widget build(BuildContext context) {
-//     TextEditingController contributionInputController = TextEditingController();
-//     final ApiServicess apiService = ApiServicess();
-
-//     Future<void> _postData(int inputData) async {
-//       try {
-//         final response = await apiService.postData(inputData);
-
-//         if (response.status.hasError) {
-//           // Handle error response from API
-//           print('Error: ${response.statusText}');
-//         } else {
-//           // Handle successful response from API
-//           print('Response: ${response.body}');
-//         }
-//       } catch (e) {
-//         // Handle exception
-//         print('Exception: $e');
-//       }
-//     }
-
-//     return Scaffold(
-//       appBar: GradientAppBar(
-//         title: Text(
-//           'Statistik',
-//           style: TextStyle(
-//             color: Colors.white,
-//             fontSize: 20,
-//           ),
-//         ),
-//         centerText: true,
-//         gradient: LinearGradient(
-//           colors: [
-//             Color(0xFF197391),
-//             Color(0xFF0F9EEA),
-//           ],
-//           begin: Alignment.centerLeft,
-//           end: Alignment.centerRight,
-//         ),
-//       ),
-//       body: SingleChildScrollView(
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             Padding(
-//               padding: const EdgeInsets.symmetric(
-//                 vertical: 35,
-//                 horizontal: 10,
-//               ),
-//               child: Container(
-//                 height: 50,
-//                 child: Obx(() {
-//                   return Center(
-//                     child: ListView(
-//                       scrollDirection: Axis.horizontal,
-//                       children: [
-//                         TombolStatistik(
-//                           textButton: 'Yesterday',
-//                           isSelected:
-//                               StatistikController.to.selectedButtonType.value ==
-//                                   'Yesterday',
-//                         ),
-//                         TombolStatistik(
-//                           textButton: 'Last Week',
-//                           isSelected:
-//                               StatistikController.to.selectedButtonType.value ==
-//                                   'Last Week',
-//                         ),
-//                         TombolStatistik(
-//                           textButton: 'Last Month',
-//                           isSelected:
-//                               StatistikController.to.selectedButtonType.value ==
-//                                   'Last Month',
-//                         ),
-//                         TombolStatistik(
-//                           textButton: 'Quarter',
-//                           isSelected:
-//                               StatistikController.to.selectedButtonType.value ==
-//                                   'Quarter',
-//                         ),
-//                       ],
-//                     ),
-//                   );
-//                 }),
-//               ),
-//             ),
-//             Container(
-//               width: MediaQuery.of(context).size.width,
-//               margin: EdgeInsets.symmetric(horizontal: 5.0),
-//               height: 540,
-//               child: Obx(() {
-//                 final selectedButtonType =
-//                     StatistikController.to.selectedButtonType.value;
-//                 final productivityPercent =
-//                     StatistikController.to.productivityPercent.value;
-//                 final contributionPercent =
-//                     StatistikController.to.contributionPercent.value;
-
-//                 return ListView(
-//                   shrinkWrap: true,
-//                   physics: ClampingScrollPhysics(),
-//                   children: [
-//                     SizedBox(
-//                       height: 46,
-//                     ),
-// CIrcularStatistik(
-//   radius: 60.0,
-//   lineWidth: 15.0,
-//   animation: true,
-//   animationDuration: 5000,
-//   percent: selectedButtonType == 'Yesterday'
-//       ? productivityPercent
-//       : contributionPercent,
-//   centerText:
-//       "${(selectedButtonType == 'Yesterday' ? productivityPercent : contributionPercent) * 100}%",
-//   centerTextColor: selectedButtonType == 'Yesterday'
-//       ? Color(0XFF197492)
-//       : Color(0XFF2699FB),
-//   centerTextFontWeight: FontWeight.bold,
-//   centerTextFontSize: 20.0,
-//   footerText: selectedButtonType == 'Yesterday'
-//       ? "Productivity"
-//       : "Contribution",
-//   footerTextFontSize: 15.0,
-//   progressColor: selectedButtonType == 'Yesterday'
-//       ? Color(0XFF197492)
-//       : Color(0XFF2699FB),
-// ),
-//                     SizedBox(
-//                       height: 9,
-//                     ),
-//                     CIrcularStatistik(
-//                       radius: 60.0,
-//                       lineWidth: 15.0,
-//                       animation: true,
-//                       animationDuration: 5000,
-//                       percent: selectedButtonType == 'Yesterday'
-//                           ? contributionPercent
-//                           : productivityPercent,
-//                       centerText:
-//                           "${(selectedButtonType == 'Yesterday' ? contributionPercent : productivityPercent) * 100}%",
-//                       centerTextColor: selectedButtonType == 'Yesterday'
-//                           ? Color(0XFF2699FB)
-//                           : Color(0XFF197492),
-//                       centerTextFontWeight: FontWeight.bold,
-//                       centerTextFontSize: 20.0,
-//                       footerText: selectedButtonType == 'Yesterday'
-//                           ? "Contribution"
-//                           : "Productivity",
-//                       footerTextFontSize: 15.0,
-//                       progressColor: selectedButtonType == 'Yesterday'
-//                           ? Color(0XFF2699FB)
-//                           : Color(0XFF197492),
-//                     ),
-//                     if (selectedButtonType == 'Yesterday')
-//                       Column(
-//                         children: [
-//                           Padding(
-//                             padding: const EdgeInsets.all(16.0),
-//                             child: TextField(
-//                               controller: contributionInputController,
-//                               keyboardType: TextInputType.number,
-//                               // decoration: InputDecoration(labelText: 'Input (int)'),
-//                               decoration: InputDecoration(
-//                                 labelText: 'Masukkan Contribution',
-//                               ),
-//                             ),
-//                           ),
-//                           ElevatedButton(
-//                             onPressed: () async {
-//                               if (contributionInputController.text.isNotEmpty) {
-//                                 int inputData =
-//                                     int.parse(contributionInputController.text);
-//                                 await _postData(inputData);
-//                               } else {
-//                                 // Handle empty input
-//                                 print('Input is empty');
-//                               }
-//                             },
-//                             child: Text('Kirim Data'),
-//                           ),
-//                         ],
-//                       ),
-//                   ],
-//                 );
-//               }),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-// class StatistikController extends GetxController {
-//   static StatistikController get to => Get.put(StatistikController());
-//   RxString selectedButtonType = 'Yesterday'.obs;
-//   RxDouble productivityPercent = 0.7.obs;
-//   RxDouble contributionPercent = 0.4.obs;
-//   RxBool showContributionInput = false.obs;
-
-//   void setShowContributionInput(bool value) {
-//     showContributionInput.value = value;
-//   }
-
-//   void setSelectedButton(String type) {
-//     // Simulasi perubahan data ketika tombol ditekan
-//     double newProductivityPercent = 0.0;
-//     double newContributionPercent = 0.0;
-
-//     if (type == 'Yesterday') {
-//       newProductivityPercent = 0.7;
-//       newContributionPercent = 0.4;
-//     } else if (type == 'Last Week') {
-//       newProductivityPercent = 0.6;
-//       newContributionPercent = 0.3;
-//     } else if (type == 'Last Month') {
-//       newProductivityPercent = 0.8;
-//       newContributionPercent = 0.5;
-//     } else if (type == 'Quarter') {
-//       newProductivityPercent = 0.75;
-//       newContributionPercent = 0.45;
-//     }
-
-//     // Set Productivity terlebih dahulu
-//     productivityPercent.value = newProductivityPercent;
-//     contributionPercent.value = newContributionPercent;
-
-//     // Set Contribution setelahnya
-//     Future.delayed(Duration(milliseconds: 100), () {
-//       contributionPercent.value = newContributionPercent;
-//     });
-
-//     selectedButtonType.value = type;
-//   }
-// }
 
 class TombolStatistik extends StatelessWidget {
   final String textButton;

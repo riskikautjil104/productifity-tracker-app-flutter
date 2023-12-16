@@ -453,6 +453,7 @@ class Project2Controller extends GetxController {
   void deleteProject(var id) {
     EasyLoading.show(status: 'loading...');
     ProjectProvider().deleteProject(id);
+    // arahkan ke halaman project saja
     Get.offAll(HomeView());
     EasyLoading.dismiss();
   }

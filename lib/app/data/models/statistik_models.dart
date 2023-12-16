@@ -1,5 +1,3 @@
-import 'package:intl/intl.dart';
-
 class StatistikJson {
   final int code;
   final StatistikData data;
@@ -57,7 +55,7 @@ class Project {
   String startDate;
   String endDate;
   bool status;
-  int progress;
+  dynamic progress;
   List<Detail> details;
 
   Project({

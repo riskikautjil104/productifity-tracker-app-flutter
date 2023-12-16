@@ -66,6 +66,7 @@ class Project2View extends GetView<Project2Controller> {
         //   // await apiService.fetchData1();
         // },
         onRefresh: () async {
+          controller.loadData();
           controller.isRefreshing.value = true;
           await Future.delayed(Duration(milliseconds: 1000));
           await controller.loadData();

@@ -1,12 +1,10 @@
-
-
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
 import '../../../data/models/statistik_models.dart';
-import '../../home/models/project1.dart';
-import '../views/statistik_pm.dart';
+// import '../../home/models/project1.dart';
+// import '../views/statistik_pm.dart';
 
 class DetailStatistikPm extends StatelessWidget {
   final Project project;
@@ -31,24 +29,23 @@ class DetailStatistikPm extends StatelessWidget {
             color: Colors.black,
           ),
         ),
-        leading: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 5),
-          child: Container(
-            height: 29.69,
-            width: 28.48,
+        leading: IconButton(
+          onPressed: () {
+            Get.back();
+          },
+          icon: Container(
+            width: 41,
+            height: 41,
+            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 7),
             decoration: BoxDecoration(
-              color: Color(0XFFD9D9D9),
-              borderRadius: BorderRadius.circular(5),
+              color: Color(0xFFD9D9D9),
+              borderRadius: BorderRadius.circular(12),
+              // color: Colors.amber,
+              border: Border.all(color: Color(0xFFE8ECF4)),
             ),
-            child: IconButton(
-              onPressed: () {
-                Get.back();
-              },
-              icon: Icon(
-                Icons.arrow_back_ios_new,
-                size: 20,
-                color: Colors.black,
-              ),
+            child: const Icon(
+              Icons.arrow_back_ios,
+              color: Colors.black,
             ),
           ),
         ),
@@ -151,14 +148,15 @@ class DetailStatistikPm extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                            // perubahan
-                              "${(person.productivity * 100).toStringAsFixed(2)}%"),
+                              // perubahan
+                              "${(person.productivity * 100).toStringAsFixed(0)}%"),
                         ),
                       ),
                       TableCell(
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text("${(person.contribution * 100).toStringAsFixed(2)}%"),
+                          child: Text(
+                              "${(person.contribution * 100).toStringAsFixed(0)}%"),
                         ),
                       ),
                     ],

@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
+import 'package:productivity_tracker_app/app/modules/home/views/home_view.dart';
 import 'package:productivity_tracker_app/app/modules/project/controllers/project2_controller.dart';
 import 'package:sp_util/sp_util.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
+// import '../../../data/providers/project_api_random.dart';
+// import '../../../data/providers/home_provider.dart';
 import '../../../data/providers/project_api_random.dart';
 import '../controllers/home_controller.dart';
 
@@ -23,6 +27,7 @@ import '../widget/cart_project.dart';
 
 class HomePm extends GetView<HomeController> {
   final ApiServices apiService = ApiServices();
+
   @override
   Widget build(BuildContext context) {
     final Project2Controller controller2 = Project2Controller();
@@ -53,30 +58,75 @@ class HomePm extends GetView<HomeController> {
           child: Padding(
             padding: const EdgeInsets.all(14.0),
             child: Container(
-              height: 28.48,
-              width: 29.69,
+              height:
+                  50, // Ubah tinggi dan lebar agar sama untuk membuat lingkaran
+              width: 50,
               decoration: BoxDecoration(
                 color: Colors.amber,
                 borderRadius: BorderRadius.circular(50),
               ),
-              child: Image.asset("assets/image/logoRadya.png"),
+              child: ClipOval(
+                child: Image.asset('assets/image/profilePic.png',
+                    fit: BoxFit.cover),
+              ),
             ),
           ),
         ),
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.search, color: Colors.white),
-          ),
-          SizedBox(width: 13),
-          IconButton(
-            onPressed: () {
-              // controller.goToNotification();
-            },
-            icon: Icon(
-              Icons.notifications_none,
-              color: Colors.white,
-            ),
+          SizedBox(width: 10),
+          Stack(
+            children: [
+              IconButton(
+                onPressed: () {
+                  controller.goToNotification();
+                },
+                icon: Icon(
+                  Icons.notifications_none,
+                  color: Colors.white,
+                ),
+              ),
+              Positioned(
+                right: 0,
+                top: 0,
+                child: Container(
+                  padding: EdgeInsets.all(3),
+                  decoration: BoxDecoration(
+                    color: Colors.red, // Warna latar belakang angka notifikasi
+                    borderRadius:
+                        BorderRadius.circular(10), // Bentuk angka notifikasi
+                  ),
+                  constraints: BoxConstraints(
+                    minWidth: 16,
+                    minHeight: 16,
+                  ),
+                  child: FutureBuilder<int>(
+                    // Ambil nilai notifikasi dari API
+                    future: apiService.fetchDataNotificationCountPM(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        int notificationCount = snapshot.data!;
+
+                        return Text(
+                          notificationCount.toString(),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                          ),
+                          textAlign: TextAlign.center,
+                        );
+                      } else {
+                        // Tampilkan loader atau widget lain jika data belum tersedia
+                        return Container(
+                          height: 10,
+                          width: 10,
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                    },
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -99,6 +149,7 @@ class HomePm extends GetView<HomeController> {
         //   // await apiService.fetchData1();
         // },
         onRefresh: () async {
+          Get.offAll(HomeView());
           controller.isRefreshing.value = true;
           await Future.delayed(Duration(milliseconds: 1000));
           await controller.loadData();
@@ -122,11 +173,57 @@ class HomePm extends GetView<HomeController> {
               ));
             } else if (snapshot.hasError) {
               return Center(
-                child: Text('Error1: ${snapshot.error}'),
+                child: Column(
+                  children: [
+                    SizedBox(
+                        width:
+                            10), // Jarak antara teks dan animasi, sesuaikan sesuai kebutuhan
+                    Lottie.asset(
+                      'assets/lottie/Animation-cat-serevr.json',
+                      width: 200, // Sesuaikan ukuran animasi sesuai kebutuhan
+                      height: 200,
+                      fit: BoxFit.contain,
+                    ),
+                    Text(
+                      'Server Erorr 500 ${snapshot.error}',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
               );
+
+              // return Center(
+              //   child:
+
+              //   Text('Error1: ${snapshot.error}'),
+              // );
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
               return Center(
-                child: Text('Tidak ada data'),
+                child: Column(
+                  children: [
+                    SizedBox(
+                        width:
+                            10), // Jarak antara teks dan animasi, sesuaikan sesuai kebutuhan
+                    Lottie.asset(
+                      'assets/lottie/cat.json',
+                      width: 200, // Sesuaikan ukuran animasi sesuai kebutuhan
+                      height: 200,
+                      fit: BoxFit.contain,
+                    ),
+                    Text(
+                      'No Project',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
               );
             } else {
               List<Project1> projects = snapshot.data!;

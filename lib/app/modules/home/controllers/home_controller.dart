@@ -1,7 +1,6 @@
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
-import 'package:productivity_tracker_app/app/modules/project/views/detail_project.dart';
+// import 'package:productivity_tracker_app/app/modules/project/views/detail_project.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 // import 'package:sp_util/sp_util.dart';
 
@@ -29,27 +28,18 @@ class HomeController extends GetxController {
     try {
       final data = await _apiService.fetchData();
       project.value = data;
-      // print(project.value.data.length);
-      // if (data.data.length == 0) {
-      //   print('data kosong');
-      // } else {
-      //   print('data ada');
-      // }
+      
       isLoading = false.obs;
-      // print(isLoading);
     } catch (e) {
-      // Handle error
-      // print(e.toString());
+     
     } finally {
       isLoading = false.obs;
     }
-    // print(isLoading);
   }
 
 // method button_navigator
   void changePage(int index) {
     currentIndex.value = index;
-    // print(SpUtil.getString('jwtToken'));
   }
 
   void changePagePm(int index) {
@@ -69,17 +59,13 @@ class HomeController extends GetxController {
         status: false,
       )).obs;
 
-      
- void fetchDetailProjectData() {
+  void fetchDetailProjectData() {
     EasyLoading.show(status: 'loading...');
- 
- 
 
-        // print(data);
-      
-        
-        Get.toNamed('/project');
-        EasyLoading.dismiss();
+    // print(data);
+
+    Get.toNamed('/project');
+    EasyLoading.dismiss();
   }
 
   @override

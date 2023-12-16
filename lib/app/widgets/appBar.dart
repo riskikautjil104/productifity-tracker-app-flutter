@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:productivity_tracker_app/app/modules/home/views/home_view.dart';
 // for use in Scaffold
 // appBar: appBar(
 //         'Profile',
@@ -16,7 +17,9 @@ import 'package:get/get.dart';
 appBar(String title, actions) {
   return AppBar(
       leading: IconButton(
-        onPressed: () => Get.back(),
+        onPressed: () {
+          Get.offAll(HomeView());
+        },
         icon: const Icon(
           Icons.arrow_back_ios_new,
           color: Colors.white,

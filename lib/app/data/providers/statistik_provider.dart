@@ -1,4 +1,4 @@
-import 'dart:convert';
+// import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:productivity_tracker_app/core/utils/EndPoints.dart';
@@ -27,57 +27,10 @@ class ApiServicess extends GetConnect {
       // Konversi data JSON menjadi objek Project1
       return data.map((json) => Project.fromJson(json)).toList();
     } else {
-      throw Exception('Gagal mengambil data proyek\nHarap muat ulang');
+      final errorResponse = response.body['Errors'];
+      throw Exception('Gagal mengambil data proyek: $errorResponse');
     }
   }
-
-  // Future<List<StatistikDataMonth>> fetchDataStatistikMonthDay() async {
-  //   final response = await get(
-  //     'https://protracker.azurewebsites.net/api/stat/$name/get-stat-month',
-  //     headers: {
-  //       'Authorization': 'Bearer $token',
-  //       'Accept': 'application/json',
-  //       'Content-Type': 'application/json',
-  //     },
-  //   );
-
-  //   print("ini pusing ${response.body}");
-  //   if (response.status.isOk) {
-  //     Map<String, dynamic> responseData = response.body;
-  //     List<dynamic> data = responseData['data'];
-
-  //     // Konversi data JSON menjadi objek Project1
-  //     return data.map((json) => StatistikDataMonth.fromJson(json)).toList();
-  //   } else {
-  //     throw Exception('Gagal mengambil data proyek\nHarap muat ulang');
-  //   }
-  // try {
-  //   final response = await get(
-  //     'https://protracker.azurewebsites.net/api/stat/$name/get-stat-month',
-  //     headers: {
-  //       'Authorization': 'Bearer $token',
-  //       'Accept': 'application/json',
-  //       'Content-Type': 'application/json',
-  //     },
-  //   );
-
-  //   if (response.status.isOk) {
-  //     List<dynamic> data = response.body['data'];
-
-  //     // Konversi data JSON menjadi objek StatistikDataMonth
-  //     List<StatistikDataMonth> statistikDataList =
-  //         data.map((json) => StatistikDataMonth.fromJson(json)).toList();
-
-  //     return statistikDataList;
-  //   } else {
-  //     throw Exception('Gagal mengambil data proyek\nHarap muat ulang');
-  //   }
-  // } catch (e) {
-  //   // Handle exception
-  //   print('Exception: $e');
-  //   throw Exception('Gagal mengambil data proyek\nHarap muat ulang');
-  // }
-  // }
 
   Future<List<StatistikDataMonth>> fetchDataStatistikMonthDay() async {
     final response = await get(
@@ -98,7 +51,8 @@ class ApiServicess extends GetConnect {
         StatistikDataMonth.fromJson(data),
       ];
     } else {
-      throw Exception('Gagal mengambil data proyek\nHarap muat ulang');
+      final errorResponse = response.body['Errors'];
+      throw Exception('Gagal mengambil data proyek: $errorResponse');
     }
   }
 
@@ -122,7 +76,8 @@ class ApiServicess extends GetConnect {
         StatistikDataLastWeek.fromJson(data),
       ];
     } else {
-      throw Exception('Gagal mengambil data proyek\nHarap muat ulang');
+      final errorResponse = response.body['Errors'];
+      throw Exception('Gagal mengambil data proyek: $errorResponse');
     }
   }
 
@@ -146,8 +101,8 @@ class ApiServicess extends GetConnect {
         StatistikDataDay.fromJson(data),
       ];
     } else {
-      throw Exception(
-          'Gagal mengambil data proyek periksa server error 500\nHarap muat ulang');
+      final errorResponse = response.body['Errors'];
+      throw Exception('Gagal mengambil data proyek: $errorResponse');
     }
   }
 
@@ -171,27 +126,27 @@ class ApiServicess extends GetConnect {
         StatistikDataQuarter.fromJson(data),
       ];
     } else {
-      throw Exception(
-          'Gagal mengambil data proyek periksa server error 500\nHarap muat ulang');
+      final errorResponse = response.body['Errors'];
+      throw Exception('Gagal mengambil data proyek: $errorResponse');
     }
   }
 
   // post data statistik day
 
   Future<Response> postData(int inputData) async {
-    if (inputData < 1 || inputData > 8) {
-      print('Error: Add working time between 1 to 8 hours.');
+    // if (inputData < 1 || inputData > 8) {
+    //   print('Error: Add working time between 1 to 8 hours.');
 
-      // Return response dengan status error
-      // Return response dengan status error
-      return Response(
-        body: jsonEncode({
-          "Code": 400,
-          "Data": "Add working time between 1 to 8 hours.",
-        }),
-        statusCode: 400,
-      );
-    }
+    //   // Return response dengan status error
+    //   // Return response dengan status error
+    //   return Response(
+    //     body: jsonEncode({
+    //       "Code": 400,
+    //       "Data": "Add working time between 1 to 8 hours.",
+    //     }),
+    //     statusCode: 400,
+    //   );
+    // }
 
     var myHeader = {
       'Accept': 'application/json',

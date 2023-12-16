@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
+import '../../../data/models/notifikasi_models.dart';
+import '../../../data/providers/home_provider.dart';
+import '../../home/views/home_view.dart';
 import '../controllers/notification_controller.dart';
 
 import '../../../widgets/navbarAppBar.dart';
@@ -11,35 +15,7 @@ class NotificationView extends GetView<NotificationController> {
 
   @override
   Widget build(BuildContext context) {
-    List<Map<String, String>> items = [
-      {
-        'name': 'Ucup Krucup',
-        'notification': 'buatkan halaman home dan halaman project',
-        'image':
-            'https://media.istockphoto.com/id/1252210017/id/foto/gadis-tersenyum-bermain-di-ayunan.webp?s=1024x1024&w=is&k=20&c=bWY91_9uM-lw0cO73xR8sEjsJmRJIso88OW7_BmBKC8=',
-        'timeSent': '5 minutes ago',
-      },
-      {
-        'name': 'Otong Surotong',
-        'notification': 'Buatkan halaman Statistik ',
-        'image':
-            'https://media.istockphoto.com/id/1320654945/id/foto/anak-laki-laki-bermain-dengan-ibu.jpg?s=1024x1024&w=is&k=20&c=CyiymZ58NhpcICH1WXaKJf0GIm_sIk9voRSfh87YHGY=',
-        'timeSent': '10 minutes ago',
-      },
-      {
-        'name': 'Otong Surotong',
-        'notification': 'Buatkan halaman Statistik ',
-        'image': 'assets/profile_image.png',
-        'timeSent': '10 minutes ago',
-      },
-      {
-        'name': 'Otong Surotong',
-        'notification': 'Buatkan halaman Statistik ',
-        'image': 'assets/profile_image.png',
-        'timeSent': '10 minutes ago',
-      },
-      // Tambahkan item lain jika diperlukan
-    ];
+    final ApiServices apiService = ApiServices();
 
     return Scaffold(
       appBar: GradientAppBar(
@@ -58,127 +34,217 @@ class NotificationView extends GetView<NotificationController> {
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
         ),
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.delete,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              // Prompt konfirmasi sebelum menghapus semua notifikasi
+              Get.defaultDialog(
+                title: 'Konfirmasi',
+                middleText:
+                    'Apakah Anda yakin untuk menghapus semua notifikasi?',
+                confirm: ElevatedButton(
+                  onPressed: () {
+                    Get.back();
+
+                    // Panggil fungsi untuk menghapus semua notifikasi
+                    controller.deleteAllNotifications();
+                  },
+                  child: Text("Hapus"),
+                ),
+                cancel: ElevatedButton(
+                  onPressed: () {
+                    Get.back();
+                  },
+                  child: Text("Batal"),
+                ),
+              );
+            },
+          ),
+        ],
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios_new,
             color: Colors.white,
           ),
           onPressed: () {
-            Get.back();
+            Get.offAll(HomeView());
           },
         ),
       ),
-      body: ListView.builder(
-        itemCount: items.length,
-        itemBuilder: (context, index) {
-          return Dismissible(
-            key: Key(items[index]['name']!),
-            onDismissed: (direction) {
-              Get.defaultDialog(
-                title: 'Konfirmasi',
-                middleText: 'Apakah Anda yakin untuk menghapus item ini?',
-                confirm: ElevatedButton(
-                  onPressed: () {
-                    Get.back();
-                    Get.snackbar('Berhasil',
-                        'Anda Anda Berhasil Menghapus data tersebut',
-                        backgroundColor: Colors.green.shade500,
-                        colorText: Colors.white,
-                        duration: Duration(seconds: 4));
-
-                    // Get.toNamed('/home-crew');
-                  },
-                  child: Text("Accept"),
-                ),
-                cancel: ElevatedButton(
-                  onPressed: () {
-                    Get.back();
-                    Get.snackbar(
-                      'Membatalkan',
-                      'Anda Berhasil Membatalkan',
-                      backgroundColor: Colors.green.shade500,
-                      colorText: Colors.white,
-                      duration: Duration(seconds: 4),
-                    );
-                  },
-                  child: Text("Cancel"),
-                ),
-                // textConfirm: 'Accept',
-                // textCancel: 'Cancel',
-                // confirmTextColor:
-                //     Colors.green, // Warna teks untuk tombol konfirmasi
-                // cancelTextColor: Colors.red,
-                // onConfirm: () {
-                //   // Tambahkan logika penghapusan item di sini
-                //   items.removeAt(index);
-                //   Get.back(); // Menutup dialog setelah mengonfirmasi penghapusan
-                // },
-                // onCancel: () {
-                //   Get.back(); // Menutup dialog ketika membatalkan penghapusan
-                // },
-              );
-              // ScaffoldMessenger.of(context).showSnackBar(
-              //   SnackBar(content: Text('Item dihapus')),
-              // );
-            },
-            background: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 5),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: Color(0xFFFF0000),
-                ),
-                alignment: Alignment.centerRight,
-                height: 59, // Sesuaikan dengan tinggi yang diinginkan
-                child: Icon(Icons.delete, color: Colors.white),
-              ),
-            ),
-            child: Container(
-              margin: const EdgeInsets.all(10),
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: Color(0XFFBCE0FD),
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+      body: FutureBuilder<List<NotificationModel>>(
+        future: apiService.fetchDataNotifications(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(
+              child: Column(
                 children: [
-                  CircleAvatar(
-                    // child: Image.network(
-                    //     'https://media.istockphoto.com/id/1252210017/id/foto/gadis-tersenyum-bermain-di-ayunan.webp?s=1024x1024&w=is&k=20&c=bWY91_9uM-lw0cO73xR8sEjsJmRJIso88OW7_BmBKC8='),
-                    // backgroundImage: Image.network(items[index] ['image']!),
-                    backgroundImage: NetworkImage(items[index]['image']!),
+                  SizedBox(
+                      width:
+                          10), // Jarak antara teks dan animasi, sesuaikan sesuai kebutuhan
+                  Lottie.asset(
+                    'assets/lottie/Animation-cat-serevr.json',
+                    width: 200, // Sesuaikan ukuran animasi sesuai kebutuhan
+                    height: 200,
+                    fit: BoxFit.contain,
                   ),
-                  SizedBox(width: 10),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          items[index]['name']!,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                          ),
-                        ),
-                        Text(
-                          items[index]['timeSent']!,
-                          style: TextStyle(
-                            color: Color(0XFFB9B9B9),
-                            fontSize: 12,
-                          ),
-                        ),
-                        Text(
-                          items[index]['notification']!,
-                        ),
-                      ],
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Text(
+                      'Server Erorr 500 ${snapshot.error}',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ],
               ),
-            ),
-          );
+            );
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return Center(
+              child: Column(
+                children: [
+                  SizedBox(
+                      width:
+                          10), // Jarak antara teks dan animasi, sesuaikan sesuai kebutuhan
+                  Lottie.network(
+                    'https://lottie.host/21f699d1-5f97-405e-b338-e31d1a80cb9d/07uDzn6POU.json',
+                    width: 200, // Sesuaikan ukuran animasi sesuai kebutuhan
+                    height: 200,
+                    fit: BoxFit.contain,
+                  ),
+                  Text(
+                    'No Notifikasi',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          } else {
+            List<NotificationModel> notifications = snapshot.data!;
+
+            return ListView.builder(
+              itemCount: notifications.length,
+              padding: EdgeInsets.all(10),
+              itemBuilder: (context, index) {
+                // Ambil notifikasi pada indeks tertentu
+                var notification = notifications[index];
+
+                // Widget Card untuk menampilkan notifikasi
+                return Card(
+                  color: Color(0XFFBCE0FD),
+                  shadowColor: Colors.black,
+                  elevation: 2,
+                  margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                  child: InkWell(
+                    onTap: () {
+                      // Tampilkan modal ketika kartu ditekan
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return Container(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [Color(0xFF197391), Color(0XFF0F9EEA)],
+                              ),
+                            ),
+                            padding: EdgeInsets.all(16),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  notification.content,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                ),
+                                SizedBox(height: 10),
+                                Text(
+                                  'Terkirim : ${notification.created.toString().substring(0, 10)}',
+                                  style: TextStyle(
+                                      fontSize: 14, color: Colors.white),
+                                ),
+                                SizedBox(height: 10),
+                                Text(
+                                  'Telah Dibaca',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: const Color.fromARGB(
+                                        255, 176, 176, 176),
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.pop(context); // Tutup modal
+                                  },
+                                  child: Text('Tutup'),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    },
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        backgroundColor: Colors.amber,
+                        child: Icon(
+                          Icons.notification_important,
+                          color: Colors.white,
+                        ),
+                      ),
+                      title: Text(
+                        notification.content,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      subtitle: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 10,
+                        ),
+                        child: Text(
+                          'Terkirim : ${notification.created.toString().substring(0, 10)}',
+                          style: TextStyle(
+                            fontSize: 10,
+                          ),
+                        ),
+                      ),
+                      trailing: Column(
+                        children: [
+                          Icon(
+                            Icons.check,
+                            color: Colors.green,
+                          ),
+                          Text(
+                            "Dibaca",
+                            style: TextStyle(
+                              fontSize: 8,
+                              color: Colors.black45,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
+            );
+          }
         },
       ),
     );

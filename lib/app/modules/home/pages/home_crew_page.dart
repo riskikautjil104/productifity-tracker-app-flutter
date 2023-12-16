@@ -19,6 +19,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 import '../../../widgets/navbarAppBar.dart';
 
 // import '../models/project.dart';
+import '../views/home_view.dart';
 import '../widget/cart_project.dart';
 
 import '../widget/cart_nama_task.dart';
@@ -39,6 +40,7 @@ class HomeViewCrew extends GetView<HomeController> {
   final CarouselController _carouselController = CarouselController();
   @override
   Widget build(BuildContext context) {
+    // var productivity = SpUtil
     final HomeController controller = Get.put(HomeController());
     return Scaffold(
       // navbar
@@ -67,30 +69,77 @@ class HomeViewCrew extends GetView<HomeController> {
           child: Padding(
             padding: const EdgeInsets.all(14.0),
             child: Container(
-              height: 28.48,
-              width: 29.69,
+              height:
+                  50, // Ubah tinggi dan lebar agar sama untuk membuat lingkaran
+              width: 50,
               decoration: BoxDecoration(
                 color: Colors.amber,
                 borderRadius: BorderRadius.circular(50),
               ),
-              child: Image.asset("assets/image/logoRadya.png"),
+              child: ClipOval(
+                child: Image.asset('assets/image/profilePic.png',
+                    fit: BoxFit.cover),
+              ),
             ),
           ),
         ),
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.search, color: Colors.white),
-          ),
           SizedBox(width: 13),
-          IconButton(
-            onPressed: () {
-              controller.goToNotification();
-            },
-            icon: Icon(
-              Icons.notifications_none,
-              color: Colors.white,
-            ),
+          Stack(
+            children: [
+              IconButton(
+                onPressed: () {
+                  controller.goToNotification();
+                },
+                icon: Icon(
+                  Icons.notifications_none,
+                  color: Colors.white,
+                ),
+              ),
+              Positioned(
+                right: 0,
+                top: 0,
+                child: Container(
+                  padding: EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    color: Colors.red, // Warna latar belakang angka notifikasi
+                    borderRadius:
+                        BorderRadius.circular(10), // Bentuk angka notifikasi
+                  ),
+                  constraints: BoxConstraints(
+                    minWidth: 16,
+                    minHeight: 16,
+                  ),
+                  child: FutureBuilder<int>(
+                    // Ambil nilai notifikasi dari API
+                    future: apiService
+                        .fetchDataNotificationCount(), // Menggunakan fungsi async untuk mengambil data dari API
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        int notificationCount = snapshot.data!;
+
+                        return Text(
+                          notificationCount.toString(),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                          ),
+                          textAlign: TextAlign.center,
+                        );
+                      } else {
+                        // Tampilkan loader atau widget lain jika data belum tersedia
+
+                        return Container(
+                          height: 10,
+                          width: 10,
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                    },
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -104,6 +153,7 @@ class HomeViewCrew extends GetView<HomeController> {
           idleText: 'Tarik ke bawah untuk refresh',
         ),
         onRefresh: () async {
+          await Get.offAll(HomeView());
           await controller.loadData();
           // await apiService.fetchData1();
         },
@@ -113,16 +163,58 @@ class HomeViewCrew extends GetView<HomeController> {
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
-                  child: CircularProgressIndicator(
-                color: Color(0XFF0F9EEA),
-              ));
+                child: CircularProgressIndicator(
+                  color: Color(0XFF0F9EEA),
+                ),
+              );
             } else if (snapshot.hasError) {
               return Center(
-                child: Text('Error1: ${snapshot.error}'),
+                child: Column(
+                  children: [
+                    SizedBox(
+                        width:
+                            10), // Jarak antara teks dan animasi, sesuaikan sesuai kebutuhan
+                    Lottie.asset(
+                      'assets/lottie/Animation-cat-serevr.json',
+                      width: 200, // Sesuaikan ukuran animasi sesuai kebutuhan
+                      height: 200,
+                      fit: BoxFit.contain,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Text(
+                        'Server Erorr 500 ${snapshot.error}',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               );
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
               return Center(
-                child: Text('Tidak ada data'),
+                child: Column(
+                  children: [
+                    SizedBox(width: 10), // Jarak antara teks dan animasi
+                    Lottie.network(
+                      'https://lottie.host/21f699d1-5f97-405e-b338-e31d1a80cb9d/07uDzn6POU.json',
+                      width: 200,
+                      height: 200,
+                      fit: BoxFit.contain,
+                    ),
+                    Text(
+                      'No Project',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
               );
             } else {
               List<ProjectHomeCrew> projects = snapshot.data!;
@@ -130,6 +222,7 @@ class HomeViewCrew extends GetView<HomeController> {
               return Column(
                 children: [
                   // Bagian atas
+
                   Container(
                     width: 375,
                     height: 185,
@@ -137,24 +230,72 @@ class HomeViewCrew extends GetView<HomeController> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          CIrcularStatistik(
-                            radius: 45.0,
-                            lineWidth: 13.0,
-                            animation: true,
-                            animationDuration: 5000,
-                            percent: projects.isEmpty
-                                ? 0.0
-                                : (projects.first.productivity).clamp(0.0, 1.0),
-                            centerText:
-                                "${(projects.first.productivity * 100).toStringAsFixed(0)}%",
-                            // centerText: "70%",
-                            centerTextColor: Color(0XFF197492),
-                            centerTextFontWeight: FontWeight.bold,
-                            centerTextFontSize: 20.0,
-                            footerText: "Productivity",
-                            footerTextFontSize: 15.0,
-                            progressColor: Color(0XFF197492),
+                          FutureBuilder<dynamic>(
+                            future: apiService.productifity(),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                dynamic sumProductivity = snapshot.data!;
+                                return CIrcularStatistik(
+                                  radius: 45.0,
+                                  lineWidth: 13.0,
+                                  animation: true,
+                                  animationDuration: 5000,
+                                  percent: sumProductivity is int
+                                      ? sumProductivity.toDouble()
+                                      : sumProductivity,
+
+                                  // projects.isEmpty
+                                  //     ? 0.0
+                                  //     : (projects.first.productivity.toDouble()) == 1
+                                  //         ? 1
+                                  //         : projects.first.productivity.toDouble(),
+
+                                  centerText:
+                                      "${(sumProductivity * 100).toStringAsFixed(0)}%",
+                                  // "${(sumProductivity * 100).toStringAsFixed(0)}%",
+                                  //  "${(projects.first.productivity)}%",
+                                  // centerText: "70%",
+                                  centerTextColor: Color(0XFF197492),
+                                  centerTextFontWeight: FontWeight.bold,
+                                  centerTextFontSize: 20.0,
+                                  footerText: "Productivity",
+                                  footerTextFontSize: 15.0,
+                                  progressColor: Color(0XFF197492),
+                                );
+                              } else {
+                                // Tampilkan loader atau widget lain jika data belum tersedia
+
+                                return Container(
+                                  height: 25,
+                                  width: 25,
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
+                            },
                           ),
+                          // CIrcularStatistik(
+                          //   radius: 45.0,
+                          //   lineWidth: 13.0,
+                          //   animation: true,
+                          //   animationDuration: 5000,
+                          //   percent: productivity,
+                          //   // projects.isEmpty
+                          //   //     ? 0.0
+                          //   //     : (projects.first.productivity.toDouble()) == 1
+                          //   //         ? 1
+                          //   //         : projects.first.productivity.toDouble(),
+
+                          //   centerText:
+                          //       "${(productivity * 100).toStringAsFixed(0)}%",
+                          //   //  "${(projects.first.productivity)}%",
+                          //   // centerText: "70%",
+                          //   centerTextColor: Color(0XFF197492),
+                          //   centerTextFontWeight: FontWeight.bold,
+                          //   centerTextFontSize: 20.0,
+                          //   footerText: "Productivity",
+                          //   footerTextFontSize: 15.0,
+                          //   progressColor: Color(0XFF197492),
+                          // ),
                           SizedBox(
                             width: 20,
                           ),
@@ -166,42 +307,101 @@ class HomeViewCrew extends GetView<HomeController> {
                           SizedBox(
                             width: 20,
                           ),
-                          CircularPercentIndicator(
-                            radius: 45.0,
-                            lineWidth: 13.0,
-                            animation: true,
-                            animationDuration: 5000,
-                            percent:
-                                // projects.first.contribution / 100,
-                                projects.isEmpty
-                                    ? 0.0
-                                    : projects.first.contribution == 1
-                                        ? 1
-                                        : projects.first.contribution
-                                            .toDouble(),
-                            // projects.isEmpty
-                            //     ? 0.0
-                            //     : (projects.first.contribution)
-                            //         .clamp(0.0, 1.0),
-                            center: Text(
-                              "${(projects.first.contribution * 100)}%",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20.0,
-                                  color: Color(0XFF0F9EEA)),
-                            ),
-                            footer: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 10),
-                              child: Text(
-                                "Contribution",
-                                style: TextStyle(
-                                  fontSize: 15.0,
-                                ),
-                              ),
-                            ),
-                            circularStrokeCap: CircularStrokeCap.round,
-                            progressColor: Color(0XFF2699FB),
+                          FutureBuilder<dynamic>(
+                            future: apiService.contribution(),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                dynamic sumContibution = snapshot.data!;
+                                return CircularPercentIndicator(
+                                  radius: 45.0,
+                                  lineWidth: 13.0,
+                                  animation: true,
+                                  animationDuration: 5000,
+                                  percent: sumContibution is int
+                                      ? sumContibution.toDouble()
+                                      : sumContibution,
+                                  //  (contributions / 100).clamp(0.0, 1.0),
+                                  // projects.first.contribution / 100,
+                                  // projects.isEmpty
+                                  //     ? 0.0
+                                  //     : projects.first.contribution == 1
+                                  //         ? 1
+                                  //         : projects.first.contribution
+                                  //             .toDouble(),
+                                  // projects.isEmpty
+                                  //     ? 0.0
+                                  //     : (projects.first.contribution)
+                                  //         .clamp(0.0, 1.0),
+                                  center: Text(
+                                    "${(sumContibution * 100).toStringAsFixed(0)}%",
+                                    // "${(projects.first.contribution * 100)}%",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20.0,
+                                        color: Color(0XFF0F9EEA)),
+                                  ),
+                                  footer: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10),
+                                    child: Text(
+                                      "Contribution",
+                                      style: TextStyle(
+                                        fontSize: 15.0,
+                                      ),
+                                    ),
+                                  ),
+                                  circularStrokeCap: CircularStrokeCap.round,
+                                  progressColor: Color(0XFF2699FB),
+                                );
+                              } else {
+                                // Tampilkan loader atau widget lain jika data belum tersedia
+
+                                return Container(
+                                  height: 25,
+                                  width: 25,
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
+                            },
                           ),
+                          // CircularPercentIndicator(
+                          //   radius: 45.0,
+                          //   lineWidth: 13.0,
+                          //   animation: true,
+                          //   animationDuration: 5000,
+                          //   percent: 0.0,
+                          //   //  (contributions / 100).clamp(0.0, 1.0),
+                          //   // projects.first.contribution / 100,
+                          //   // projects.isEmpty
+                          //   //     ? 0.0
+                          //   //     : projects.first.contribution == 1
+                          //   //         ? 1
+                          //   //         : projects.first.contribution
+                          //   //             .toDouble(),
+                          //   // projects.isEmpty
+                          //   //     ? 0.0
+                          //   //     : (projects.first.contribution)
+                          //   //         .clamp(0.0, 1.0),
+                          //   center: Text(
+                          //     "%",
+                          //     // "${(projects.first.contribution * 100)}%",
+                          //     style: TextStyle(
+                          //         fontWeight: FontWeight.bold,
+                          //         fontSize: 20.0,
+                          //         color: Color(0XFF0F9EEA)),
+                          //   ),
+                          //   footer: Padding(
+                          //     padding: const EdgeInsets.symmetric(vertical: 10),
+                          //     child: Text(
+                          //       "Contribution",
+                          //       style: TextStyle(
+                          //         fontSize: 15.0,
+                          //       ),
+                          //     ),
+                          //   ),
+                          //   circularStrokeCap: CircularStrokeCap.round,
+                          //   progressColor: Color(0XFF2699FB),
+                          // ),
                         ],
                       ),
                     ),
@@ -493,32 +693,3 @@ class CIrcularStatistik extends StatelessWidget {
     );
   }
 }
-
-// class DetailPage extends StatelessWidget {
-//   // final Project project; // Mengganti tipe data menjadi Project
-
-//   // Mengganti parameter konstruktor dan menambahkan this.project
-//   DetailPage({required this.project});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Detail Page'),
-//       ),
-//       body: Center(
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: [
-//             Text('Detail Page for Project:'),
-//             SizedBox(height: 10),
-//             Text('Project Name: ${project.namaProject}'),
-//             Text('Project Date: ${project.date}'),
-//             Text('Project Progress: ${project.percend}'),
-//             // Tambahan informasi proyek lainnya
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
