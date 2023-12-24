@@ -106,13 +106,13 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           children: [
             SizedBox(
-              height: 250,
+              height: 200,
             ),
             Container(
               child: Center(
                 child: Image.asset(
-                  'assets/image/logologo-removebg-preview.png',
-                  width: 400,
+                  'assets/icons/PROTracker2.png',
+                  width: 290,
                   height: 300,
                   fit: BoxFit.contain,
                 ),
