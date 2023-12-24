@@ -1,38 +1,20 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:productivity_tracker_app/app/modules/login/controllers/login_controller.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sp_util/sp_util.dart';
-
 import '../controllers/home_controller.dart';
-
 import 'package:carousel_slider/carousel_slider.dart';
-
-// import '../widget/namaTask_widget.dart';
-
 import 'package:percent_indicator/percent_indicator.dart';
-
-// import '../widget/buttonNavigator.dart';
-
 import '../../../widgets/navbarAppBar.dart';
-
-// import '../models/project.dart';
 import '../views/home_view.dart';
 import '../widget/cart_project.dart';
-
 import '../widget/cart_nama_task.dart';
-
-// import '../../../widgets/button_navigatorBar.dart';
-
-// import '../../../data/providers/project_api_random.dart';
-
-// import '../models/project1.dart';
 import '../../../data/providers/home_provider.dart';
 import '../../../data/models/home_model.dart';
-
 import 'package:lottie/lottie.dart';
+
 
 class HomeViewCrew extends GetView<HomeController> {
   final LoginController loginController = Get.put(LoginController());
@@ -67,7 +49,7 @@ class HomeViewCrew extends GetView<HomeController> {
             Get.toNamed('/profile');
           },
           child: Padding(
-            padding: const EdgeInsets.all(14.0),
+            padding: const EdgeInsets.all(15.0),
             child: Container(
               height:
                   50, // Ubah tinggi dan lebar agar sama untuk membuat lingkaran
@@ -77,8 +59,12 @@ class HomeViewCrew extends GetView<HomeController> {
                 borderRadius: BorderRadius.circular(50),
               ),
               child: ClipOval(
-                child: Image.asset('assets/image/profilePic.png',
-                    fit: BoxFit.cover),
+                child: Image.asset(
+                  'assets/image/profilePic.png',
+                  height: 50,
+                  width: 50,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
@@ -244,17 +230,9 @@ class HomeViewCrew extends GetView<HomeController> {
                                       ? sumProductivity.toDouble()
                                       : sumProductivity,
 
-                                  // projects.isEmpty
-                                  //     ? 0.0
-                                  //     : (projects.first.productivity.toDouble()) == 1
-                                  //         ? 1
-                                  //         : projects.first.productivity.toDouble(),
-
                                   centerText:
                                       "${(sumProductivity * 100).toStringAsFixed(0)}%",
-                                  // "${(sumProductivity * 100).toStringAsFixed(0)}%",
-                                  //  "${(projects.first.productivity)}%",
-                                  // centerText: "70%",
+                                
                                   centerTextColor: Color(0XFF197492),
                                   centerTextFontWeight: FontWeight.bold,
                                   centerTextFontSize: 20.0,
@@ -263,7 +241,7 @@ class HomeViewCrew extends GetView<HomeController> {
                                   progressColor: Color(0XFF197492),
                                 );
                               } else {
-                                // Tampilkan loader atau widget lain jika data belum tersedia
+                              
 
                                 return Container(
                                   height: 25,
@@ -273,29 +251,6 @@ class HomeViewCrew extends GetView<HomeController> {
                               }
                             },
                           ),
-                          // CIrcularStatistik(
-                          //   radius: 45.0,
-                          //   lineWidth: 13.0,
-                          //   animation: true,
-                          //   animationDuration: 5000,
-                          //   percent: productivity,
-                          //   // projects.isEmpty
-                          //   //     ? 0.0
-                          //   //     : (projects.first.productivity.toDouble()) == 1
-                          //   //         ? 1
-                          //   //         : projects.first.productivity.toDouble(),
-
-                          //   centerText:
-                          //       "${(productivity * 100).toStringAsFixed(0)}%",
-                          //   //  "${(projects.first.productivity)}%",
-                          //   // centerText: "70%",
-                          //   centerTextColor: Color(0XFF197492),
-                          //   centerTextFontWeight: FontWeight.bold,
-                          //   centerTextFontSize: 20.0,
-                          //   footerText: "Productivity",
-                          //   footerTextFontSize: 15.0,
-                          //   progressColor: Color(0XFF197492),
-                          // ),
                           SizedBox(
                             width: 20,
                           ),
@@ -320,21 +275,9 @@ class HomeViewCrew extends GetView<HomeController> {
                                   percent: sumContibution is int
                                       ? sumContibution.toDouble()
                                       : sumContibution,
-                                  //  (contributions / 100).clamp(0.0, 1.0),
-                                  // projects.first.contribution / 100,
-                                  // projects.isEmpty
-                                  //     ? 0.0
-                                  //     : projects.first.contribution == 1
-                                  //         ? 1
-                                  //         : projects.first.contribution
-                                  //             .toDouble(),
-                                  // projects.isEmpty
-                                  //     ? 0.0
-                                  //     : (projects.first.contribution)
-                                  //         .clamp(0.0, 1.0),
                                   center: Text(
                                     "${(sumContibution * 100).toStringAsFixed(0)}%",
-                                    // "${(projects.first.contribution * 100)}%",
+                                    
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 20.0,
@@ -354,7 +297,7 @@ class HomeViewCrew extends GetView<HomeController> {
                                   progressColor: Color(0XFF2699FB),
                                 );
                               } else {
-                                // Tampilkan loader atau widget lain jika data belum tersedia
+                               
 
                                 return Container(
                                   height: 25,
@@ -364,44 +307,6 @@ class HomeViewCrew extends GetView<HomeController> {
                               }
                             },
                           ),
-                          // CircularPercentIndicator(
-                          //   radius: 45.0,
-                          //   lineWidth: 13.0,
-                          //   animation: true,
-                          //   animationDuration: 5000,
-                          //   percent: 0.0,
-                          //   //  (contributions / 100).clamp(0.0, 1.0),
-                          //   // projects.first.contribution / 100,
-                          //   // projects.isEmpty
-                          //   //     ? 0.0
-                          //   //     : projects.first.contribution == 1
-                          //   //         ? 1
-                          //   //         : projects.first.contribution
-                          //   //             .toDouble(),
-                          //   // projects.isEmpty
-                          //   //     ? 0.0
-                          //   //     : (projects.first.contribution)
-                          //   //         .clamp(0.0, 1.0),
-                          //   center: Text(
-                          //     "%",
-                          //     // "${(projects.first.contribution * 100)}%",
-                          //     style: TextStyle(
-                          //         fontWeight: FontWeight.bold,
-                          //         fontSize: 20.0,
-                          //         color: Color(0XFF0F9EEA)),
-                          //   ),
-                          //   footer: Padding(
-                          //     padding: const EdgeInsets.symmetric(vertical: 10),
-                          //     child: Text(
-                          //       "Contribution",
-                          //       style: TextStyle(
-                          //         fontSize: 15.0,
-                          //       ),
-                          //     ),
-                          //   ),
-                          //   circularStrokeCap: CircularStrokeCap.round,
-                          //   progressColor: Color(0XFF2699FB),
-                          // ),
                         ],
                       ),
                     ),
@@ -414,25 +319,18 @@ class HomeViewCrew extends GetView<HomeController> {
                     options: CarouselOptions(
                       height: 400.0,
                       viewportFraction: 1.0,
-                      autoPlay: projects.length > 1,
-                      autoPlayAnimationDuration: Duration(seconds: 5),
+                      // autoPlay: projects.length > 1,
+                      // autoPlayAnimationDuration: Duration(seconds: 5),
                     ),
                     items: projects.map(
                       (project) {
                         return Builder(
                           builder: (BuildContext context) {
                             return GestureDetector(
-                              onTap: () {
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //     builder: (context) =>
-                                //         DetailPage(project: project),
-                                //   ),
-                                // );
-                              },
+                              onTap: () {},
                               child: Container(
                                 width: MediaQuery.of(context).size.width,
+                                height: MediaQuery.of(context).size.height,
                                 margin: EdgeInsets.symmetric(horizontal: 5.0),
                                 child: ListView(
                                   shrinkWrap: true,
@@ -441,8 +339,29 @@ class HomeViewCrew extends GetView<HomeController> {
                                     Column(
                                       children: [
                                         project.status == true
-                                            ? Text(
-                                                "Project ${project.name}, Complete")
+                                            ? CartProject(
+                                                namaProject:
+                                                    project.name.toString(),
+                                                date: "Completed✅",
+                                                // DateFormat('yyyy-MM-dd')
+                                                //     .format(project.endDate),
+                                                progress:
+                                                    '${project.progress}%',
+                                                percent: project.progress / 100,
+                                                leadingIcon:
+                                                    Icons.arrow_back_ios,
+                                                leadingIconOnPressed: () {
+                                                  _carouselController
+                                                      .previousPage();
+                                                },
+                                                trailingIcon:
+                                                    Icons.arrow_forward_ios,
+                                                tarilingIconOnPressed: () {
+                                                  _carouselController
+                                                      .nextPage();
+                                                },
+                                                onTap: () {},
+                                              )
                                             : Column(
                                                 children: [
                                                   CartProject(
@@ -470,7 +389,36 @@ class HomeViewCrew extends GetView<HomeController> {
                                                     },
                                                     onTap: () {},
                                                   ),
-                                                  SizedBox(height: 22),
+                                                  SizedBox(height: 5),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 14,
+                                                            right: 14),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Text(
+                                                          (project.tasks
+                                                                      ?.isNotEmpty ??
+                                                                  false)
+                                                              ? "Task Count: ${project.tasks?.length}"
+                                                              : "Task Count\t :\t 0",
+                                                          style: TextStyle(
+                                                            fontSize: 12,
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          " ${(project.tasks?.where((task) => task.status == true).length ?? 0) > 0 ? project.tasks?.where((task) => task.status == true).length : 0}\t: \tTask Completed",
+                                                          style: TextStyle(
+                                                            fontSize: 12,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
                                                 ],
                                               ),
                                         SizedBox(
@@ -480,7 +428,7 @@ class HomeViewCrew extends GetView<HomeController> {
                                         Column(
                                           children: [
                                             // Bagian "New Task"
-                                            Text("Task 🚀👨‍💻"),
+                                            Text("Task"),
                                             if ((project.tasks ?? [])
                                                 .isNotEmpty)
                                               for (var task in project.tasks!)
@@ -512,7 +460,7 @@ class HomeViewCrew extends GetView<HomeController> {
                                             // Bagian "New Task" kosong
                                             if ((project.tasks ?? []).isEmpty)
                                               Container(
-                                                height: 50,
+                                                height: 70,
                                                 decoration: BoxDecoration(
                                                   color: const Color.fromARGB(
                                                       255, 223, 223, 223),
@@ -524,29 +472,30 @@ class HomeViewCrew extends GetView<HomeController> {
                                                     .width,
                                                 child: Center(
                                                   child: Container(
-                                                    height: 70,
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          const Color.fromARGB(
-                                                              255,
-                                                              223,
-                                                              223,
-                                                              223),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                    ),
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                            .size
-                                                            .width,
-                                                    child: Lottie.asset(
-                                                        'assets/lottie/notfound.json'),
-                                                    // child: Text("New Task Kosong"),
-                                                  ),
+                                                      height: 70,
+                                                      decoration: BoxDecoration(
+                                                        color: const Color
+                                                            .fromARGB(
+                                                            255, 223, 223, 223),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10),
+                                                      ),
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                              .size
+                                                              .width,
+                                                      child: Center(
+                                                        child: Text('No Task'),
+                                                      )
+                                                      // Lottie.asset(
+                                                      //     'assets/lottie/notfound.json'),
+                                                      // child: Text("New Task Kosong"),
+                                                      ),
                                                 ),
                                               ),
                                             SizedBox(height: 8),
+
                                             // Bagian "Completed"
                                             if ((project.tasks ?? [])
                                                 .isNotEmpty)
@@ -580,38 +529,26 @@ class HomeViewCrew extends GetView<HomeController> {
                                               ),
                                             // Bagian "Completed" kosong
                                             if ((project.tasks ?? []).isEmpty)
-                                              Center(
-                                                child: Text(
-                                                    "Task Completed Kosong"),
+                                              Container(
+                                                height: 70,
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                decoration: BoxDecoration(
+                                                  color: const Color.fromARGB(
+                                                      255, 223, 223, 223),
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                child: Center(
+                                                  child:
+                                                      Text("No Task Completed"),
+                                                ),
                                               ),
-                                            Container(
-                                              height: 70,
-                                              decoration: BoxDecoration(
-                                                color: const Color.fromARGB(
-                                                    255, 223, 223, 223),
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                              ),
-                                              child: LottieBuilder.asset(
-                                                  'assets/lottie/notfound.json'),
-                                            ),
                                           ],
                                         ),
 
-                                        // Container(
-                                        //   height: 70,
-                                        // decoration: BoxDecoration(
-                                        //   color: const Color.fromARGB(
-                                        //       255, 223, 223, 223),
-                                        //   borderRadius:
-                                        //       BorderRadius.circular(10),
-                                        // ),
-                                        // width:
-                                        //     MediaQuery.of(context).size.width,
-                                        // child: Lottie.asset(
-                                        //     'assets/lottie/notfound.json'),
-                                        // ),
-                                        // Animation - 1700913385823.json
+                                      
                                       ],
                                     ),
                                   ],

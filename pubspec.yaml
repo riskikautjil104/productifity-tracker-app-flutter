@@ -19,6 +19,7 @@ dependencies:
   pull_to_refresh: ^2.0.0
   lottie: ^2.7.0
   intl: ^0.17.0
+  flutter_launcher_icons: ^0.13.1
   flutter:
     sdk: flutter
 
@@ -34,3 +35,10 @@ flutter:
     - assets/image/
     - assets/icons/
     - assets/lottie/
+
+# i
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icons/icon.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21

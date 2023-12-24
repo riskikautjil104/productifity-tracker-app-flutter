@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
+import 'package:productivity_tracker_app/app/modules/home/models/project1.dart';
 // import 'package:lottie/lottie.dart';
 // import 'package:productivity_tracker_app/app/modules/home/widget/cart_project.dart';
-import 'package:productivity_tracker_app/app/modules/home/models/project1.dart';
+// import 'package:productivity_tracker_app/app/modules/home/models/project1.dart';
 import 'package:productivity_tracker_app/app/modules/home/widget/cart_project.dart';
 import 'package:productivity_tracker_app/app/modules/project/controllers/project2_controller.dart';
 import 'package:productivity_tracker_app/app/modules/project/views/add_project_view.dart';
@@ -13,6 +14,8 @@ import 'package:productivity_tracker_app/app/modules/project/views/add_project_v
 import 'package:productivity_tracker_app/app/widgets/navbarAppBar.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sp_util/sp_util.dart';
+
+// import '../../../data/models/home_model.dart';
 
 // ignore: must_be_immutable
 class Project2View extends GetView<Project2Controller> {
@@ -126,7 +129,7 @@ class Project2View extends GetView<Project2Controller> {
                                                 .endDate), // Konversi DateTime ke String
                                         progress:
                                             '${project.progress}%', // Ganti properti
-                                        percent: project.progress.toDouble() /
+                                        percent: project.progress /
                                             100, // Ganti properti
                                       )
                                     : Container());
@@ -169,7 +172,7 @@ class Project2View extends GetView<Project2Controller> {
                                           .endDate), // Konversi DateTime ke String
                                       progress:
                                           '${project.progress}%', // Ganti properti
-                                      percent: project.progress.toDouble() /
+                                      percent: project.progress /
                                           100, // Ganti properti
                                     )
                                   : Container(),

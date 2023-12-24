@@ -16,9 +16,7 @@ class Project1 {
     dynamic progress,
     this.tasks,
   }) : progress = progress;
-  // bool hasNewTasks() {
-  //   return tasks.any((task) => task.isNew);
-  // }
+ 
 
   factory Project1.fromJson(Map<String, dynamic> json) {
     return Project1(
@@ -59,7 +57,7 @@ class Task {
     return Task(
       taskId: json['taskId'],
       taskName: json['taskName'],
-      isNew: json['isNew'] ?? false, // Ganti dengan kunci yang sesuai dengan status "isNew"
+      isNew: json['isNew'] ?? false, 
     );
   }
 }

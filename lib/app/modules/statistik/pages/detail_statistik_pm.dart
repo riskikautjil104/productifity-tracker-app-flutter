@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../data/models/statistik_models.dart';
-// import '../../home/models/project1.dart';
-// import '../views/statistik_pm.dart';
+
 
 class DetailStatistikPm extends StatelessWidget {
   final Project project;

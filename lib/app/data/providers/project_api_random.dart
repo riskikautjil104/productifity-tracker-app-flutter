@@ -1,13 +1,8 @@
 import 'package:get/get.dart';
 import 'package:productivity_tracker_app/core/utils/EndPoints.dart';
-
 import '../../modules/home/models/project1.dart';
-// import '../../modules/home/models/project.dart';
-
 import 'package:sp_util/sp_util.dart';
 
-import '../models/statistik_models.dart';
-import '../models/task_models.dart';
 
 class ApiServices extends GetConnect {
   var token = SpUtil.getString('jwtToken');
@@ -32,63 +27,14 @@ class ApiServices extends GetConnect {
       Map<String, dynamic> responseData = response.body;
       List<dynamic> data = responseData['data'];
 
-      // Konversi data JSON menjadi objek Project1
+     
       return data.map((json) => Project1.fromJson(json)).toList();
     } else {
       throw Exception('Gagal mengambil data proyek\nHarap muat ulang');
     }
   }
 
-  // Method untuk mendapatkan daftar tugas berdasarkan ID proyek
-  Future<List<TaskData>> fetchTasks(String projectId) async {
-    var token = SpUtil.getString('jwtToken');
-    var name = SpUtil.getString('username');
-
-    final response = await get(
-      'https://protracker.azurewebsites.net/api/task/$name/get-all-task?projectId=$projectId',
-      headers: {
-        'Authorization': 'Bearer $token',
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-    );
-
-    if (response.status.isOk) {
-      Map<String, dynamic> responseData = response.body;
-      List<dynamic> data = responseData['data'];
-
-      print('data datanya aku sedang ${data}');
-
-      // Konversi data JSON menjadi objek TaskData
-      return data.map((json) => TaskData.fromJson(json)).toList();
-    } else {
-      throw Exception('Gagal mengambil data tugas\nHarap muat ulang');
-    }
-  }
-
-  Future<List<StatistikData>> statistik() async {
-    final response = await get(
-      'https://protracker.azurewebsites.net/api/project/$name/get-all-project',
-      headers: {
-        'Authorization': 'Bearer $token',
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-    );
-
-    print("data data nya ${response.status.isOk}");
-    if (response.status.isOk) {
-      Map<String, dynamic> responseData = response.body;
-      List<dynamic> data = responseData['data'];
-      print("ini adalah ${data}");
-
-      return data.map((json) => StatistikData.fromJson(json)).toList();
-      // List<dynamic> data = response.body;
-      // return data.map((json) => Project1.fromJson(json)).toList();
-    } else {
-      throw Exception('Gagal mengambil data\nHarap muat ulang');
-    }
-  }
+  
 
   Future<int> fetchDataNotificationCountPM() async {
     try {
@@ -109,7 +55,8 @@ class ApiServices extends GetConnect {
       );
 
       print(
-          "int notif ${response.body}"); // Tambahkan ini untuk mencetak respons API
+          "int notif ${response.body}"); 
+          // Tambahkan ini untuk mencetak respons API
 
       if (response.status.isOk) {
         Map<String, dynamic> responseData = response.body;

@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:productivity_tracker_app/app/modules/home/views/home_view.dart';
-// import 'package:pull_to_refresh/pull_to_refresh.dart';
-
-// import '../controllers/statistik_controller.dart';
-
 import '../../../data/models/statistik_models.dart';
 import '../../../data/providers/statistik_provider.dart';
 import '../controllers/statistik_controller.dart';
 import '../widget/statistik_circular.dart';
-
 import '../../../widgets/navbarAppBar.dart';
 
 class StatistikView extends GetView<StatistikController> {
@@ -131,10 +125,9 @@ class StatistikView extends GetView<StatistikController> {
           } else {
             List<StatistikDataDay> dataMonth = snapshot.data!;
 
-   
             double productivityPercentage =
                 dataMonth.first.productivity.toDouble();
-     
+
             return SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -258,6 +251,15 @@ class LastWeek extends GetView<StatistikController> {
           ],
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
+        ),
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios_new,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Get.back();
+          },
         ),
       ),
       body: FutureBuilder<List<StatistikDataLastWeek>?>(
@@ -431,21 +433,18 @@ class LastMonth extends GetView<StatistikController> {
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
         ),
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios_new,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Get.back();
+          },
+        ),
       ),
       body:
-          // SmartRefresher(
-          //   controller: controller.refreshController,
-          //   enablePullDown: true,
-          //   header: ClassicHeader(
-          //     refreshingText: 'Memuat...',
-          //     completeText: 'Selesai',
-          //     failedText: 'Gagal',
-          //     idleText: 'Tarik ke bawah untuk refresh',
-          //   ),
-          //   onRefresh: () async {
-          //     await controller.loadData();
-          //     // await apiService.fetchData1();
-          //   },
+          
           FutureBuilder<List<StatistikDataMonth>?>(
         future: apiServicess.fetchDataStatistikMonthDay(),
         // future: controller.loadData(),
@@ -489,8 +488,6 @@ class LastMonth extends GetView<StatistikController> {
             );
           } else {
             List<StatistikDataMonth> dataMonth = snapshot.data!;
-
-            // Ambil nilai dari data pertama (anda mungkin perlu mengatur logika sesuai kebutuhan anda)
             double productivityPercentage =
                 dataMonth.first.productivity.toDouble();
             double contributionPercentage =
@@ -618,6 +615,15 @@ class Quarter extends GetView<StatistikController> {
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
         ),
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios_new,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Get.back();
+          },
+        ),
       ),
       body: FutureBuilder<List<StatistikDataQuarter>?>(
         future: apiServicess.fetchDataStatistikQuarter(),
@@ -662,8 +668,6 @@ class Quarter extends GetView<StatistikController> {
             );
           } else {
             List<StatistikDataQuarter> dataMonth = snapshot.data!;
-
-            // Ambil nilai dari data pertama (anda mungkin perlu mengatur logika sesuai kebutuhan anda)
             double productivityPercentage =
                 dataMonth.first.productivity.toDouble();
             double contributionPercentage =
@@ -702,7 +706,7 @@ class Quarter extends GetView<StatistikController> {
                               textButton: "Last Month",
                               isSelected: false,
                               onPress: () {
-                                Get.to(() => Quarter());
+                                Get.to(() => LastMonth());
                               },
                             ),
                             TombolStatistik(
@@ -813,7 +817,7 @@ class TombolStatistik extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
             ),
             child: Container(
-              width: 60,
+              width: 70,
               height: 13,
               alignment: Alignment.center,
               child: Text(

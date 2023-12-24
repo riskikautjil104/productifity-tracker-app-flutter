@@ -1,8 +1,5 @@
-// import 'dart:convert';
-
 import 'package:get/get.dart';
 import 'package:productivity_tracker_app/core/utils/EndPoints.dart';
-// import 'package:productivity_tracker_app/app/modules/statistik/views/statistik_pm.dart';
 import '../models/statistik_models.dart';
 import 'package:sp_util/sp_util.dart';
 
@@ -134,20 +131,7 @@ class ApiServicess extends GetConnect {
   // post data statistik day
 
   Future<Response> postData(int inputData) async {
-    // if (inputData < 1 || inputData > 8) {
-    //   print('Error: Add working time between 1 to 8 hours.');
-
-    //   // Return response dengan status error
-    //   // Return response dengan status error
-    //   return Response(
-    //     body: jsonEncode({
-    //       "Code": 400,
-    //       "Data": "Add working time between 1 to 8 hours.",
-    //     }),
-    //     statusCode: 400,
-    //   );
-    // }
-
+   
     var myHeader = {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',

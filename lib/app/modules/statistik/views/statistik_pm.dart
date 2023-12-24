@@ -1,24 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-// import 'package:productivity_tracker_app/app/modules/home/views/home_view.dart';
-// import 'package:intl/intl.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-
 import '../../../data/providers/statistik_provider.dart';
 import '../../../widgets/navbarAppBar.dart';
-
 import 'package:get/get.dart';
-
-// import '../../home/models/project1.dart';
 import '../../home/controllers/home_controller.dart';
 import '../controllers/statistik_controller.dart';
-
 import 'package:percent_indicator/percent_indicator.dart';
-
 import '../pages/detail_statistik_pm.dart';
-
-// import '../pages/detail_statistik_pm.dart';
-
 import '../../../data/models/statistik_models.dart';
 
 class StatistikPm extends StatelessWidget {
@@ -130,7 +119,7 @@ class StatistikPm extends StatelessWidget {
               );
             } else {
               List<Project> projects = snapshot.data!;
-
+              projects.sort((a, b) => b.endDate.compareTo(a.endDate));
               return ListView.builder(
                 shrinkWrap: true,
                 physics: ClampingScrollPhysics(),

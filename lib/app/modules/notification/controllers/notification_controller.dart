@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../data/providers/home_provider.dart';
-// import '../../home/views/home_view.dart';
 import '../views/notification_view.dart';
 
 class NotificationController extends GetxController {
@@ -10,8 +8,7 @@ class NotificationController extends GetxController {
   Future<void> deleteAllNotifications() async {
     try {
       await apiService.deleteAllNotifications();
-      // Panggil fungsi untuk memuat ulang notifikasi
-      // Get.toNamed("/");
+
       Get.snackbar(
         'Berhasil',
         'Anda Berhasil Menghapus Semua Notifikasi',
@@ -30,7 +27,6 @@ class NotificationController extends GetxController {
         backgroundColor: Color.fromARGB(255, 250, 1, 1),
         duration: Duration(seconds: 5),
       );
-      // Tampilkan snackbar atau pesan kesalahan kepada pengguna jika perlu
     }
   }
 

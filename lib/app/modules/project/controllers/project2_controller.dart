@@ -3,15 +3,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+// import 'package:productivity_tracker_app_fix/app/data/models/home_model.dart';
 import 'package:productivity_tracker_app/app/data/models/target.dart';
 import 'package:productivity_tracker_app/app/data/models/tasks.dart';
 import 'package:productivity_tracker_app/app/data/models/detail_project.dart';
 import 'package:productivity_tracker_app/app/data/models/projects_model.dart';
 import 'package:productivity_tracker_app/app/data/models/team.dart';
-import 'package:productivity_tracker_app/app/data/providers/project_api_random.dart';
+// import 'package:productivity_tracker_app/app/data/providers/project_api_random.dart';
 import 'package:productivity_tracker_app/app/data/providers/project_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:productivity_tracker_app/app/modules/home/models/project1.dart';
+// import 'package:productivity_tracker_app/app/modules/home/models/project1.dart';
 import 'package:productivity_tracker_app/app/modules/home/views/home_view.dart';
 import 'package:productivity_tracker_app/app/modules/project/views/detail_project.dart';
 // import 'package:productivity_tracker_app/app/modules/project/views/projects2_view.dart';
@@ -20,6 +22,9 @@ import 'package:sp_util/sp_util.dart';
 // import 'package:sp_util/sp_util.dart';
 // import 'package:productivity_tracker_app/app/data/providers/project_provider.dart';
 // import 'package:sp_util/sp_util.dart';
+
+// import '../../../data/providers/home_provider.dart';
+import '../../../data/providers/project_api_random.dart';
 
 class Project2Controller extends GetxController {
   TextEditingController projectName = TextEditingController();

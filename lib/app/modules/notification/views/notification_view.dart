@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-
 import '../../../data/models/notifikasi_models.dart';
 import '../../../data/providers/home_provider.dart';
 import '../../home/views/home_view.dart';
 import '../controllers/notification_controller.dart';
-
 import '../../../widgets/navbarAppBar.dart';
 
 class NotificationView extends GetView<NotificationController> {
@@ -86,10 +83,10 @@ class NotificationView extends GetView<NotificationController> {
                 children: [
                   SizedBox(
                       width:
-                          10), // Jarak antara teks dan animasi, sesuaikan sesuai kebutuhan
+                          10), 
                   Lottie.asset(
                     'assets/lottie/Animation-cat-serevr.json',
-                    width: 200, // Sesuaikan ukuran animasi sesuai kebutuhan
+                    width: 200, 
                     height: 200,
                     fit: BoxFit.contain,
                   ),
@@ -113,7 +110,7 @@ class NotificationView extends GetView<NotificationController> {
                 children: [
                   SizedBox(
                       width:
-                          10), // Jarak antara teks dan animasi, sesuaikan sesuai kebutuhan
+                          10), 
                   Lottie.network(
                     'https://lottie.host/21f699d1-5f97-405e-b338-e31d1a80cb9d/07uDzn6POU.json',
                     width: 200, // Sesuaikan ukuran animasi sesuai kebutuhan

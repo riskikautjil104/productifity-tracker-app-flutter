@@ -8,14 +8,8 @@ import 'package:productivity_tracker_app/app/modules/project/controllers/project
 import 'package:sp_util/sp_util.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-// import '../../../data/providers/project_api_random.dart';
-// import '../../../data/providers/home_provider.dart';
 import '../../../data/providers/project_api_random.dart';
 import '../controllers/home_controller.dart';
-
-// import '../widget/listNamaProject_widget.dart';
-
-// import '../widget/buttonNavigator.dart';
 
 import '../../../widgets/navbarAppBar.dart';
 
@@ -23,14 +17,13 @@ import '../models/project1.dart';
 
 import '../widget/cart_project.dart';
 
-// import '../../../modules/project/controllers/project_controller.dart';
-
 class HomePm extends GetView<HomeController> {
   final ApiServices apiService = ApiServices();
 
   @override
   Widget build(BuildContext context) {
     final Project2Controller controller2 = Project2Controller();
+
     return Scaffold(
       // navbar
       appBar: GradientAppBar(
@@ -175,32 +168,27 @@ class HomePm extends GetView<HomeController> {
               return Center(
                 child: Column(
                   children: [
-                    SizedBox(
-                        width:
-                            10), // Jarak antara teks dan animasi, sesuaikan sesuai kebutuhan
+                    SizedBox(width: 10),
                     Lottie.asset(
                       'assets/lottie/Animation-cat-serevr.json',
                       width: 200, // Sesuaikan ukuran animasi sesuai kebutuhan
                       height: 200,
                       fit: BoxFit.contain,
                     ),
-                    Text(
-                      'Server Erorr 500 ${snapshot.error}',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Text(
+                        'Server Erorr 500 ${snapshot.error}',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ],
                 ),
               );
-
-              // return Center(
-              //   child:
-
-              //   Text('Error1: ${snapshot.error}'),
-              // );
             } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
               return Center(
                 child: Column(
@@ -227,7 +215,11 @@ class HomePm extends GetView<HomeController> {
               );
             } else {
               List<Project1> projects = snapshot.data!;
+              // target selesai
+              projects.sort((a, b) => b.endDate.compareTo(a.endDate));
 
+              // start project
+              // projects.sort((a, b) => b.startDate.compareTo(a.startDate));
               return SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -237,39 +229,64 @@ class HomePm extends GetView<HomeController> {
                         horizontal: 15,
                         vertical: 27,
                       ),
-                      child: Text(
-                        "List Project",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.left,
+                      child: Column(
+                        children: [
+                          Text(
+                            "List Project",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.left,
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text("Count Project: ${projects.length}")
+                        ],
                       ),
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width,
                       margin: EdgeInsets.symmetric(horizontal: 5.0),
-                      height: 540,
+                      height: MediaQuery.of(context).size.height * 0.7 - 60,
                       child: ListView.builder(
                         shrinkWrap: true,
                         physics: ClampingScrollPhysics(),
                         itemCount: projects.length,
                         itemBuilder: (context, index) {
                           Project1 project = projects[index];
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 9),
-                            child: CartProject(
-                              onTap: () => controller2
-                                  .fetchDetailProjectData(project.id),
-                              namaProject: project.name, // Ganti properti
-                              date: DateFormat('yyyy-MM-dd').format(project
-                                  .endDate), // Konversi DateTime ke String
-                              progress:
-                                  '${project.progress}%', // Ganti properti
-                              percent: project.progress.toDouble() /
-                                  100, // Ganti properti
-                            ),
-                          );
+                          if (project.status == false) {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 9),
+                              child: CartProject(
+                                onTap: () {},
+                                namaProject: project.name, // Ganti properti
+                                date: DateFormat('yyyy-MM-dd').format(project
+                                    .endDate), // Konversi DateTime ke String
+                                progress:
+                                    '${project.progress}%', // Ganti properti
+                                percent: project.progress is int
+                                    ? project.progress.toDouble() / 100
+                                    : project.progress.toDouble() /
+                                        100, // Ganti properti
+                              ),
+                            );
+                          } else {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 9),
+                              child: CartProject(
+                                onTap: () {},
+                                namaProject: project.name, // Ganti properti
+                                date: DateFormat('yyyy-MM-dd').format(project
+                                    .endDate), // Konversi DateTime ke String
+                                progress:
+                                    '${project.progress}%\t✅', // Ganti properti
+                                percent: project.progress.toDouble() /
+                                    100, // Ganti properti
+                              ),
+                            );
+                          }
                         },
                       ),
                     ),

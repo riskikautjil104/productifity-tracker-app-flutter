@@ -1,13 +1,9 @@
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-// import 'package:productivity_tracker_app/app/modules/project/views/detail_project.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-// import 'package:sp_util/sp_util.dart';
-
 import '../../../data/models/detail_project.dart';
 import '../../../data/providers/project_api_random.dart';
 import '../../../data/providers/project_provider.dart';
-
 import '../../../data/models/projects_model.dart';
 import '../models/project1.dart';
 
@@ -28,10 +24,9 @@ class HomeController extends GetxController {
     try {
       final data = await _apiService.fetchData();
       project.value = data;
-      
+
       isLoading = false.obs;
     } catch (e) {
-     
     } finally {
       isLoading = false.obs;
     }

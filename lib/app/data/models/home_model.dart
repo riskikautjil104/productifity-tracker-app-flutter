@@ -71,9 +71,6 @@ class Task {
       crewId: json['crewId'],
       projectId: json['projectId'],
       weekTargetId: json['weekTargetId'],
-      // Add other property assignments as needed
     );
   }
 }
-
-
