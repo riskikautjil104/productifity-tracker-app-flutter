@@ -132,3 +132,8 @@ class _SplashScreenState extends State<SplashScreen> {
 }
 
 
+
+// Jika anda merasa diri anda gila, tidak perlu anda merasa karena semua orang  juga sudah tau, hahaha hahaha, wkwkw wkwk wkw wk, tapi pelase jangan emosi ya ttd, tanda tangan kamu juga bagus,  
+
+// seputar  bale kata biking beta ta pata parcuma nona se pui cinta bukan par beta kanapa nona sepung cinta bukan par beta kana  janji yang se bilang Hahahahahaha,
+// TES KEYBOAR GUYS JANGAN MARAH YA UKE HEHEHE
