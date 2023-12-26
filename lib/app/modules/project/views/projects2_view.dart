@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:lottie/lottie.dart';
+// import 'package:lottie/lottie.dart';
 import 'package:productivity_tracker_app/app/modules/home/models/project1.dart';
 // import 'package:lottie/lottie.dart';
 // import 'package:productivity_tracker_app/app/modules/home/widget/cart_project.dart';
@@ -101,6 +101,8 @@ class Project2View extends GetView<Project2Controller> {
               );
             } else {
               List<Project1> projects = snapshot.data!;
+              // target selesai
+              projects.sort((a, b) => b.endDate.compareTo(a.endDate));
 
               return SingleChildScrollView(
                 child: Center(
@@ -109,76 +111,138 @@ class Project2View extends GetView<Project2Controller> {
                     width: MediaQuery.of(context).size.width * 0.9,
                     child: Column(
                       children: [
-                        ListView.builder(
-                          shrinkWrap: true,
-                          physics: ClampingScrollPhysics(),
-                          itemCount: projects.length,
-                          itemBuilder: (context, index) {
-                            Project1 project = projects[index];
-                            return Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 9),
-                                child: project.status == false
-                                    ? CartProject(
-                                        onTap: () => controller
-                                            .fetchDetailProjectData(project.id),
-                                        namaProject:
-                                            project.name, // Ganti properti
-                                        date: DateFormat('yyyy-MM-dd').format(
-                                            project
-                                                .endDate), // Konversi DateTime ke String
-                                        progress:
-                                            '${project.progress}%', // Ganti properti
-                                        percent: project.progress /
-                                            100, // Ganti properti
-                                      )
-                                    : Container());
-                          },
+                        Text(
+                          'Uncompleted Projects',
+                          style: TextStyle(
+                              fontSize: 13, fontWeight: FontWeight.w700),
                         ),
-                        SizedBox(height: 11),
-                        (projects.length <= 0)
-                            ? Column(
-                                children: [
-                                  Text(
-                                    'Tidak Ada Project',
-                                    style: TextStyle(
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w700),
-                                  ),
-                                  Lottie.asset('assets/lottie/notfound.json'),
-                                ],
-                              )
-                            : Text(
-                                'Completed',
-                                style: TextStyle(
-                                    fontSize: 13, fontWeight: FontWeight.w700),
-                              ),
-                        SizedBox(height: 11),
                         ListView.builder(
                           shrinkWrap: true,
                           physics: ClampingScrollPhysics(),
-                          itemCount: projects.length,
+                          itemCount: projects
+                              .where((project) => !project.status)
+                              .length,
                           itemBuilder: (context, index) {
-                            Project1 project = projects[index];
+                            Project1 project = projects
+                                .where((project) => !project.status)
+                                .toList()[index];
                             return Padding(
                               padding: const EdgeInsets.symmetric(vertical: 9),
-                              child: project.status == true
-                                  ? CartProject(
-                                      onTap: () => controller
-                                          .fetchDetailProjectData(project.id),
-                                      namaProject:
-                                          project.name, // Ganti properti
-                                      date: DateFormat('yyyy-MM-dd').format(project
-                                          .endDate), // Konversi DateTime ke String
-                                      progress:
-                                          '${project.progress}%', // Ganti properti
-                                      percent: project.progress /
-                                          100, // Ganti properti
-                                    )
-                                  : Container(),
+                              child: CartProject(
+                                onTap: () => controller
+                                    .fetchDetailProjectData(project.id),
+                                namaProject: project.name,
+                                date: DateFormat('yyyy-MM-dd')
+                                    .format(project.endDate),
+                                progress: '${project.progress}%',
+                                percent: project.progress is int
+                                    ? project.progress.toDouble() / 100
+                                    : project.progress.toDouble() / 100,
+                              ),
                             );
                           },
                         ),
+                        SizedBox(height: 20),
+                        Text(
+                          'Completed Projects',
+                          style: TextStyle(
+                              fontSize: 13, fontWeight: FontWeight.w700),
+                        ),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: ClampingScrollPhysics(),
+                          itemCount: projects
+                              .where((project) => project.status)
+                              .length,
+                          itemBuilder: (context, index) {
+                            Project1 project = projects
+                                .where((project) => project.status)
+                                .toList()[index];
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 9),
+                              child: CartProject(
+                                onTap: () => controller
+                                    .fetchDetailProjectData(project.id),
+                                namaProject: project.name,
+                                date: DateFormat('yyyy-MM-dd')
+                                    .format(project.endDate),
+                                progress: '${project.progress}%\t✅',
+                                percent: project.progress.toDouble() / 100,
+                              ),
+                            );
+                          },
+                        ),
+
+                        // ListView.builder(
+                        //   shrinkWrap: true,
+                        //   physics: ClampingScrollPhysics(),
+                        //   itemCount: projects.length,
+                        //   itemBuilder: (context, index) {
+                        //     Project1 project = projects[index];
+                        //     return Padding(
+                        //         padding:
+                        //             const EdgeInsets.symmetric(vertical: 9),
+                        //         child: project.status == false
+                        //             ? CartProject(
+                        // onTap: () => controller
+                        //     .fetchDetailProjectData(project.id),
+                        //                 namaProject:
+                        //                     project.name, // Ganti properti
+                        //                 date: DateFormat('yyyy-MM-dd').format(
+                        //                     project
+                        //                         .endDate), // Konversi DateTime ke String
+                        //                 progress:
+                        //                     '${project.progress}%', // Ganti properti
+                        //                 percent: project.progress /
+                        //                     100, // Ganti properti
+                        //               )
+                        //             : Container());
+                        //   },
+                        // ),
+                        // SizedBox(height: 11),
+                        // (projects.length <= 0)
+                        //     ? Column(
+                        //         children: [
+                        //           Text(
+                        //             'Tidak Ada Project',
+                        //             style: TextStyle(
+                        //                 fontSize: 13,
+                        //                 fontWeight: FontWeight.w700),
+                        //           ),
+                        //           Lottie.asset('assets/lottie/notfound.json'),
+                        //         ],
+                        //       )
+                        //     : Text(
+                        //         'Completed',
+                        // style: TextStyle(
+                        //     fontSize: 13, fontWeight: FontWeight.w700),
+                        //       ),
+                        // SizedBox(height: 11),
+                        // ListView.builder(
+                        //   shrinkWrap: true,
+                        //   physics: ClampingScrollPhysics(),
+                        //   itemCount: projects.length,
+                        //   itemBuilder: (context, index) {
+                        //     Project1 project = projects[index];
+                        //     return Padding(
+                        //       padding: const EdgeInsets.symmetric(vertical: 9),
+                        //       child: project.status == true
+                        //           ? CartProject(
+                        //               onTap: () => controller
+                        //                   .fetchDetailProjectData(project.id),
+                        //               namaProject:
+                        //                   project.name, // Ganti properti
+                        //               date: DateFormat('yyyy-MM-dd').format(project
+                        //                   .endDate), // Konversi DateTime ke String
+                        //               progress:
+                        //                   '${project.progress}%', // Ganti properti
+                        //               percent: project.progress /
+                        //                   100, // Ganti properti
+                        //             )
+                        //           : Container(),
+                        //     );
+                        //   },
+                        // ),
                       ],
                     ),
                   ),

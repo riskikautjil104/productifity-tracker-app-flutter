@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:productivity_tracker_app/app/modules/home/views/home_view.dart';
-import 'package:productivity_tracker_app/app/modules/project/controllers/project2_controller.dart';
+// import 'package:productivity_tracker_app/app/modules/project/controllers/project2_controller.dart';
 import 'package:sp_util/sp_util.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -22,7 +22,7 @@ class HomePm extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    final Project2Controller controller2 = Project2Controller();
+    // final Project2Controller controller2 = Project2Controller();
 
     return Scaffold(
       // navbar
