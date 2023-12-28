@@ -37,8 +37,9 @@ class StatistikView extends GetView<StatistikController> {
         Get.snackbar(
           'Gagal',
           "${response.body['Errors']}",
-          backgroundColor: Colors.red[200],
-          duration: Duration(seconds: 5),
+          backgroundColor: Colors.red.shade500,
+          colorText: Colors.white,
+          duration: Duration(seconds: 3),
         );
         print('Gagal terhubung. Status code: ${response.statusCode}');
       }
@@ -211,6 +212,7 @@ class StatistikView extends GetView<StatistikController> {
                       decoration: InputDecoration(
                         labelText: 'Masukkan Jam Kerja Hari ini 1-8 Jam',
                       ),
+                      onEditingComplete: sendData,
                     ),
                   ),
                   Center(
@@ -443,9 +445,7 @@ class LastMonth extends GetView<StatistikController> {
           },
         ),
       ),
-      body:
-          
-          FutureBuilder<List<StatistikDataMonth>?>(
+      body: FutureBuilder<List<StatistikDataMonth>?>(
         future: apiServicess.fetchDataStatistikMonthDay(),
         // future: controller.loadData(),
         builder: (context, snapshot) {
