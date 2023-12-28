@@ -76,17 +76,18 @@ class NotificationView extends GetView<NotificationController> {
         future: apiService.fetchDataNotifications(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return Center(
+                child: CircularProgressIndicator(
+              color: Colors.blue,
+            ));
           } else if (snapshot.hasError) {
             return Center(
               child: Column(
                 children: [
-                  SizedBox(
-                      width:
-                          10), 
+                  SizedBox(width: 10),
                   Lottie.asset(
                     'assets/lottie/Animation-cat-serevr.json',
-                    width: 200, 
+                    width: 200,
                     height: 200,
                     fit: BoxFit.contain,
                   ),
@@ -108,9 +109,7 @@ class NotificationView extends GetView<NotificationController> {
             return Center(
               child: Column(
                 children: [
-                  SizedBox(
-                      width:
-                          10), 
+                  SizedBox(width: 10),
                   Lottie.network(
                     'https://lottie.host/21f699d1-5f97-405e-b338-e31d1a80cb9d/07uDzn6POU.json',
                     width: 200, // Sesuaikan ukuran animasi sesuai kebutuhan
@@ -151,6 +150,7 @@ class NotificationView extends GetView<NotificationController> {
                         context: context,
                         builder: (BuildContext context) {
                           return Container(
+                            width: MediaQuery.sizeOf(context).width,
                             decoration: BoxDecoration(
                               gradient: LinearGradient(
                                 begin: Alignment.topLeft,

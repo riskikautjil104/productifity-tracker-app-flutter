@@ -112,7 +112,9 @@ class HomePm extends GetView<HomeController> {
                         return Container(
                           height: 10,
                           width: 10,
-                          child: CircularProgressIndicator(),
+                          child: CircularProgressIndicator(
+                            color: Colors.blue,
+                          ),
                         );
                       }
                     },

@@ -96,7 +96,7 @@ class CartNamaTask extends StatelessWidget {
                     child: Text(
                       progress,
                       style: TextStyle(
-                        fontSize: 9.06,
+                        fontSize: 8.06,
                         color: Color(0XFFB1B1B1),
                       ),
                     ),

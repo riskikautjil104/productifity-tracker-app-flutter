@@ -15,7 +15,6 @@ import '../../../data/providers/home_provider.dart';
 import '../../../data/models/home_model.dart';
 import 'package:lottie/lottie.dart';
 
-
 class HomeViewCrew extends GetView<HomeController> {
   final LoginController loginController = Get.put(LoginController());
   final ApiServices apiService = ApiServices();
@@ -118,7 +117,7 @@ class HomeViewCrew extends GetView<HomeController> {
                         return Container(
                           height: 10,
                           width: 10,
-                          child: CircularProgressIndicator(),
+                          child: CircularProgressIndicator(color: Colors.blue),
                         );
                       }
                     },
@@ -229,10 +228,8 @@ class HomeViewCrew extends GetView<HomeController> {
                                   percent: sumProductivity is int
                                       ? sumProductivity.toDouble()
                                       : sumProductivity,
-
                                   centerText:
                                       "${(sumProductivity * 100).toStringAsFixed(0)}%",
-                                
                                   centerTextColor: Color(0XFF197492),
                                   centerTextFontWeight: FontWeight.bold,
                                   centerTextFontSize: 20.0,
@@ -241,12 +238,11 @@ class HomeViewCrew extends GetView<HomeController> {
                                   progressColor: Color(0XFF197492),
                                 );
                               } else {
-                              
-
                                 return Container(
                                   height: 25,
                                   width: 25,
-                                  child: CircularProgressIndicator(),
+                                  child: CircularProgressIndicator(
+                                      color: Colors.blue),
                                 );
                               }
                             },
@@ -277,7 +273,6 @@ class HomeViewCrew extends GetView<HomeController> {
                                       : sumContibution,
                                   center: Text(
                                     "${(sumContibution * 100).toStringAsFixed(0)}%",
-                                    
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 20.0,
@@ -297,12 +292,11 @@ class HomeViewCrew extends GetView<HomeController> {
                                   progressColor: Color(0XFF2699FB),
                                 );
                               } else {
-                               
-
                                 return Container(
                                   height: 25,
                                   width: 25,
-                                  child: CircularProgressIndicator(),
+                                  child: CircularProgressIndicator(
+                                      color: Colors.blue),
                                 );
                               }
                             },
@@ -424,7 +418,6 @@ class HomeViewCrew extends GetView<HomeController> {
                                         SizedBox(
                                           height: 22,
                                         ),
-
                                         Column(
                                           children: [
                                             // Bagian "New Task"
@@ -547,8 +540,6 @@ class HomeViewCrew extends GetView<HomeController> {
                                               ),
                                           ],
                                         ),
-
-                                      
                                       ],
                                     ),
                                   ],
