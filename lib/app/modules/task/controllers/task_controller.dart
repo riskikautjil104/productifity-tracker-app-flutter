@@ -53,7 +53,7 @@ class TasksController extends GetxController {
     }
   }
 
-  void createTask() {
+  void createTask(String idProject) {
     if (taskName.text.isEmpty) {
       Get.snackbar(
         'Failed',
@@ -75,7 +75,7 @@ class TasksController extends GetxController {
         "week": selectedWeek.value.week,
       };
 
-      ProjectProvider().createTask(data).then((value) {
+      ProjectProvider().createTask(data, idProject).then((value) {
         // final data = jsonDecode(value.body) as Map<String, dynamic>;
         print(value.body);
         if (value.statusCode == 200) {

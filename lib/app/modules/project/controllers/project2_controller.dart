@@ -88,9 +88,15 @@ class Project2Controller extends GetxController {
 
   void taskToggleStatus(var id) {
     // EasyLoading.show(status: 'loading...');
-    Future.delayed(Duration(milliseconds: 5000));
+    // Future.delayed(Duration(milliseconds: 5000));
     print("Id Task" + id);
     ProjectProvider().changeStatusTask(id);
+    Get.back();
+    Get.snackbar('Successful', 'Task status successfully changed',
+        backgroundColor: Colors.green.shade500,
+        colorText: Colors.white,
+        duration: Duration(seconds: 3));
+    // Get.off(DetailProjectView());
     update();
     // EasyLoading.dismiss();
   }
@@ -285,6 +291,14 @@ class Project2Controller extends GetxController {
           Get.snackbar(
             'Failed',
             value.body['Errors'],
+            backgroundColor: Colors.red.shade500,
+            colorText: Colors.white,
+          );
+        } else {
+          EasyLoading.dismiss();
+          Get.snackbar(
+            'Failed',
+            'Something Wrong',
             backgroundColor: Colors.red.shade500,
             colorText: Colors.white,
           );

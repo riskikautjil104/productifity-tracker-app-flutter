@@ -12,7 +12,8 @@ class NotificationController extends GetxController {
       Get.snackbar(
         'Berhasil',
         'Anda Berhasil Menghapus Semua Notifikasi',
-        backgroundColor: Color(0XFF0F9EEA),
+        backgroundColor: Colors.green.shade500,
+        colorText: Colors.white,
         duration: Duration(seconds: 5),
       );
       // Perbarui UI

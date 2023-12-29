@@ -340,7 +340,10 @@ class DetailProjectView extends GetView<Project2Controller> {
                                                                     .check_box_outline_blank),
                                                               ),
                                                             )
-                                                          : Container();
+                                                          : Container(
+                                                              color:
+                                                                  Colors.white,
+                                                            );
                                                     },
                                                   );
                                                 }
@@ -416,7 +419,10 @@ class DetailProjectView extends GetView<Project2Controller> {
                                                                 ),
                                                               ),
                                                             )
-                                                          : Container();
+                                                          : Container(
+                                                              color:
+                                                                  Colors.white,
+                                                            );
                                                     },
                                                   );
                                                 }
@@ -849,7 +855,7 @@ class DetailProjectView extends GetView<Project2Controller> {
                                   );
                                 });
                         default:
-                          return Container();
+                          return Container(color: Colors.white);
                       }
                     }),
                   ),
@@ -863,7 +869,8 @@ class DetailProjectView extends GetView<Project2Controller> {
           ? Container()
           : FloatingActionButton(
               onPressed: () {
-                Get.to(AddTaskView());
+                Get.to(AddTaskView(
+                    idProject: controller.detailProject.value.data.id));
               },
               // foregroundColor: customizations[index].$1,
               backgroundColor: Color(0xFF0F9EEA),

@@ -42,14 +42,14 @@ class ProjectProvider extends GetConnect {
         headers: myHeader);
   }
 
-  Future<Response> createTask(var data) async {
+  Future<Response> createTask(var data, String idProject) async {
     var token = SpUtil.getString('jwtToken');
     var name = SpUtil.getString('username');
     var myHeader = {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     };
-    return await post(EndPoints.baseUrl + 'task/$name/create-task', data,
+    return await post(EndPoints.baseUrl + 'task/$name/create-task?projectId=$idProject', data,
         headers: myHeader);
   }
 

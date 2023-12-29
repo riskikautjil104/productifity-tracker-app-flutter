@@ -269,8 +269,12 @@ class HomeViewCrew extends GetView<HomeController> {
                                   animation: true,
                                   animationDuration: 5000,
                                   percent: sumContibution is int
-                                      ? sumContibution.toDouble()
-                                      : sumContibution,
+                                      ? sumContibution.toDouble() < 0
+                                          ? 1
+                                          : sumContibution.toDouble()
+                                      : sumContibution < 0
+                                          ? 1
+                                          : sumContibution,
                                   center: Text(
                                     "${(sumContibution * 100).toStringAsFixed(0)}%",
                                     style: TextStyle(

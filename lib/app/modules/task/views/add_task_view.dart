@@ -5,6 +5,8 @@ import 'package:productivity_tracker_app/app/data/models/Week.dart';
 import 'package:productivity_tracker_app/app/modules/task/controllers/task_controller.dart';
 
 class AddTaskView extends GetView<TasksController> {
+  final String idProject;
+  AddTaskView({required this.idProject});
   @override
   Widget build(BuildContext context) {
     TasksController controller = Get.put(TasksController());
@@ -47,7 +49,7 @@ class AddTaskView extends GetView<TasksController> {
             actions: [
               TextButton(
                 onPressed: () {
-                  controller.createTask();
+                  controller.createTask(idProject);
                 },
                 child: Text(
                   'Save',
